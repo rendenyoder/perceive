@@ -1,0 +1,182 @@
+section {
+  display: block;
+}
+
+span {
+  font-size: 18px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 100;
+}
+
+/*
+  Styling For Upper Navigation Bar Items (Logo & Menu).
+ */
+.nav {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  padding: 20px;
+  .logo {
+    float: left;
+    .icon {
+      margin-top: -5px;
+      height: 30px;
+      width: auto;
+    }
+  }
+  .menu {
+    float: right;
+    .icon {
+      height: 15px;
+      width: auto;
+      cursor: pointer;
+    }
+    .icon:hover {
+      opacity: 0.8;
+    }
+  }
+  .icon {
+    outline: none;
+  }
+}
+
+/*
+  Styling For Settings Menu.
+ */
+.settings {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  padding-right: 20px;
+  padding-left: 20px;
+  -webkit-transition: height 300ms ease-in-out;
+  -moz-transition: height 300ms ease-in-out;
+  -o-transition: height 300ms ease-in-out;
+  transition: height 300ms ease-in-out;
+  .settings-table {
+    width: 100%;
+    padding: 10px 30px 0 30px;
+    .toggle-switch-container {
+      display: inline-block;
+      min-width: 180px;
+      .switch-name-container {
+        padding: 5px 10px 5px 0;
+        .name {
+          display: inline-block;
+          padding-left: 10px;
+          vertical-align: middle;
+        }
+      }
+    }
+    .read-view-container {
+      border-bottom: 2px solid transparent;
+      max-width: 100px;
+      text-align: center;
+      cursor: pointer;
+      .icon {
+        height: 50px;
+        vertical-align: middle;
+      }
+      .name {
+        text-transform: capitalize;
+        padding-left: 10px;
+      }
+    }
+    .read-view-container:hover {
+      border-bottom: 2px solid #626262;
+    }
+    .read-view-selected {
+      border-bottom: 2px solid #ff8534 !important;
+    }
+  }
+}
+
+.settings-open {
+  height: 85px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 55px;
+  height: 25px;
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #626262;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #ffffff;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: #ff8534;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #ff8534;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+  }
+
+  .slider.round {
+    border-radius: 20px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/*
+  Styling For Search Bar.
+ */
+.search-container {
+  display: block;
+  padding: 20px 40px 20px 40px;
+  .search {
+    margin-left: -10px;
+    padding: 10px;
+    width: 100%;
+    font-size: 20px;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+  }
+  .search:hover {
+    cursor: text;
+  }
+}

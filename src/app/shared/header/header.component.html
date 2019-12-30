@@ -1,0 +1,53 @@
+<section>
+  <!-- Upper Navigation Buttons -->
+  <div class="nav">
+    <!-- Logo With Link Back To Home -->
+    <div class="logo">
+      <a href=".">
+        <img class="icon" src="./assets/img/logo.png" alt="logo"/>
+      </a>
+    </div>
+    <!-- Settings Menu Button -->
+    <div class="menu">
+      <input class="icon" (click)="isExpanded = !isExpanded;" type="image" src="./assets/img/menu.png" alt="menu"/>
+    </div>
+  </div>
+
+  <!-- Collapsible Settings Buttons -->
+  <div class="settings" [ngClass]="{'settings-open': isExpanded}">
+    <table class="settings-table">
+      <tr>
+        <td class="toggle-switch-container">
+          <!-- Dark Mode Switch -->
+          <div class="switch-name-container">
+            <label class="toggle-switch">
+              <input [(ngModel)]="isDarkMode" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+            <span class="name">Dark Mode</span>
+          </div>
+          <!-- Toggle For Using Cookies -->
+          <div class="switch-name-container">
+            <label class="toggle-switch">
+              <input [(ngModel)]="useCookies" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+            <span class="name">Use Cookies</span>
+          </div>
+        </td>
+        <!-- Read View Mode Button -->
+        <ng-container *ngFor="let mode of modes">
+          <td class="read-view-container" [ngClass]="{'read-view-selected': currentMode === mode}" (click)="setMode(mode)" >
+            <img class="icon" src="./assets/img/{{mode}}-view.png" alt="logo"/>
+            <span class="name">{{mode}}</span>
+          </td>
+        </ng-container>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input class="search shadow" type="text" placeholder="Search"/>
+  </div>
+</section>
