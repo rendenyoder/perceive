@@ -9,12 +9,12 @@
     </div>
     <!-- Settings Menu Button -->
     <div class="menu">
-      <input class="icon" (click)="isExpanded = !isExpanded;" type="image" src="./assets/img/menu.png" alt="menu"/>
+      <input class="icon" (click)="isGlobalExpanded = !isGlobalExpanded;" type="image" src="./assets/img/menu.png" alt="menu"/>
     </div>
   </div>
 
   <!-- Collapsible Settings Buttons -->
-  <div class="settings" [ngClass]="{'settings-open': isExpanded}">
+  <div class="settings" [ngClass]="{'settings-open': isGlobalExpanded}">
     <table class="settings-table">
       <tr>
         <td class="toggle-switch-container">
@@ -46,8 +46,42 @@
     </table>
   </div>
 
-  <!-- Search Bar -->
+  <!-- Search Bar Container -->
   <div class="search-container">
+    <!-- Search Field -->
     <input class="search shadow" type="text" placeholder="Search"/>
+    <!-- Container For Dropdown -->
+    <div class="icon-container">
+      <!-- Execute Search Icon -->
+      <img class="magnifying-glass" src="./assets/img/search.png" alt="magnifying-glass"/>
+      <!-- Divider -->
+      <div class="divider"></div>
+      <!-- View Search Settings Icon -->
+      <img class="gear" (click)="isSearchExpanded = !isSearchExpanded" src="./assets/img/gear.png" alt="gear"/>
+    </div>
+    <!-- Search Settings Container -->
+    <div class="search-settings-container shadow" [ngClass]="{'search-settings-container-open': isSearchExpanded}">
+      <!-- Version Search Input -->
+      <div class="version-search-container">
+        <input class="version-search" type="text" [(ngModel)]="versionSearchTerm" (ngModelChange)="filterVersions()" placeholder="Search Versions"/>
+      </div>
+      <!-- Version List -->
+      <div class="versions-container">
+        <!-- Selected Versions Row -->
+        <div class="miniview" *ngIf="selectedVersions && selectedVersions.length > 0">
+          <div class="mini-selected" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
+            <span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
+          </div>
+        </div>
+        <!-- Available Version Row -->
+        <table class="versions">
+          <tr *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
+            <td><span>{{version.name}}</span></td>
+            <td><span>{{version.description}}</span></td>
+            <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
