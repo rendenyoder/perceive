@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 
 @Component({
@@ -7,6 +7,9 @@ import { BibleService } from '../services/bible.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  @Output()
+  execSearch: EventEmitter<any> = new EventEmitter();
 
   isGlobalExpanded = false;
   isSearchExpanded = false;
@@ -20,6 +23,7 @@ export class HeaderComponent implements OnInit {
   selectedVersions = [];
   versions = [];
   filteredVersions = [];
+  searchTerm = '';
   versionSearchTerm = '';
 
   constructor(private bible: BibleService) { }
@@ -40,10 +44,17 @@ export class HeaderComponent implements OnInit {
       // set filtered version list to full list
       this.filteredVersions = this.versions;
       // set selected version as default
-      const kjv = this.versions.find(version => version.id === this.defaultVersion);
-      kjv.selected = true;
-      this.selectedVersions.push(kjv);
+      this.setDefaultVersion();
     });
+  }
+
+  /**
+   * Sets the default selected version.
+   */
+  private setDefaultVersion() {
+    const kjv = this.versions.find(version => version.id === this.defaultVersion);
+    kjv.selected = true;
+    this.selectedVersions.push(kjv);
   }
 
   /**
@@ -68,6 +79,7 @@ export class HeaderComponent implements OnInit {
         return selected.id !== version.id;
       });
       version.selected = false;
+      version.results = undefined;
     } else {
       this.selectedVersions.push(version);
       version.selected = true;
@@ -85,6 +97,26 @@ export class HeaderComponent implements OnInit {
       });
     } else {
       this.filteredVersions = this.versions;
+    }
+  }
+
+  /**
+   * Executes search and emits search results.
+   */
+  search() {
+    if (this.searchTerm) {
+      this.isGlobalExpanded = false;
+      this.isSearchExpanded = false;
+      if (this.selectedVersions.length === 0) {
+        this.setDefaultVersion();
+      }
+      this.selectedVersions.forEach(version => {
+        const id = version.id;
+        this.bible.search(id, this.searchTerm).subscribe(results => {
+          version.results = results.data;
+        });
+      });
+      this.execSearch.emit(this.selectedVersions);
     }
   }
 }

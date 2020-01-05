@@ -49,11 +49,11 @@
   <!-- Search Bar Container -->
   <div class="search-container">
     <!-- Search Field -->
-    <input class="search shadow" type="text" placeholder="Search"/>
+    <input class="search shadow" [(ngModel)]="searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
     <!-- Container For Dropdown -->
     <div class="icon-container">
       <!-- Execute Search Icon -->
-      <img class="magnifying-glass" src="./assets/img/search.png" alt="magnifying-glass"/>
+      <img class="magnifying-glass" (click)="search()" src="./assets/img/search.png" alt="magnifying-glass"/>
       <!-- Divider -->
       <div class="divider"></div>
       <!-- View Search Settings Icon -->

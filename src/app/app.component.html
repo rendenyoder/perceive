@@ -1,1 +1,4 @@
-<app-header></app-header>
+<!-- Header Containing Settings Menu And Search Bar -->
+<app-header (execSearch)="setSearchResults($event)"></app-header>
+<!-- Display Search Results -->
+<app-search [searchResults]="searchResults"></app-search>

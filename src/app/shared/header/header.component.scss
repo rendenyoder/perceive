@@ -3,7 +3,7 @@ section {
 }
 
 span {
-  font: 200 20px system-ui;
+  font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 /*
@@ -77,7 +77,7 @@ span {
       }
     }
     .read-view-container {
-      border-bottom: 2px solid transparent;
+      border-bottom: 1px solid transparent;
       max-width: 100px;
       text-align: center;
       cursor: pointer;
@@ -95,16 +95,16 @@ span {
       }
     }
     .read-view-container:hover {
-      border-bottom: 2px solid #626262;
+      border-bottom: 1px solid #626262;
     }
     .read-view-selected {
-      border-bottom: 2px solid #ff8534 !important;
+      border-bottom: 1px solid #ff8534 !important;
     }
   }
 }
 
 .settings-open {
-  height: 85px;
+  height: 90px;
 }
 
 .toggle-switch {
