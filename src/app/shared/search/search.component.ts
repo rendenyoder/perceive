@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 
 @Component({
@@ -9,7 +9,10 @@ import { BibleService } from '../services/bible.service';
 export class SearchComponent implements OnInit {
 
   @Input()
-  searchResults = [];
+  searchResults = {};
+
+  @Output()
+  display: EventEmitter<any> = new EventEmitter();
 
   selected = {verses: {}, passages: {}};
 
@@ -49,8 +52,57 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  // TODO: SETUP SELECT METHOD
+  /**
+   * Checks whether the user has selected any content to view.
+   */
+  hasSelected() {
+    const selected = this.searchResults['selected'];
+    return selected && (Object.keys(selected.passages).length > 0 || Object.keys(selected.verses).length > 0);
+  }
+
+  /**
+   * Adds content to the appropriate selected object.
+   * @param content The selected content.
+   * @param version The selected contents version.
+   * @param isPassage Whether or not the content is a passage or verse.
+   */
   select(content, version, isPassage) {
-    content.selected = !content.selected;
+    if (!this.searchResults['selected']) {
+      this.searchResults['selected'] = {verses: {}, passages: {}};
+    }
+    const bibleContent = isPassage ? this.searchResults['selected'].passages : this.searchResults['selected'].verses;
+    if (!content.selected) {
+      // create object to contain content and version info without results
+      const selectedContent = {content, versionInfo: undefined};
+      const versionInfo = Object.assign({}, version);
+      versionInfo.results = undefined;
+      selectedContent.versionInfo = versionInfo;
+      // put content at id of passage or verse
+      const contentList = bibleContent[selectedContent.content.id];
+      if (contentList) {
+        contentList.push(selectedContent);
+      } else {
+        bibleContent[selectedContent.content.id] = [selectedContent];
+      }
+      content.selected = true;
+    } else {
+      if (bibleContent[content.id]) {
+        bibleContent[content.id] = bibleContent[content.id].filter(item => item.versionInfo.id !== version.id);
+        // remove list if empty
+        if (bibleContent[content.id].length <= 0) {
+          delete bibleContent[content.id];
+        }
+      }
+      content.selected = false;
+    }
+  }
+
+  /**
+   * Emit selected search results.
+   */
+  displayResults() {
+    if (this.searchResults['selected']) {
+      this.display.emit(this.searchResults['selected']);
+    }
   }
 }

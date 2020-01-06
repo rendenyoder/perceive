@@ -1,4 +1,7 @@
 <!-- Header Containing Settings Menu And Search Bar -->
-<app-header (execSearch)="setSearchResults($event)"></app-header>
+<app-header [modeSettings]="modeSettings" (execSearch)="setSearchResults($event)"></app-header>
 <!-- Display Search Results -->
-<app-search [searchResults]="searchResults"></app-search>
+<app-search *ngIf="!isReadView" [searchResults]="searchResults" (display)="display($event)"></app-search>
+
+<!-- Display On Of The Read Views -->
+<ng-container *ngIf="isReadView"></ng-container>

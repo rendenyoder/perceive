@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 
 @Component({
@@ -8,6 +8,9 @@ import { BibleService } from '../services/bible.service';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input()
+  modeSettings: any;
+
   @Output()
   execSearch: EventEmitter<any> = new EventEmitter();
 
@@ -15,9 +18,6 @@ export class HeaderComponent implements OnInit {
   isSearchExpanded = false;
   isDarkMode = false;
   useCookies = true;
-
-  modes = ['standard', 'column', 'rotate', 'interlinear'];
-  currentMode = this.modes[0];
 
   defaultVersion = 'de4e12af7f28f599-02';
   selectedVersions = [];
@@ -62,10 +62,10 @@ export class HeaderComponent implements OnInit {
    * @param selected The selected mode.
    */
   setMode(selected: string) {
-    if (this.modes.includes(selected)) {
-      this.currentMode = selected;
+    if (this.modeSettings.modes.includes(selected)) {
+      this.modeSettings.current = selected;
     } else {
-      this.currentMode = this.modes[0];
+      this.modeSettings.current = this.modeSettings.modes[0];
     }
   }
 

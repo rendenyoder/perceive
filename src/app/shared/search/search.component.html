@@ -1,5 +1,5 @@
 <section>
-  <ng-container *ngFor="let version of searchResults">
+  <ng-container *ngFor="let version of searchResults.results">
     <ng-container *ngIf="version.results && hasContent(version)">
       <!-- Version Name -->
       <div class="version-name">
@@ -67,3 +67,8 @@
     </ng-container>
   </ng-container>
 </section>
+
+<!-- Button To Display Off To the Right To Enter Read Mode -->
+<div class="read-mode-container">
+  <img class="side-arrow" (click)="displayResults()" [ngClass]="{'side-arrow-view': hasSelected()}" src="./assets/img/side-arrow.png" alt="Read"/>
+</div>

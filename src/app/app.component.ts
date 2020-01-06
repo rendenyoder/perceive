@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  searchResults = [];
+  isReadView = false;
+  searchResults = {};
+  modeSettings = { current: 'standard', modes: ['standard', 'column', 'rotate', 'interlinear'] };
+  content = {};
 
   constructor() { }
 
@@ -16,6 +19,12 @@ export class AppComponent implements OnInit {
    * Sets the current search results from a search event.
    */
   setSearchResults($event) {
-    this.searchResults = $event;
+    this.isReadView = false;
+    this.searchResults = {results: $event};
+  }
+
+  display($event) {
+    this.isReadView = true;
+    this.content = $event;
   }
 }
