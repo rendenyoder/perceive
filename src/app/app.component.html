@@ -4,4 +4,7 @@
 <app-search *ngIf="!isReadView" [searchResults]="searchResults" (display)="display($event)"></app-search>
 
 <!-- Display On Of The Read Views -->
-<ng-container *ngIf="isReadView"></ng-container>
+<ng-container *ngIf="isReadView">
+  <!-- Standard View -->
+  <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content"></app-standard-view>
+</ng-container>

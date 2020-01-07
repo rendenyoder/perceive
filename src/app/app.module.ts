@@ -7,12 +7,14 @@ import { HeaderComponent } from './shared/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BibleService } from './shared/services/bible.service';
 import { SearchComponent } from './shared/search/search.component';
+import { StandardComponent } from './shared/views/standard/standard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SearchComponent
+    SearchComponent,
+    StandardComponent
   ],
   imports: [
     BrowserModule,

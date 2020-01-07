@@ -1,0 +1,61 @@
+<section>
+  <!-- View For Verses -->
+  <ng-container *ngIf="hasContent(content.verses)">
+    <div class="content-container">
+      <ng-container *ngFor="let group of content.verses | keyvalue">
+        <!-- Table For Each Passage Group -->
+        <table class="content-table shadow">
+          <!-- Row To Container Reference, Name, And Content -->
+          <ng-container *ngFor="let verse of group.value">
+            <!-- Passage Title -->
+            <tr>
+              <td>
+                <span class="content-reference">{{verse.content.reference}}</span>
+                <div class="content-version">
+                  <span>{{verse.versionInfo.name}}</span>&nbsp;
+                  <span *ngIf="verse.versionInfo.description">[{{verse.versionInfo.description}}]</span>
+                </div>
+              </td>
+            </tr>
+            <!-- Passage Content -->
+            <tr>
+              <div class="scripture-styles content">
+                <p class="p">{{verse.content.text}}</p>
+              </div>
+            </tr>
+          </ng-container>
+        </table>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- View For Passages -->
+  <ng-container *ngIf="hasContent(content.passages)">
+    <div class="content-container">
+      <ng-container *ngFor="let group of content.passages | keyvalue">
+        <!-- Table For Each Passage Group -->
+        <table class="content-table shadow">
+          <!-- Row To Container Reference, Name, And Content -->
+          <ng-container *ngFor="let passage of group.value">
+            <!-- Passage Title -->
+            <tr>
+              <td>
+                <span class="content-reference">{{passage.content.reference}}</span>
+                <div class="content-version">
+                  <span>{{passage.versionInfo.name}}</span>&nbsp;
+                  <span *ngIf="passage.versionInfo.description">[{{passage.versionInfo.description}}]</span>
+                </div>
+              </td>
+            </tr>
+            <!-- Passage Content -->
+            <tr>
+              <td>
+                <div class="scripture-styles content" [innerHTML]="passage.content.content"></div>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>
