@@ -9,7 +9,7 @@ import { BibleService } from '../services/bible.service';
 export class SearchComponent implements OnInit {
 
   @Input()
-  searchResults = {};
+  searchResults = {results: []};
 
   @Output()
   display: EventEmitter<any> = new EventEmitter();

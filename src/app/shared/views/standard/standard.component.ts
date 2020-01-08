@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class StandardComponent implements OnInit {
 
   @Input()
-  content = {};
+  content = {verses: {}, passages: {}};
 
   constructor() { }
 
