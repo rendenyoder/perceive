@@ -102,6 +102,7 @@ export class SearchComponent implements OnInit {
    */
   displayResults() {
     if (this.searchResults['selected']) {
+      window.scroll(0, 0);
       this.display.emit(this.searchResults['selected']);
     }
   }
