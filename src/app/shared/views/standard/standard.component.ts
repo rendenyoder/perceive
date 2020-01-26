@@ -10,6 +10,9 @@ export class StandardComponent implements OnInit {
   @Input()
   content = {verses: {}, passages: {}};
 
+  @Input()
+  zoom = 1;
+
   isAlphabetized = false;
 
   constructor(private cdr: ChangeDetectorRef) { }

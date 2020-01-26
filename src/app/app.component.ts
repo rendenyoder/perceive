@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   searchResults = {};
   modeSettings = { current: 'standard', modes: ['standard', 'column', 'rotate', 'interlinear'] };
   content = {};
+  zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
   constructor() { }
 
@@ -32,6 +33,18 @@ export class AppComponent implements OnInit {
     this.isHeaderHidden = true;
     this.isReadView = true;
     this.content = $event;
+  }
+
+  zoomIn() {
+    if (this.zoom.factor < this.zoom.max) {
+      this.zoom.factor += this.zoom.step;
+    }
+  }
+
+  zoomOut() {
+    if (this.zoom.factor > this.zoom.min) {
+      this.zoom.factor -= this.zoom.step;
+    }
   }
 
   /**

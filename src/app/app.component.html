@@ -7,11 +7,14 @@
 
 <!-- Display On Of The Read Views -->
 <div *ngIf="isReadView" class="read-view-container" [ngClass]="{'margin-top': !isHeaderHidden}">
+  <!-- Default Settings Shared By All Views -->
   <div class="settings-container">
     <img class="icon" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>
     <img *ngIf="isHeaderHidden" class="icon up" (click)="isHeaderHidden = false" src="./assets/img/arrow.png" alt="Show Menu"/>
     <img *ngIf="!isHeaderHidden" class="icon down" (click)="isHeaderHidden = true" src="./assets/img/arrow.png" alt="Hide Menu"/>
+    <img class="icon" (click)="zoomIn()" src="./assets/img/plus.png" alt="Zoom In"/>
+    <img class="icon" (click)="zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
   </div>
   <!-- Standard View -->
-  <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content"></app-standard-view>
+  <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content" [zoom]="zoom.factor"></app-standard-view>
 </div>
