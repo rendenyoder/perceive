@@ -1,7 +1,20 @@
+.settings-container {
+  cursor: pointer;
+  display: inline-block;
+  .settings-table {
+    margin: 2px;
+    .alphabetize {
+      padding: 0 5px 0 8px;
+    }
+    .checkbox {
+      margin-top: 3px;
+    }
+  }
+}
+
 section {
   width: 100%;
   box-sizing: border-box;
-  padding-top: 20px;
 }
 
 span {
@@ -11,16 +24,15 @@ span {
 .content-container {
   .content-table {
     width: 100%;
-    padding: 10px 10px 0 10px;
-    margin: 0 auto 10px auto;
-    background-color: #ffffff;
-    border-radius: 10px;
+    padding: 0 10px 0 10px;
     .content-reference {
       font-weight: 400 !important;
     }
     .content-version {
+      padding-bottom: 5px;
       span {
-        font-size: 16px;
+        font-size: 14px;
+        text-transform: uppercase;
       }
     }
     .content {

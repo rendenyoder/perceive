@@ -1,10 +1,17 @@
-<!-- Header Containing Settings Menu And Search Bar -->
-<app-header [modeSettings]="modeSettings" (execSearch)="setSearchResults($event)"></app-header>
+<div class="header" [ngClass]="{'header-hidden': isHeaderHidden}">
+  <!-- Header Containing Settings Menu And Search Bar -->
+  <app-header [modeSettings]="modeSettings" (execSearch)="setSearchResults($event)"></app-header>
+</div>
 <!-- Display Search Results -->
 <app-search *ngIf="!isReadView" [searchResults]="searchResults" (display)="display($event)"></app-search>
 
 <!-- Display On Of The Read Views -->
-<ng-container *ngIf="isReadView">
+<div *ngIf="isReadView" class="read-view-container" [ngClass]="{'margin-top': !isHeaderHidden}">
+  <div class="settings-container">
+    <img class="icon" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>
+    <img *ngIf="isHeaderHidden" class="icon up" (click)="isHeaderHidden = false" src="./assets/img/arrow.png" alt="Show Menu"/>
+    <img *ngIf="!isHeaderHidden" class="icon down" (click)="isHeaderHidden = true" src="./assets/img/arrow.png" alt="Hide Menu"/>
+  </div>
   <!-- Standard View -->
   <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content"></app-standard-view>
-</ng-container>
+</div>
