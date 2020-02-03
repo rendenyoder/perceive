@@ -34,26 +34,35 @@ export class StandardComponent implements OnInit {
   }
 
   /**
-   * List of keys sorted by preference.
+   * Content sorted by preference.
    * @param content The verse or passage content.
    */
-  keys(content) {
+  sorted(content) {
+    const sorted = [];
     const keys = Object.keys(content);
-    if (this.isAlphabetized) {
-      const moveChapter = (str) => str.substr(2).replace(' ', str[0]);
-      return keys.sort((a, b) => {
+    if (keys.length) {
+      keys.forEach(k => sorted.push(Object.assign([], content[k])));
+      if (this.isAlphabetized) {
+        // sort passages or verses in each group alphabetically
+        sorted.forEach(group => {
+          group.sort((a, b) => a.content.reference.localeCompare(b.content.reference));
+        });
+        // sort each group by first verse or passage
         const regex = /^[[0-9]/;
-        let first = content[a][0].content.reference;
-        let second = content[b][0].content.reference;
-        if (regex.test(first)) {
-          first = moveChapter(first);
-        }
-        if (regex.test(second)) {
-          second = moveChapter(second);
-        }
-        return first.localeCompare(second);
-      });
+        const moveChapter = (str) => str.substr(2).replace(' ', str[0]);
+        sorted.sort((a, b) => {
+          let first = a[0].content.reference;
+          let second = b[0].content.reference;
+          if (regex.test(first)) {
+            first = moveChapter(first);
+          }
+          if (regex.test(second)) {
+            second = moveChapter(second);
+          }
+          return first.localeCompare(second);
+        });
+      }
     }
-    return keys;
+    return sorted;
   }
 }

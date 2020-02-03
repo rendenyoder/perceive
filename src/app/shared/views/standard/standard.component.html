@@ -16,11 +16,11 @@
   <!-- View For Verses -->
   <ng-container *ngIf="hasContent(content.verses)">
     <div class="content-container">
-      <ng-container *ngFor="let key of keys(content.verses)">
+      <ng-container *ngFor="let group of sorted(content.verses)">
         <!-- Table For Each Passage Group -->
         <table class="content-table">
           <!-- Row To Container Reference, Name, And Content -->
-          <ng-container *ngFor="let verse of content.verses[key]">
+          <ng-container *ngFor="let verse of group">
             <!-- Verse Title -->
             <tr>
               <td>
@@ -46,11 +46,11 @@
   <!-- View For Passages -->
   <ng-container *ngIf="hasContent(content.passages)">
     <div class="content-container">
-      <ng-container *ngFor="let key of keys(content.passages)">
+      <ng-container *ngFor="let group of sorted(content.passages)">
         <!-- Table For Each Passage Group -->
         <table class="content-table">
           <!-- Row To Container Reference, Name, And Content -->
-          <ng-container *ngFor="let passage of content.passages[key]">
+          <ng-container *ngFor="let passage of group">
             <!-- Passage Title -->
             <tr>
               <td>
