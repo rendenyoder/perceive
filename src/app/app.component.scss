@@ -1,12 +1,27 @@
-.header {
-  overflow: hidden;
+.perceive {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: table;
 }
 
-.header-hidden {
-  height: 0;
+.header {
+  display: table-row;
+}
+
+.hidden {
+  display: none;
+}
+
+.content {
+  height: 100%;
+  margin: 0;
+  display: table-row;
 }
 
 .read-view-container {
+  min-height: calc(100% - 20px);
+  margin: 10px;
   padding: 5px;
   background-color: #ffffff;
   border-radius: 10px;
