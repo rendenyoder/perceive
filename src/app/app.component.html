@@ -5,6 +5,12 @@
   </div>
 
   <div class="content">
+    <!-- No Results Icon -->
+    <div *ngIf="!isReadView && !hasSearchResults()" class="not-found">
+      <p *ngIf="hasSearched">No Results</p>
+      <img *ngIf="hasSearched" src="./assets/img/not-found.png" alt="No Results Found"/>
+    </div>
+
     <!-- Display Search Results -->
     <app-search *ngIf="!isReadView" [searchResults]="searchResults" (display)="display($event)"></app-search>
 

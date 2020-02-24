@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  hasSearched = false;
   isReadView = false;
   isHeaderHidden = false;
   searchResults = {};
@@ -17,10 +18,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { }
 
+  hasSearchResults() {
+    if (this.searchResults['results']) {
+      return this.searchResults['results'].some(item => item.results && (item.results.total || item.results.passages));
+    }
+    return false;
+  }
+
   /**
    * Sets the current search results from a search event.
    */
   setSearchResults($event) {
+    this.hasSearched = true;
     this.isReadView = false;
     this.searchResults = {results: $event};
   }
