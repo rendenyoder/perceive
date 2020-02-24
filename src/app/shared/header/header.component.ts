@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -110,13 +112,17 @@ export class HeaderComponent implements OnInit {
       if (this.selectedVersions.length === 0) {
         this.setDefaultVersion();
       }
+      const calls = [];
       this.selectedVersions.forEach(version => {
         const id = version.id;
-        this.bible.search(id, this.searchTerm).subscribe(results => {
-          version.results = results.data;
-        });
+        const call = this.bible.search(id, this.searchTerm).pipe(
+          map((results) => {
+            version.results = results.data;
+          })
+        );
+        calls.push(call);
       });
-      this.execSearch.emit(this.selectedVersions);
+      forkJoin(calls).subscribe(_ => this.execSearch.emit(this.selectedVersions));
     }
   }
 }
