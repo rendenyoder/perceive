@@ -13,11 +13,24 @@ export class HeaderComponent implements OnInit {
   @Input()
   modeSettings: any;
 
+  @Input()
+  searchTerm = '';
+
+  @Input()
+  isSearchExpanded = false;
+
+  @Input()
+  isGlobalExpanded = false;
+
   @Output()
   execSearch: EventEmitter<any> = new EventEmitter();
 
-  isGlobalExpanded = false;
-  isSearchExpanded = false;
+  @Output()
+  updateSearchExpanded: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  updateGlobalExpanded: EventEmitter<any> = new EventEmitter();
+
   isDarkMode = false;
   useCookies = true;
 
@@ -25,7 +38,6 @@ export class HeaderComponent implements OnInit {
   selectedVersions = [];
   versions = [];
   filteredVersions = [];
-  searchTerm = '';
   versionSearchTerm = '';
 
   constructor(private bible: BibleService) { }
@@ -124,5 +136,23 @@ export class HeaderComponent implements OnInit {
       });
       forkJoin(calls).subscribe(_ => this.execSearch.emit(this.selectedVersions));
     }
+  }
+
+  /**
+   * Toggles the state of the search settings expanded flag.
+   * @param state the new search expanded state
+   */
+  updateSearch(state) {
+    this.isSearchExpanded = state;
+    this.updateSearchExpanded.emit(this.isSearchExpanded);
+  }
+
+  /**
+   * Toggles the state of the global settings expanded flag.
+   * @param state the new global expanded state
+   */
+  updateGlobal(state) {
+    this.isGlobalExpanded = state;
+    this.updateGlobalExpanded.emit(this.isGlobalExpanded);
   }
 }

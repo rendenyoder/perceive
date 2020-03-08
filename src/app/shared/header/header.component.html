@@ -9,7 +9,7 @@
     </div>
     <!-- Settings Menu Button -->
     <div class="menu">
-      <input class="icon" (click)="isGlobalExpanded = !isGlobalExpanded;" type="image" src="./assets/img/menu.png" alt="menu"/>
+      <input class="icon" (click)="updateGlobal(!isGlobalExpanded)" type="image" src="./assets/img/menu.png" alt="menu"/>
     </div>
   </div>
 
@@ -57,7 +57,7 @@
       <!-- Divider -->
       <div class="divider"></div>
       <!-- View Search Settings Icon -->
-      <img class="gear" (click)="isSearchExpanded = !isSearchExpanded" src="./assets/img/gear.png" alt="gear"/>
+      <img class="gear" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/gear.png" alt="gear"/>
     </div>
     <!-- Search Settings Container -->
     <div class="search-settings-container shadow" [ngClass]="{'search-settings-container-open': isSearchExpanded}">

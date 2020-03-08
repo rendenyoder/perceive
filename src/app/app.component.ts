@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  searchTerm = '';
+  isSearchExpanded = false;
+  isGlobalExpanded = false;
   hasSearched = false;
   isReadView = false;
   isHeaderHidden = false;
@@ -18,6 +21,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * Checks whether any search results are present.
+   */
   hasSearchResults() {
     if (this.searchResults['results']) {
       return this.searchResults['results'].some(item => item.results && (item.results.total || item.results.passages));
@@ -44,16 +50,38 @@ export class AppComponent implements OnInit {
     this.content = $event;
   }
 
+  /**
+   * Increases the current zoom factor.
+   */
   zoomIn() {
     if (this.zoom.factor < this.zoom.max) {
       this.zoom.factor += this.zoom.step;
     }
   }
 
+  /**
+   * Decreases the current zoom factor.
+   */
   zoomOut() {
     if (this.zoom.factor > this.zoom.min) {
       this.zoom.factor -= this.zoom.step;
     }
+  }
+
+  /**
+   * Updates the state of the search settings expanded flag.
+   * @param $event the new state.
+   */
+  updateSearch($event) {
+    this.isSearchExpanded = $event;
+  }
+
+  /**
+   * Updates the state of the global settings expanded flag.
+   * @param $event the new state.
+   */
+  updateGlobal($event) {
+    this.isGlobalExpanded = $event;
   }
 
   /**
@@ -62,5 +90,45 @@ export class AppComponent implements OnInit {
   close() {
     this.isHeaderHidden = false;
     this.isReadView = false;
+  }
+
+  /**
+   * Scrolls view to the updated element and updates search term.
+   * @param $element the updated element.
+   * @param term the new search term.
+   */
+  updateSearchTerm($element, term) {
+    this.isSearchExpanded = false;
+    this.isGlobalExpanded = false;
+    this.scrollToElement($element, () => this.searchTerm = term);
+  }
+
+  /**
+   * Scrolls view to the updated element and updates global expanded state.
+   * @param $element the updated element.
+   * @param state the new global expanded state.
+   */
+  updateGlobalExpand($element, state) {
+    this.isSearchExpanded = false;
+    this.scrollToElement($element, () => this.isGlobalExpanded = state);
+  }
+
+  /**
+   * Scrolls view to the updated element and updates search expanded state.
+   * @param $element the updated element.
+   * @param state the new search expanded state.
+   */
+  updateSearchExpand($element, state) {
+    this.isGlobalExpanded = false;
+    this.scrollToElement($element, () => this.isSearchExpanded = state);
+  }
+
+  /**
+   * Scrolls to given element.
+   * @param $element the element to scroll to.
+   */
+  private scrollToElement($element, lambda): void {
+    $element.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
+    setTimeout(() => lambda(), 150);
   }
 }
