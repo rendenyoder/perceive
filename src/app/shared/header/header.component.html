@@ -77,7 +77,7 @@
         <table class="versions">
           <tr *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
             <td><span>{{version.name}}</span></td>
-            <td><span>{{version.description}}</span></td>
+            <td><span>{{version.description || 'Not Provided'}}</span></td>
             <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>
           </tr>
         </table>

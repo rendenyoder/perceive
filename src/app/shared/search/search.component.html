@@ -1,28 +1,32 @@
+<!-- Button To Display Off To the Right To Enter Read Mode -->
+<div class="prompt" (click)="displayResults()" [ngClass]="{'prompt-show': hasSelected()}">
+  <span>Open Read View</span>
+</div>
+
 <section>
   <ng-container *ngFor="let version of searchResults.results">
     <ng-container *ngIf="version.results && hasContent(version)">
-      <!-- Version Name -->
-      <div class="version-name">
-        <span>{{version.name}}
-          <span *ngIf="version.description">[{{version.description}}]</span>
-        </span>
-      </div>
+      <div class="result-container shadow">
+        <!-- Version Name -->
+        <div class="version-name">
+          <span>{{version.name}}
+            <span *ngIf="version.description">[{{version.description}}]</span>
+          </span>
+        </div>
 
-      <!-- Search Result Container -->
-      <div class="search-result-container">
         <!-- If Results Contained Verses -->
         <ng-container *ngIf="version.results.verses && version.results.verses.length > 0">
           <ng-container *ngFor="let verse of version.results.verses">
             <!-- Container For Each Verse Result -->
-            <div class="result-content">
+            <div class="result-content" (click)="select(verse, version, false)">
               <!-- Checkbox For Selecting Verse -->
-              <div class="checkbox" (click)="select(verse, version, false)" [ngClass]="{'checkbox-checked': verse.selected}"></div>
+              <div class="checkbox" [ngClass]="{'checkbox-checked': verse.selected}"></div>
               <!-- Name Of The Verse -->
-              <div class="reference" (click)="select(verse, version, false)">
+              <div class="reference">
                 <span>{{verse.reference}}</span>
               </div>
               <!-- Verse Text -->
-              <div class="scripture-styles" (click)="select(verse, version, false)">
+              <div class="scripture-styles">
                 <p class="p">{{verse.text}}</p>
               </div>
             </div>
@@ -67,8 +71,3 @@
     </ng-container>
   </ng-container>
 </section>
-
-<!-- Button To Display Off To the Right To Enter Read Mode -->
-<div class="read-mode-container">
-  <img class="side-arrow" (click)="displayResults()" [ngClass]="{'side-arrow-view': hasSelected()}" src="./assets/img/arrow.png" alt="Read"/>
-</div>

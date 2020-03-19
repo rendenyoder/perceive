@@ -20,7 +20,7 @@
         <img src="./assets/img/not-found.png" alt="No Results Found"/>
       </div>
       <div *ngIf="!hasSearched" class="info">
-        <div>
+        <div class="shadow">
           <ul>
             <!-- Search Help -->
             <li class="title">
@@ -102,10 +102,10 @@
     </div>
 
     <!-- Display Search Results -->
-    <app-search *ngIf="!isReadView" [searchResults]="searchResults" (display)="display($event)"></app-search>
+    <app-search *ngIf="!isReadView && hasSearchResults()" [searchResults]="searchResults" (display)="display($event)"></app-search>
 
     <!-- Display On Of The Read Views -->
-    <div *ngIf="isReadView" class="read-view-container" [ngClass]="{'margin-top': !isHeaderHidden}">
+    <div *ngIf="isReadView" class="read-view-container shadow">
       <!-- Default Settings Shared By All Views -->
       <div class="settings-container">
         <img class="icon" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>

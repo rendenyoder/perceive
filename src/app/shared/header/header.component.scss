@@ -35,9 +35,6 @@ span {
       transition: 300ms;
     }
     .icon:hover {
-      -webkit-transform: translateY(-2px);
-      -ms-transform: translateY(-2px);
-      transform: translateY(-2px);
       opacity: 0.7;
     }
   }
@@ -50,7 +47,6 @@ span {
   Styling For Settings Menu.
  */
 .settings {
-  display: inline-block;
   box-sizing: border-box;
   height: 0;
   width: 100%;
@@ -63,7 +59,7 @@ span {
   transition: height 300ms ease-in-out;
   .settings-table {
     width: 100%;
-    padding: 10px 30px 0 30px;
+    padding-top: 5px;
     .toggle-switch-container {
       display: inline-block;
       min-width: 180px;
@@ -175,7 +171,7 @@ span {
  */
 .search-container {
   display: block;
-  padding: 10px 30px 20px 30px;
+  padding: 10px 20px 10px 20px;
   position: relative;
   .search {
     position: relative;
@@ -187,7 +183,7 @@ span {
     font-size: 22px;
     font-weight: 200;
     outline: none;
-    border-radius: 10px;
+    border-radius: 2px;
     border: none;
   }
   .search:hover {
@@ -195,8 +191,8 @@ span {
   }
   .icon-container {
     margin: -43px -10px auto auto;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
     background: #ffffff;
     position: relative;
     z-index: 100;
@@ -223,8 +219,8 @@ span {
     height: 0;
     overflow: hidden;
     background-color: #ffffff;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
     -webkit-transition: height 400ms ease-in-out;
     -moz-transition: height 400ms ease-in-out;
     -o-transition: height 400ms ease-in-out;
@@ -254,7 +250,7 @@ span {
         .mini-selected {
           display: inline-block;
           background-color: #ff8534;
-          border-radius: 20px;
+          border-radius: 2px;
           padding: 5px;
           margin: 5px;
           span {
@@ -282,7 +278,7 @@ span {
           opacity: 0.5;
         }
         tr:nth-child(odd) {
-          background-color: #eaebeb;
+          background-color: #f5f5f5;
         }
         td {
           padding: 10px;
