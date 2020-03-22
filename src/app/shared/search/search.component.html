@@ -32,8 +32,9 @@
             </div>
           </ng-container>
           <!-- Button To Add More Search Results To Queue -->
-          <div class="plus-results-container" *ngIf="hasMoreResults(version)">
-            <img class="plus-icon" (click)="addResults(version)" src="./assets/img/plus.png" alt="Add Results"/>
+          <div class="plus-results-container" *ngIf="searchResults.results.length > 1 && hasMoreResults(version)" (click)="addResults(version)">
+            <span>Add More Results</span>
+            <img class="plus-icon" src="./assets/img/plus.png" alt="Add Results"/>
           </div>
         </ng-container>
 

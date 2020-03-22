@@ -59,15 +59,19 @@ span {
 }
 
 .plus-results-container {
-  width: 100%;
+  cursor: pointer;
   display: block;
+  padding: 8px;
+  margin-top: 10px;
+  text-align: center;
+  background-color: #f5f5f5;
   .plus-icon {
-    cursor: pointer;
     position: relative;
-    height: 20px;
-    margin: 0 0 0 -10px;
-    left: 50%;
-    right: 50%;
+    height: 15px;
+    margin: 0 0 -2px 5px
+  }
+  span {
+    font-size: 18px;
   }
 }
 

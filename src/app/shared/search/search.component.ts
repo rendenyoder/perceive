@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 
 @Component({
@@ -19,6 +19,24 @@ export class SearchComponent implements OnInit {
   constructor(private bible: BibleService) { }
 
   ngOnInit() { }
+
+  /**
+   * Detects when the window has been scrolled to the bottom and will
+   * load more results if there is only one version being used and there
+   * are more results to fetch.
+   */
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll($event) {
+    if ((document.body.clientHeight + window.scrollY) >= document.body.scrollHeight) {
+      const results = this.searchResults.results;
+      if (results.length === 1) {
+        const version = results[0];
+        if (version.results && this.hasContent(version) && this.hasMoreResults(version)) {
+          this.addResults(version);
+        }
+      }
+    }
+  }
 
   /**
    * Whether or not a version has results.
