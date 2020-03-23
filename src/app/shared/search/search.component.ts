@@ -16,6 +16,8 @@ export class SearchComponent implements OnInit {
 
   selected = {verses: {}, passages: {}};
 
+  private isFetching = false;
+
   constructor(private bible: BibleService) { }
 
   ngOnInit() { }
@@ -27,11 +29,11 @@ export class SearchComponent implements OnInit {
    */
   @HostListener('window:scroll', ['$event'])
   onWindowScroll($event) {
-    if ((document.body.clientHeight + window.scrollY) >= document.body.scrollHeight) {
+    if ((document.body.clientHeight + window.scrollY) + 500 >= document.body.scrollHeight) {
       const results = this.searchResults.results;
       if (results.length === 1) {
         const version = results[0];
-        if (version.results && this.hasContent(version) && this.hasMoreResults(version)) {
+        if (version.results && this.hasContent(version) && this.hasMoreResults(version) && !this.isFetching) {
           this.addResults(version);
         }
       }
@@ -60,11 +62,13 @@ export class SearchComponent implements OnInit {
    */
   addResults(version) {
     if (this.hasMoreResults(version)) {
+      this.isFetching = true;
       const id = version.id;
       const limit = version.results.limit;
       const query = version.results.query;
       version.results.offset += limit;
       this.bible.search(id, query, limit, version.results.offset).subscribe(results => {
+        this.isFetching = false;
         results.data.verses.forEach(res => version.results.verses.push(res));
       });
     }
