@@ -26,6 +26,9 @@ export class HeaderComponent implements OnInit {
   execSearch: EventEmitter<any> = new EventEmitter();
 
   @Output()
+  updateSearchTerm: EventEmitter<any> = new EventEmitter();
+
+  @Output()
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
 
   @Output()
@@ -119,6 +122,7 @@ export class HeaderComponent implements OnInit {
    */
   search() {
     if (this.searchTerm) {
+      this.updateSearchTerm.emit(this.searchTerm);
       this.isGlobalExpanded = false;
       this.isSearchExpanded = false;
       if (this.selectedVersions.length === 0) {

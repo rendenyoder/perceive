@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   isReadView = false;
   isHeaderHidden = false;
   searchResults = {};
+  hasSearchResults = false;
+  versionNames = [];
   modeSettings = { current: 'standard', modes: ['standard', 'column', 'rotate', 'interlinear'] };
   content = {};
   zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
@@ -22,22 +24,16 @@ export class AppComponent implements OnInit {
   ngOnInit() { }
 
   /**
-   * Checks whether any search results are present.
-   */
-  hasSearchResults() {
-    if (this.searchResults['results']) {
-      return this.searchResults['results'].some(item => item.results && (item.results.total || item.results.passages));
-    }
-    return false;
-  }
-
-  /**
    * Sets the current search results from a search event.
    */
   setSearchResults($event) {
     this.hasSearched = true;
     this.isReadView = false;
     this.searchResults = {results: $event};
+    this.hasSearchResults = this.searchResults['results'] && this.searchResults['results'].some(item => {
+      return item.results && (item.results.total || item.results.passages);
+    });
+    this.versionNames = this.searchResults['results'].map(res => res.name);
   }
 
   /**
@@ -69,6 +65,14 @@ export class AppComponent implements OnInit {
   }
 
   /**
+   * Updates the search term.
+   * @param $event the new search term.
+   */
+  updateSearchTerm($event) {
+    this.searchTerm = $event;
+  }
+
+  /**
    * Updates the state of the search settings expanded flag.
    * @param $event the new state.
    */
@@ -97,7 +101,7 @@ export class AppComponent implements OnInit {
    * @param $element the updated element.
    * @param term the new search term.
    */
-  updateSearchTerm($element, term) {
+  scrollSearchTerm($element, term) {
     this.isSearchExpanded = false;
     this.isGlobalExpanded = false;
     this.scrollToElement($element, () => this.searchTerm = term);
@@ -108,7 +112,7 @@ export class AppComponent implements OnInit {
    * @param $element the updated element.
    * @param state the new global expanded state.
    */
-  updateGlobalExpand($element, state) {
+  scrollGlobalExpand($element, state) {
     this.isSearchExpanded = false;
     this.scrollToElement($element, () => this.isGlobalExpanded = state);
   }
@@ -118,7 +122,7 @@ export class AppComponent implements OnInit {
    * @param $element the updated element.
    * @param state the new search expanded state.
    */
-  updateSearchExpand($element, state) {
+  scrollSearchExpand($element, state) {
     this.isGlobalExpanded = false;
     this.scrollToElement($element, () => this.isSearchExpanded = state);
   }
