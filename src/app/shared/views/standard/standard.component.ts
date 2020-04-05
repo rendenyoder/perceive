@@ -14,10 +14,13 @@ export class StandardComponent implements OnInit {
   zoom = 1;
 
   isAlphabetized = false;
+  sortedContent = {verses: [], passages: []};
 
   constructor(private cdr: ChangeDetectorRef) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.sortContent();
+  }
 
   /**
    * Checks if a given passage or verse group has content.
@@ -30,6 +33,7 @@ export class StandardComponent implements OnInit {
    */
   toggleAlphabetical() {
     this.isAlphabetized = !this.isAlphabetized;
+    this.sortContent();
     this.cdr.detectChanges();
   }
 
@@ -64,5 +68,13 @@ export class StandardComponent implements OnInit {
       }
     }
     return sorted;
+  }
+
+  /**
+   * Sorts verses and passages.
+   */
+  sortContent() {
+    this.sortedContent.verses = this.sorted(this.content.verses);
+    this.sortedContent.passages = this.sorted(this.content.passages);
   }
 }

@@ -16,7 +16,7 @@
   <!-- View For Verses -->
   <ng-container *ngIf="hasContent(content.verses)">
     <div class="content-container">
-      <ng-container *ngFor="let group of sorted(content.verses)">
+      <ng-container *ngFor="let group of sortedContent.verses">
         <!-- Table For Each Passage Group -->
         <table class="content-table">
           <!-- Row To Container Reference, Name, And Content -->
@@ -46,7 +46,7 @@
   <!-- View For Passages -->
   <ng-container *ngIf="hasContent(content.passages)">
     <div class="content-container">
-      <ng-container *ngFor="let group of sorted(content.passages)">
+      <ng-container *ngFor="let group of sortedContent.passages">
         <!-- Table For Each Passage Group -->
         <table class="content-table">
           <!-- Row To Container Reference, Name, And Content -->
