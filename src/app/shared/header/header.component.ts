@@ -122,7 +122,6 @@ export class HeaderComponent implements OnInit {
    */
   search() {
     if (this.searchTerm) {
-      this.updateSearchTerm.emit(this.searchTerm);
       this.isGlobalExpanded = false;
       this.isSearchExpanded = false;
       if (this.selectedVersions.length === 0) {
@@ -138,7 +137,12 @@ export class HeaderComponent implements OnInit {
         );
         calls.push(call);
       });
-      forkJoin(calls).subscribe(_ => this.execSearch.emit(this.selectedVersions));
+      forkJoin(calls).subscribe(_ => {
+        this.updateSearchTerm.emit(this.searchTerm);
+        this.execSearch.emit(this.selectedVersions);
+      }, err => {
+        this.updateSearchTerm.emit(this.searchTerm);
+      });
     }
   }
 
