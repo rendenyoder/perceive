@@ -6,6 +6,13 @@ span {
   font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+.transition {
+  -webkit-transition: 300ms;
+  -moz-transition: 300ms;
+  -o-transition: 300ms;
+  transition: 300ms;
+}
+
 /*
   Styling For Upper Navigation Bar Items (Logo & Menu).
  */
@@ -29,10 +36,6 @@ span {
       height: 15px;
       width: auto;
       cursor: pointer;
-      -webkit-transition: 300ms;
-      -moz-transition: 300ms;
-      -o-transition: 300ms;
-      transition: 300ms;
     }
     .icon:hover {
       opacity: 0.7;
@@ -77,10 +80,6 @@ span {
       max-width: 100px;
       text-align: center;
       cursor: pointer;
-      -webkit-transition: 300ms;
-      -moz-transition: 300ms;
-      -o-transition: 300ms;
-      transition: 300ms;
       .icon {
         height: 50px;
         vertical-align: middle;
@@ -117,13 +116,10 @@ span {
     right: 0;
     bottom: 0;
     background-color: #626262;
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -o-transition: 300ms;
-    transition: 300ms;
   }
 
   .slider:before {
+    @extend .transition;
     position: absolute;
     content: "";
     height: 18px;
@@ -131,10 +127,6 @@ span {
     left: 4px;
     bottom: 4px;
     background-color: #ffffff;
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -o-transition: 300ms;
-    transition: 300ms;
   }
 
   input:checked + .slider {
@@ -203,6 +195,9 @@ span {
       margin: 8px 20px auto 5px;
       cursor: pointer;
     }
+    .magnifying-glass:hover {
+      opacity: 0.7;
+    }
     .divider {
       height: 25px;
       display: inline-block;
@@ -212,6 +207,9 @@ span {
       height: 25px;
       margin: 8px 20px auto 20px;
       cursor: pointer;
+    }
+    .gear:hover {
+      opacity: 0.7;
     }
   }
   .search-settings-container {
@@ -264,10 +262,6 @@ span {
         width: 100%;
         tr {
           cursor: pointer;
-          -webkit-transition: 300ms;
-          -moz-transition: 300ms;
-          -o-transition: 300ms;
-          transition: 300ms;
           span {
             font-size: 12px;
             font-weight: 300;

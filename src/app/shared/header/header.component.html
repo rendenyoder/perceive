@@ -9,7 +9,7 @@
     </div>
     <!-- Settings Menu Button -->
     <div class="menu">
-      <input class="icon" (click)="updateGlobal(!isGlobalExpanded)" type="image" src="./assets/img/menu.png" alt="menu"/>
+      <input class="icon transition" (click)="updateGlobal(!isGlobalExpanded)" type="image" src="./assets/img/menu.png" alt="menu"/>
     </div>
   </div>
 
@@ -37,7 +37,7 @@
         </td>
         <!-- Read View Mode Button -->
         <ng-container *ngFor="let mode of modeSettings.modes">
-          <td class="read-view-container" [ngClass]="{'read-view-selected': modeSettings.current === mode}" (click)="setMode(mode)" >
+          <td class="read-view-container transition" [ngClass]="{'read-view-selected': modeSettings.current === mode}" (click)="setMode(mode)" >
             <img class="icon" src="./assets/img/{{mode}}-view.png" alt="logo"/>
             <span class="name">{{mode}}</span>
           </td>
@@ -53,11 +53,11 @@
     <!-- Container For Dropdown -->
     <div class="icon-container">
       <!-- Execute Search Icon -->
-      <img class="magnifying-glass" (click)="search()" src="./assets/img/search.png" alt="magnifying-glass"/>
+      <img class="magnifying-glass transition" (click)="search()" src="./assets/img/search.png" alt="magnifying-glass"/>
       <!-- Divider -->
       <div class="divider"></div>
       <!-- View Search Settings Icon -->
-      <img class="gear" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/gear.png" alt="gear"/>
+      <img class="gear transition" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/gear.png" alt="gear"/>
     </div>
     <!-- Search Settings Container -->
     <div class="search-settings-container shadow" [ngClass]="{'search-settings-container-open': isSearchExpanded}">
@@ -75,7 +75,7 @@
         </div>
         <!-- Available Version Row -->
         <table class="versions">
-          <tr *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
+          <tr class="transition" *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
             <td><span>{{version.name}}</span></td>
             <td><span>{{version.description || 'Not Provided'}}</span></td>
             <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>
