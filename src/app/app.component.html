@@ -84,17 +84,8 @@
               </p>
             </li>
             <li class="view-grid">
-              <div>
-                <img src="./assets/img/standard-view.png" alt="Standard"/>
-              </div>
-              <div>
-                <img src="./assets/img/column-view.png" alt="Column"/>
-              </div>
-              <div>
-                <img src="./assets/img/rotate-view.png" alt="Rotate"/>
-              </div>
-              <div>
-                <img src="./assets/img/interlinear-view.png" alt="Interlinear"/>
+              <div *ngFor="let mode of modeSettings.modes">
+                <img src="./assets/img/{{mode}}-view.png" [alt]="mode"/>
               </div>
               <p>Standard</p>
               <p>Column</p>
