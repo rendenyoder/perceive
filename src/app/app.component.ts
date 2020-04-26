@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { settings } from './shared/model/mode';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild('appHeader', {static: false}) appHeader;
+
+  @ViewChild('appSearch', {static: false}) appSearch;
+
   searchTerm = '';
   isSearchExpanded = false;
   isGlobalExpanded = false;
@@ -15,11 +21,11 @@ export class AppComponent implements OnInit {
   searchResults = {};
   hasSearchResults = false;
   versionNames = [];
-  modeSettings = { current: 'standard', modes: ['standard', 'column', 'rotate', 'interlinear'] };
+  modeSettings = settings;
   content = {};
   zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
-  constructor() { }
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() { }
 
@@ -44,6 +50,47 @@ export class AppComponent implements OnInit {
     this.isHeaderHidden = true;
     this.isReadView = true;
     this.content = $event;
+  }
+
+  /**
+   * Opens content in the specified read view.
+   * @param modeId The view mode to open content in.
+   * @param query The search query to use.
+   * @param versions The version to search from.
+   * @param selected The selected passages or verses. Undefined will be interpreted as select all.
+   * @param limit The number of results to fetch.
+   * @param offset The offset of results.
+   */
+  openContent(modeId, query, versions, selected?, limit?, offset?) {
+    this.modeSettings.current = modeId;
+    this.searchTerm = query;
+    if (versions) {
+      this.appHeader.selectVersions(...versions);
+    }
+    this.appHeader.doSearch(this.searchTerm, limit, offset).subscribe(res => {
+      this.setSearchResults(res);
+      // TODO: Really should not be calling detectChanges()...
+      this.changeDetector.detectChanges();
+      if (this.appSearch) {
+        res.forEach(version => {
+          if (version.results && version.results.verses) {
+            version.results.verses.forEach(v => {
+              if (!selected || selected.includes(v.id)) {
+                this.appSearch.select(v, version, false);
+              }
+            });
+          }
+          if (version.results && version.results.passages) {
+            version.results.passages.forEach(p => {
+              if (!selected || selected.includes(p.id)) {
+                this.appSearch.select(p, version, true);
+              }
+            });
+          }
+        });
+        this.appSearch.displayResults();
+      }
+    });
   }
 
   /**

@@ -37,9 +37,9 @@
         </td>
         <!-- Read View Mode Button -->
         <ng-container *ngFor="let mode of modeSettings.modes">
-          <td class="read-view-container transition" [ngClass]="{'read-view-selected': modeSettings.current === mode}" (click)="setMode(mode)" >
-            <img class="icon" src="./assets/img/{{mode}}-view.png" [alt]="mode"/>
-            <span class="name">{{mode}}</span>
+          <td class="read-view-container transition" [ngClass]="{'read-view-selected': modeSettings.current === mode.id}" (click)="setMode(mode.id)" >
+            <img class="icon" [src]="mode.icon" [alt]="mode"/>
+            <span class="name">{{mode.display}}</span>
           </td>
         </ng-container>
       </tr>

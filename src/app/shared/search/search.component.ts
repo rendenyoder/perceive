@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
       const results = this.searchResults.results;
       if (results.length === 1) {
         const version = results[0];
-        if (version.results && this.hasContent(version) && this.hasMoreResults(version) && !this.isFetching) {
+        if (version.results && this.hasContent(version) && version.results.verses && this.hasMoreResults(version) && !this.isFetching) {
           this.addResults(version);
         }
       }

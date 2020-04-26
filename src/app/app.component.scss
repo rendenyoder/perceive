@@ -116,15 +116,16 @@
         p {
           text-align: center;
         }
+        .title {
+          color: #cc5200;
+          font-style: italic;
+          i {
+            cursor: pointer;
+          }
+        }
         .explanation {
           font-size: 18px;
           padding: 0 20px 0 20px;
-        }
-        .example {
-          color: #cc5200;
-          font-size: 18px;
-          margin-top: 0;
-          margin-bottom: 40px;
         }
       }
     }

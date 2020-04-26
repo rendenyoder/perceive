@@ -61,17 +61,8 @@ export class HeaderComponent implements OnInit {
       // set filtered version list to full list
       this.filteredVersions = this.versions;
       // set selected version as default
-      this.setDefaultVersion();
+      this.selectVersions(this.defaultVersion);
     });
-  }
-
-  /**
-   * Sets the default selected version.
-   */
-  private setDefaultVersion() {
-    const kjv = this.versions.find(version => version.id === this.defaultVersion);
-    kjv.selected = true;
-    this.selectedVersions.push(kjv);
   }
 
   /**
@@ -79,11 +70,7 @@ export class HeaderComponent implements OnInit {
    * @param selected The selected mode.
    */
   setMode(selected: string) {
-    if (this.modeSettings.modes.includes(selected)) {
-      this.modeSettings.current = selected;
-    } else {
-      this.modeSettings.current = this.modeSettings.modes[0];
-    }
+    this.modeSettings.current = selected;
   }
 
   /**
@@ -118,6 +105,18 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
+   * Selects the version(s) passed in.
+   * @param versions The version(s) being selected.
+   */
+  selectVersions(...versions) {
+    const selected = this.versions.filter(v => versions.includes(v.id) && !v.selected);
+    for (const version of selected) {
+      version.selected = true;
+      this.selectedVersions.push(version);
+    }
+  }
+
+  /**
    * Executes search and emits search results.
    */
   search() {
@@ -125,25 +124,35 @@ export class HeaderComponent implements OnInit {
       this.isGlobalExpanded = false;
       this.isSearchExpanded = false;
       if (this.selectedVersions.length === 0) {
-        this.setDefaultVersion();
+        this.selectVersions(this.defaultVersion);
       }
-      const calls = [];
-      this.selectedVersions.forEach(version => {
-        const id = version.id;
-        const call = this.bible.search(id, this.searchTerm).pipe(
-          map((results) => {
-            version.results = results.data;
-          })
-        );
-        calls.push(call);
-      });
-      forkJoin(calls).subscribe(_ => {
+      this.doSearch(this.searchTerm).subscribe(_ => {
         this.updateSearchTerm.emit(this.searchTerm);
         this.execSearch.emit(this.selectedVersions);
       }, err => {
         this.updateSearchTerm.emit(this.searchTerm);
       });
     }
+  }
+
+  /**
+   * Returns subscribable for executing a search with a given term.
+   * @param term The search term.
+   * @param limit The number of results to fetch.
+   * @param offset The offset of results.
+   */
+  doSearch(term, limit?, offset?) {
+    const calls = [];
+    this.selectedVersions.forEach(version => {
+      const id = version.id;
+      const call = this.bible.search(id, term, limit, offset).pipe(
+        map((results) => {
+          version.results = results.data;
+        })
+      );
+      calls.push(call);
+    });
+    return forkJoin(calls).pipe(map(_ => this.selectedVersions));
   }
 
   /**

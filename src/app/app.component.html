@@ -1,7 +1,7 @@
 <div #header class="perceive">
   <div class="header" [ngClass]="{'hidden': isHeaderHidden}">
     <!-- Header Containing Settings Menu And Search Bar -->
-    <app-header
+    <app-header #appHeader
       [searchTerm]="searchTerm"
       [modeSettings]="modeSettings"
       [isSearchExpanded]="isSearchExpanded"
@@ -85,28 +85,10 @@
             </li>
             <li class="view-grid">
               <div *ngFor="let mode of modeSettings.modes">
-                <img src="./assets/img/{{mode}}-view.png" [alt]="mode"/>
+                <img [src]="mode.icon" [alt]="mode"/>
+                <p class="title" (click)="openContent(mode.id, mode.query, mode.versions)"><i>{{mode.display}}</i></p>
+                <p class="explanation">{{mode.description}}</p>
               </div>
-              <p>Standard</p>
-              <p>Column</p>
-              <p>Rotate</p>
-              <p>Interlinear</p>
-              <p class="explanation">
-                The standard view displays verses, passages and chapters in a vertical orientation grouped by version
-              </p>
-              <p class="explanation">
-                The column view displays verses, passages and chapters grouped by their book name, chapter and verse side by side
-              </p>
-              <p class="explanation">
-                The rotate view displays the first selected verse, passage or chapter and rotates through each selected verse, passage or chapter
-              </p>
-              <p class="explanation">
-                The interlinear view takes verses, passages and chapters grouped by their book name, chapter and verse and interweaves them line by line
-              </p>
-              <p class="example">example</p>
-              <p class="example">example</p>
-              <p class="example">example</p>
-              <p class="example">example</p>
             </li>
           </ul>
         </div>
@@ -114,7 +96,7 @@
     </div>
 
     <!-- Display Search Results -->
-    <app-search *ngIf="!isReadView && hasSearchResults" [searchResults]="searchResults" (display)="display($event)"></app-search>
+    <app-search #appSearch *ngIf="!isReadView && hasSearchResults" [searchResults]="searchResults" (display)="display($event)"></app-search>
 
     <!-- Display On Of The Read Views -->
     <div *ngIf="isReadView" class="read-view-container shadow">
