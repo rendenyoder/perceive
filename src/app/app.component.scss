@@ -27,9 +27,6 @@
     height: 100%;
     padding: 10px;
     box-sizing: border-box;
-    span {
-      font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
-    }
     .not-found {
       height: 100%;
       border-radius: 2px;
@@ -45,7 +42,6 @@
         i {
           color: #cc5200;
           padding: 0 2px;
-          font-size: 18px;
         }
       }
       .help {
@@ -61,7 +57,6 @@
             @extend span;
             padding: 5px;
             list-style-type: none;
-            font-size: 18px;
             line-height: 30px;
           }
         }
@@ -85,21 +80,14 @@
       margin:0;
       padding: 10px 0 0 0;
       text-align: left;
-      li {
-        font: 200 22px Helvetica Neue, Helvetica, Arial, sans-serif;
-      }
       .title {
         padding: 0 20px 0 20px;
       }
       .help-info {
-        font-size: 18px;
         padding: 0 40px 0 40px;
-        span {
+        i {
+          color: #cc5200;
           cursor: pointer;
-          i {
-            color: #cc5200;
-            text-decoration: underline;
-          }
         }
       }
       .view-grid {
@@ -124,7 +112,6 @@
           }
         }
         .explanation {
-          font-size: 18px;
           padding: 0 20px 0 20px;
         }
       }
@@ -146,10 +133,6 @@
       cursor: pointer;
       padding: 5px;
       opacity: 0.7;
-      -webkit-transition: 300ms;
-      -moz-transition: 300ms;
-      -o-transition: 300ms;
-      transition: 300ms;
     }
     .icon:hover {
       opacity: 1.0;

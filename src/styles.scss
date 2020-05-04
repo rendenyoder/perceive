@@ -9,7 +9,42 @@ html, body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+.std-font {
+  @extend .std-font-size;
+  color: #292929;
+  font-weight: 200;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.xs-font-size {
+  font-size: 0.8rem;
+}
+
+.std-font-size {
+  font-size: 1.0rem;
+}
+
+.md-font-size {
+  font-size: 1.2rem;
+}
+
+.lg-font-size {
+  font-size: 1.4rem;
+}
+
+.xl-font-size {
+  font-size: 1.6rem;
+}
+
+.std-transition {
+  -webkit-transition: 300ms;
+  -moz-transition: 300ms;
+  -o-transition: 300ms;
+  transition: 300ms; 
+}
+
 .checkbox {
+  @extend .std-transition;
   cursor: pointer;
   float: right;
   width: 15px;
@@ -17,10 +52,6 @@ html, body {
   border-radius: 2px;
   border: 1px solid #626262;
   background-color: transparent;
-  -webkit-transition: 300ms;
-  -moz-transition: 300ms;
-  -o-transition: 300ms;
-  transition: 300ms;
 }
 
 .checkbox-checked {
