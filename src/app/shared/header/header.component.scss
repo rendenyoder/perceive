@@ -2,17 +2,6 @@ section {
   display: block;
 }
 
-span {
-  font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-.transition {
-  -webkit-transition: 300ms;
-  -moz-transition: 300ms;
-  -o-transition: 300ms;
-  transition: 300ms;
-}
-
 /*
   Styling For Upper Navigation Bar Items (Logo & Menu).
  */
@@ -56,10 +45,6 @@ span {
   overflow: hidden;
   padding-right: 20px;
   padding-left: 20px;
-  -webkit-transition: height 300ms ease-in-out;
-  -moz-transition: height 300ms ease-in-out;
-  -o-transition: height 300ms ease-in-out;
-  transition: height 300ms ease-in-out;
   .settings-table {
     width: 100%;
     padding-top: 5px;
@@ -119,7 +104,10 @@ span {
   }
 
   .slider:before {
-    @extend .transition;
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
     position: absolute;
     content: "";
     height: 18px;
@@ -172,8 +160,6 @@ span {
     padding: 10px 120px 10px 10px;
     width: calc(100% - 110px);
     height: 25px;
-    font-size: 22px;
-    font-weight: 200;
     outline: none;
     border-radius: 2px;
     border: none;
@@ -219,28 +205,22 @@ span {
     background-color: #ffffff;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-    -webkit-transition: height 400ms ease-in-out;
-    -moz-transition: height 400ms ease-in-out;
-    -o-transition: height 400ms ease-in-out;
-    transition: height 400ms ease-in-out;
     .version-search-container {
       width: 100%;
-      padding: 20px 20px 0 20px;
+      padding: 10px 12px 0 12px;
       box-sizing: border-box;
       .version-search {
         margin-left: -5px;
         padding: 5px;
         width: 100%;
-        font-size: 16px;
-        font-weight: 200;
         outline: none;
         border: none;
         border-bottom: 1px solid #626262;
       }
     }
     .versions-container {
-      height: 240px;
-      padding: 5px 20px 0 20px;
+      height: 255px;
+      padding: 0 5px;
       overflow: scroll;
       .miniview {
         display: inline-block;
@@ -253,29 +233,27 @@ span {
           margin: 5px;
           span {
             cursor: pointer;
-            font-size: 14px;
             text-transform: uppercase;
           }
         }
       }
       .versions {
         width: 100%;
+        line-height: 1.3rem;
         tr {
           cursor: pointer;
           span {
-            font-size: 12px;
-            font-weight: 300;
             text-transform: uppercase;
           }
         }
         tr:hover {
-          opacity: 0.5;
+          opacity: 0.7;
         }
         tr:nth-child(odd) {
           background-color: #f5f5f5;
         }
         td {
-          padding: 10px;
+          padding: 8px;
         }
         .selected {
           background-color: #ff8534 !important;
