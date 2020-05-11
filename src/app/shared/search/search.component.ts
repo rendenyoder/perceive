@@ -75,6 +75,16 @@ export class SearchComponent implements OnInit {
   }
 
   /**
+   * Toggles the expanded state of a passage.
+   * @param $event The click event.
+   * @param passage The given passage.
+   */
+  toggleExpand($event, passage) {
+    passage.expanded = !passage.expanded;
+    $event.stopPropagation();
+  }
+
+  /**
    * Checks whether the user has selected any content to view.
    */
   hasSelected() {

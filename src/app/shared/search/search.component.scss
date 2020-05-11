@@ -4,14 +4,9 @@ section {
   box-sizing: border-box;
 }
 
-span {
-  font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
 .version-name {
   text-transform: uppercase;
   padding: 5px 5px 15px 5px;
-  font-size: 22px;
 }
 
 .result-content {
@@ -28,9 +23,6 @@ span {
   }
   .reference {
     padding-bottom: 5px;
-    span {
-      font-weight: 300;
-    }
   }
   .passage-container {
     overflow: hidden;
@@ -41,10 +33,9 @@ span {
     max-height: unset;
   }
   .copyright {
-    padding-top: 10px;
+    padding-top: 20px;
     span {
       text-transform: uppercase;
-      font-size: 10px;
     }
   }
 }
@@ -69,9 +60,6 @@ span {
     position: relative;
     height: 15px;
     margin: 0 0 -2px 5px
-  }
-  span {
-    font-size: 18px;
   }
 }
 

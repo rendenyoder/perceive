@@ -1,6 +1,6 @@
 <!-- Button To Display Off To the Right To Enter Read Mode -->
-<div class="prompt" (click)="displayResults()" [ngClass]="{'prompt-show': hasSelected()}">
-  <span>Open Read View</span>
+<div class="prompt std-font" (click)="displayResults()" [ngClass]="{'prompt-show': hasSelected()}">
+  <span class="md-font-size">Open Read View</span>
 </div>
 
 <section>
@@ -8,8 +8,8 @@
     <ng-container *ngIf="version.results && hasContent(version)">
       <div class="result-container shadow">
         <!-- Version Name -->
-        <div class="version-name">
-          <span>{{version.name}}
+        <div class="version-name std-font">
+          <span class="md-font-size">{{version.name}}
             <span *ngIf="version.description">[{{version.description}}]</span>
           </span>
         </div>
@@ -22,8 +22,8 @@
               <!-- Checkbox For Selecting Verse -->
               <div class="checkbox" [ngClass]="{'checkbox-checked': verse.selected}"></div>
               <!-- Name Of The Verse -->
-              <div class="reference">
-                <span>{{verse.reference}}</span>
+              <div class="reference std-font">
+                <span class="md-font-size">{{verse.reference}}</span>
               </div>
               <!-- Verse Text -->
               <div class="scripture-styles">
@@ -32,7 +32,7 @@
             </div>
           </ng-container>
           <!-- Button To Add More Search Results To Queue -->
-          <div class="plus-results-container" *ngIf="hasMoreResults(version)" (click)="addResults(version)">
+          <div class="plus-results-container std-font" *ngIf="hasMoreResults(version)" (click)="addResults(version)">
             <span>Add More Results</span>
             <img class="plus-icon" src="./assets/img/plus.png" alt="Add Results"/>
           </div>
@@ -42,28 +42,28 @@
         <ng-container *ngIf="version.results.passages && version.results.passages.length > 0">
           <ng-container *ngFor="let passage of version.results.passages">
             <!-- Container For Each Passage Result -->
-            <div class="result-content">
+            <div class="result-content" (click)="select(passage, version, true)">
               <!-- Checkbox For Selecting Verse -->
-              <div class="checkbox" (click)="select(passage, version, true)" [ngClass]="{'checkbox-checked': passage.selected}"></div>
+              <div class="checkbox" [ngClass]="{'checkbox-checked': passage.selected}"></div>
               <!-- Icon To Expand Passage Container -->
               <ng-container *ngIf="!passage.expanded">
-                <img class="passage-expand" (click)="passage.expanded = true" src="./assets/img/plus.png" alt="Expand"/>
+                <img class="passage-expand" (click)="toggleExpand($event, passage)" src="./assets/img/plus.png" alt="Expand"/>
               </ng-container>
               <!-- Icon To Shrink Passage Container -->
               <ng-container *ngIf="passage.expanded">
-                <img class="passage-expand" (click)="passage.expanded = false" src="./assets/img/minus.png" alt="Shrink"/>
+                <img class="passage-expand" (click)="toggleExpand($event, passage)" src="./assets/img/minus.png" alt="Shrink"/>
               </ng-container>
               <!-- Name Of The Passage -->
-              <div class="reference" (click)="select(passage, version, true)">
-                <span>{{passage.reference}}</span>
+              <div class="reference std-font">
+                <span class="md-font-size">{{passage.reference}}</span>
               </div>
               <!-- Passage Content -->
-              <div class="passage-container" (click)="select(passage, version, true)" [ngClass]="{'passage-container-expanded': passage.expanded}">
+              <div class="passage-container" [ngClass]="{'passage-container-expanded': passage.expanded}">
                 <div class="scripture-styles" [innerHTML]="passage.content"></div>
               </div>
               <!-- Copyright Content -->
-              <div class="copyright" *ngIf="passage.expanded">
-                <span>{{passage.copyright}}</span>
+              <div class="copyright std-font" *ngIf="passage.expanded">
+                <span class="xs-font-size">{{passage.copyright}}</span>
               </div>
             </div>
           </ng-container>
