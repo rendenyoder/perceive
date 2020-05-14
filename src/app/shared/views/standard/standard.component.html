@@ -3,7 +3,7 @@
   <table class="settings-table">
     <tr class="alphabetize-row">
       <td (click)="toggleAlphabetical()">
-        <div class="alphabetize"><span>Alphabetize</span></div>
+        <div class="alphabetize std-transition std-font md-font-size">Alphabetize</div>
       </td>
       <td (click)="toggleAlphabetical()">
         <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
@@ -23,12 +23,12 @@
           <ng-container *ngFor="let verse of group">
             <!-- Verse Title -->
             <tr>
-              <td>
+              <td class="std-font">
                 <div class="content-version">
                   <span>{{verse.versionInfo.name}}</span>&nbsp;
                   <span *ngIf="verse.versionInfo.description">[{{verse.versionInfo.description}}]</span>
                 </div>
-                <span class="content-reference">{{verse.content.reference}}</span>
+                <span class="md-font-size">{{verse.content.reference}}</span>
               </td>
             </tr>
             <!-- Verse Content -->
@@ -53,12 +53,12 @@
           <ng-container *ngFor="let passage of group">
             <!-- Passage Title -->
             <tr>
-              <td>
+              <td class="std-font">
                 <div class="content-version">
                   <span>{{passage.versionInfo.name}}</span>&nbsp;
                   <span *ngIf="passage.versionInfo.description">[{{passage.versionInfo.description}}]</span>
                 </div>
-                <span class="content-reference">{{passage.content.reference}}</span>
+                <span class="md-font-size">{{passage.content.reference}}</span>
               </td>
             </tr>
             <!-- Passage Content -->

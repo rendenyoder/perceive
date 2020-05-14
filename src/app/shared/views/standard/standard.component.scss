@@ -11,10 +11,6 @@
     .alphabetize {
       padding: 0 5px 0 8px;
       opacity: 0.7;
-      -webkit-transition: 300ms;
-      -moz-transition: 300ms;
-      -o-transition: 300ms;
-      transition: 300ms;
     }
     .checkbox {
       margin-top: 3px;
@@ -27,21 +23,13 @@ section {
   box-sizing: border-box;
 }
 
-span {
-  font: 200 20px Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
 .content-container {
   .content-table {
     width: 100%;
     padding: 0 10px 0 10px;
-    .content-reference {
-      font-weight: 400 !important;
-    }
     .content-version {
-      padding-bottom: 5px;
+      padding: 10px 0;
       span {
-        font-size: 14px;
         text-transform: uppercase;
       }
     }
