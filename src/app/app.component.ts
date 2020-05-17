@@ -35,11 +35,13 @@ export class AppComponent implements OnInit {
   setSearchResults($event) {
     this.hasSearched = true;
     this.isReadView = false;
-    this.searchResults = {results: $event};
-    this.hasSearchResults = this.searchResults['results'] && this.searchResults['results'].some(item => {
-      return item.results && (item.results.total || item.results.passages);
-    });
-    this.versionNames = this.searchResults['results'].map(res => res.name);
+    this.searchResults = {results: Array.from($event)};
+    if (this.searchResults['results'] && this.searchResults['results'].length > 0) {
+      this.hasSearchResults = this.searchResults['results'].some(item => {
+        return item.results && (item.results.total || item.results.passages);
+      });
+      this.versionNames = this.searchResults['results'].map(res => res.name);
+    }
   }
 
   /**

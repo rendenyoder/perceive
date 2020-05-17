@@ -68,7 +68,7 @@
       <!-- Version List -->
       <div class="versions-container">
         <!-- Selected Versions Row -->
-        <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.length > 0">
+        <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.size > 0">
           <div class="mini-selected sm-font-size" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
             <span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
           </div>

@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   useCookies = true;
 
   defaultVersion = 'de4e12af7f28f599-02';
-  selectedVersions = [];
+  selectedVersions = new Set<any>();
   versions = [];
   filteredVersions = [];
   versionSearchTerm = '';
@@ -79,13 +79,11 @@ export class HeaderComponent implements OnInit {
    */
   toggleVersion(version) {
     if (version.selected) {
-      this.selectedVersions = this.selectedVersions.filter(selected => {
-        return selected.id !== version.id;
-      });
+      this.selectedVersions.delete(version);
       version.selected = false;
       version.results = undefined;
     } else {
-      this.selectedVersions.push(version);
+      this.selectedVersions.add(version);
       version.selected = true;
     }
   }
@@ -112,7 +110,7 @@ export class HeaderComponent implements OnInit {
     const selected = this.versions.filter(v => versions.includes(v.id) && !v.selected);
     for (const version of selected) {
       version.selected = true;
-      this.selectedVersions.push(version);
+      this.selectedVersions.add(version);
     }
   }
 
@@ -123,7 +121,7 @@ export class HeaderComponent implements OnInit {
     if (this.searchTerm) {
       this.isGlobalExpanded = false;
       this.isSearchExpanded = false;
-      if (this.selectedVersions.length === 0) {
+      if (this.selectedVersions.size === 0) {
         this.selectVersions(this.defaultVersion);
       }
       this.doSearch(this.searchTerm).subscribe(_ => {
