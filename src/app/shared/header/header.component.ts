@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit {
    * @param version The version object that has been selected.
    */
   toggleVersion(version) {
-    if (version.selected) {
+    if (version.selected && this.selectedVersions.size > 1) {
       this.selectedVersions.delete(version);
       version.selected = false;
       version.results = undefined;
