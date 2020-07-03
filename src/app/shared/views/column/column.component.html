@@ -1,0 +1,59 @@
+<!-- Container For Settings Pertaining To Viewer -->
+<div class="settings-container">
+  <table class="settings-table">
+    <tr class="alphabetize-row">
+      <td (click)="toggleAlphabetical()">
+        <div class="alphabetize std-transition std-font md-font-size">Alphabetize</div>
+      </td>
+      <td (click)="toggleAlphabetical()">
+        <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<section [style.zoom]="zoom">
+  <!-- View For Verses -->
+  <ng-container *ngIf="hasContent(content.verses)">
+    <div class="content-container">
+      <div class="scripture-group" *ngFor="let group of sortedContent.verses">
+        <ng-container *ngFor="let verse of group">
+          <div class="scripture-container" [ngStyle]="{'width': 100/group.length + '%' }">
+            <div class="version std-font">
+              <span class="title">
+                <span>{{verse.versionInfo.name}}</span>&nbsp;
+                <span *ngIf="verse.versionInfo.description">[{{verse.versionInfo.description}}]</span>
+              </span>
+              <div class="md-font-size">{{verse.content.reference}}</div>
+            </div>
+            <div class="scripture-styles content">
+              <p class="p">{{verse.content.text}}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- View For Passages -->
+  <ng-container *ngIf="hasContent(content.passages)">
+    <div #passageContent class="content-container">
+      <div #passageGroup>
+        <div class="scripture-group" *ngFor="let group of sortedContent.passages">
+          <ng-container *ngFor="let passage of group;">
+            <div class="scripture-container" [ngStyle]="{'width': 100/group.length + '%'}">
+              <div class="version std-font">
+                <span class="title">
+                  <span>{{passage.versionInfo.name}}</span>&nbsp;
+                  <span *ngIf="passage.versionInfo.description">[{{passage.versionInfo.description}}]</span>
+                </span>
+                <div class="md-font-size">{{passage.content.reference}}</div>
+              </div>
+              <div class="scripture-styles content" [innerHTML]="passage.content.content"></div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

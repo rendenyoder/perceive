@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { BibleService } from './shared/services/bible.service';
 import { SearchComponent } from './shared/search/search.component';
 import { StandardComponent } from './shared/views/standard/standard.component';
+import { ColumnComponent } from './shared/views/column/column.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SearchComponent,
-    StandardComponent
+    StandardComponent,
+    ColumnComponent
   ],
   imports: [
     BrowserModule,

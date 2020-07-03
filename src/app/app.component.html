@@ -108,6 +108,8 @@
       </div>
       <!-- Standard View -->
       <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content" [zoom]="zoom.factor"></app-standard-view>
+      <!-- Column View -->
+      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content" [zoom]="zoom.factor"></app-column-view>
     </div>
   </div>
 </div>

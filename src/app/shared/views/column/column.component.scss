@@ -1,0 +1,51 @@
+.settings-container {
+  cursor: pointer;
+  display: inline-block;
+  .settings-table {
+    margin: 2px;
+    .alphabetize-row:hover {
+      td .alphabetize {
+        opacity: 1.0;
+      }
+    }
+    .alphabetize {
+      padding: 0 5px 0 8px;
+      opacity: 0.7;
+    }
+    .checkbox {
+      margin-top: 3px;
+    }
+  }
+}
+
+section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.content-container {
+  width: 100%;
+  padding: 3px;
+  .scripture-group {
+    position: relative;
+    .scripture-container {
+      position: relative;
+      display: inline-grid;
+      box-sizing: border-box;
+      padding: 0 10px 0 10px;
+      .version {
+        padding: 10px 0 5px 0;
+        span {
+          text-transform: uppercase;
+        }
+        div {
+          padding-top: 10px;
+        }
+      }
+      .content {
+        padding: 10px;
+        text-align: left;
+      }
+    }
+  }
+}
