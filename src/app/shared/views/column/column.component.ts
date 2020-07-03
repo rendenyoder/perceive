@@ -24,12 +24,12 @@ export class ColumnComponent extends ViewComponent implements OnInit, AfterViewI
   }
 
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
+  onWindowScroll($event) {
     this.setTop(false);
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize() {
+  onResize($event) {
     this.setTop(true);
   }
 
