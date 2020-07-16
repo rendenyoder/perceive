@@ -3,12 +3,12 @@
   display: inline-block;
   .settings-table {
     margin: 2px;
-    .alphabetize-row:hover {
+    .toggle:hover {
       td .alphabetize {
         opacity: 1.0;
       }
     }
-    .alphabetize {
+    .toggle {
       padding: 0 5px 0 8px;
       opacity: 0.7;
     }

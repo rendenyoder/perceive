@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ViewComponent } from '../view.component';
 
 @Component({
@@ -6,21 +6,16 @@ import { ViewComponent } from '../view.component';
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent extends ViewComponent implements OnInit, AfterViewInit {
+export class ColumnComponent extends ViewComponent implements OnInit {
 
   @ViewChild('passageContent', {static: false}) passageContent;
 
   @ViewChild('passageGroup', {static: false}) passageGroup;
 
+  isSmartScrollEnabled = true;
+
   ngOnInit() {
     this.sortContent();
-  }
-
-  ngAfterViewInit() {
-    const parent = this.passageGroup.nativeElement;
-    for (const child of parent.children) {
-      child.topDist = child.getBoundingClientRect().top;
-    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -34,6 +29,14 @@ export class ColumnComponent extends ViewComponent implements OnInit, AfterViewI
   }
 
   /**
+   * Toggle smart scroll.
+   */
+  toggleSmartScroll() {
+    this.isSmartScrollEnabled = !this.isSmartScrollEnabled;
+    this.setTop(false);
+  }
+
+  /**
    * Set top style to ease scrolling of side-by-side content of different heights.
    * @param refresh Whether to refresh the stored distance from top value for a passage/verse.
    */
@@ -41,16 +44,20 @@ export class ColumnComponent extends ViewComponent implements OnInit, AfterViewI
     const parent = this.passageGroup.nativeElement;
     for (const child of parent.children) {
       // refresh topDist if window has been re-sized
-      if (refresh) {
+      if (refresh || child.topDist === undefined) {
         child.topDist = child.getBoundingClientRect().top + window.scrollY;
       }
       // calculate offset for top if applicable
       for (const content of child.children) {
-        const diff = child.offsetHeight - content.offsetHeight;
-        if (diff > 200) {
-          child.isTopSet = true;
-          content.style.top = this.calculateOffset(diff, child) + 'px';
-        } else if (child.isTopSet) {
+        if (this.isSmartScrollEnabled) {
+          const diff = child.offsetHeight - content.offsetHeight;
+          if (diff > 200) {
+            child.isTopSet = true;
+            content.style.top = this.calculateOffset(diff, child) + 'px';
+          } else if (child.isTopSet) {
+            content.style.top = '0px';
+          }
+        } else {
           content.style.top = '0px';
         }
       }
