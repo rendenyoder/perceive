@@ -70,7 +70,7 @@ export class ColumnComponent extends ViewComponent implements OnInit {
    * @param child The given passage/verse container.
    */
   private calculateOffset(diff, child) {
-    const percent = (window.scrollY - child.topDist) / (child.offsetHeight - window.innerHeight);
+    const percent = (window.scrollY - child.topDist) / Math.abs(child.offsetHeight - window.innerHeight);
     return Math.round(diff * Math.max(0, Math.min(percent, 1)));
   }
 }
