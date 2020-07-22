@@ -10,6 +10,7 @@ export class ViewComponent {
   zoom = 1;
 
   isAlphabetized = false;
+  isAlphabetizable = false;
   sortedContent = {verses: [], passages: []};
 
   constructor(private cdr: ChangeDetectorRef) { }
@@ -19,6 +20,13 @@ export class ViewComponent {
    * @param bibleContent A given passage or verse.
    */
   hasContent = (bibleContent) => bibleContent && Object.keys(bibleContent).length > 0;
+
+  /**
+   * Checks if the selected content contains multiple different chapters or verses.
+   */
+  isMultipleSelected() {
+    return Object.keys(this.content.verses).length > 1 || Object.keys(this.content.passages).length > 1;
+  }
 
   /**
    * Toggles alphabetical sorting and updates content.

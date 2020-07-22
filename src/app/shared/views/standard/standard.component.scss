@@ -1,19 +1,18 @@
-.settings-container {
-  cursor: pointer;
+.toggle-container {
   display: inline-block;
-  .settings-table {
-    margin: 2px;
-    .alphabetize-row:hover {
-      td .alphabetize {
-        opacity: 1.0;
-      }
+  position: absolute;
+  padding: 12px;
+  .toggle {
+    display: inline-block;
+    cursor: pointer;
+    .checkbox {
+      margin: 4px 15px 0 5px;
     }
-    .alphabetize {
-      padding: 0 5px 0 8px;
+    .title {
       opacity: 0.7;
     }
-    .checkbox {
-      margin-top: 3px;
+    .title:hover {
+      opacity: 1;
     }
   }
 }

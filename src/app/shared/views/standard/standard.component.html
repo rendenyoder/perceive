@@ -1,15 +1,9 @@
 <!-- Container For Settings Pertaining To Viewer -->
-<div class="settings-container">
-  <table class="settings-table">
-    <tr class="alphabetize-row">
-      <td (click)="toggleAlphabetical()">
-        <div class="alphabetize std-transition std-font md-font-size">Alphabetize</div>
-      </td>
-      <td (click)="toggleAlphabetical()">
-        <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
-      </td>
-    </tr>
-  </table>
+<div class="toggle-container std-transition std-font md-font-size">
+  <div *ngIf="isAlphabetizable" class="toggle" (click)="toggleAlphabetical()">
+    <span class="title std-transition">Alphabetize</span>
+    <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
+  </div>
 </div>
 
 <section [style.zoom]="zoom">

@@ -1,21 +1,13 @@
 <!-- Container For Settings Pertaining To Viewer -->
-<div class="settings-container">
-  <table class="settings-table">
-    <tr>
-      <td (click)="toggleAlphabetical()">
-        <div class="toggle std-transition std-font md-font-size">Alphabetize</div>
-      </td>
-      <td (click)="toggleAlphabetical()">
-        <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
-      </td>
-      <td (click)="toggleSmartScroll()">
-        <div class="toggle std-transition std-font md-font-size">Smart Scroll</div>
-      </td>
-      <td (click)="toggleSmartScroll()">
-        <div class="checkbox" [ngClass]="{'checkbox-checked': isSmartScrollEnabled}"></div>
-      </td>
-    </tr>
-  </table>
+<div class="toggle-container std-transition std-font md-font-size">
+  <div *ngIf="isAlphabetizable" class="toggle" (click)="toggleAlphabetical()">
+    <span class="title std-transition">Alphabetize</span>
+    <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
+  </div>
+  <div class="toggle" (click)="toggleSmartScroll()">
+    <span class="title std-transition">Smart Scroll</span>
+    <div class="checkbox" [ngClass]="{'checkbox-checked': isSmartScrollEnabled}"></div>
+  </div>
 </div>
 
 <section [style.zoom]="zoom">

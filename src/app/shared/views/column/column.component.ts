@@ -16,6 +16,7 @@ export class ColumnComponent extends ViewComponent implements OnInit {
 
   ngOnInit() {
     this.sortContent();
+    this.isAlphabetizable = this.isMultipleSelected();
   }
 
   @HostListener('window:scroll', ['$event'])
