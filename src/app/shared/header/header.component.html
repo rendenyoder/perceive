@@ -1,86 +1,62 @@
 <section>
-  <!-- Upper Navigation Buttons -->
-  <div class="nav">
-    <!-- Logo With Link Back To Home -->
-    <div class="logo">
-      <a href=".">
-        <img class="icon" src="./assets/img/logo.png" alt="logo"/>
-      </a>
-    </div>
-    <!-- Settings Menu Button -->
-    <div class="menu">
-      <input class="icon std-transition" (click)="updateGlobal(!isGlobalExpanded)" type="image" src="./assets/img/menu.png" alt="menu"/>
-    </div>
-  </div>
-
-  <!-- Collapsible Settings Buttons -->
-  <div class="settings std-transition" [ngClass]="{'settings-open': isGlobalExpanded}">
-    <table class="settings-table">
-      <tr>
-        <td class="toggle-switch-container">
-          <!-- Dark Mode Switch -->
+  <div class="header-container">
+    <!-- Navigation Bar & Settings -->
+    <div class="navigation-container shadow">
+      <div class="navigation-bar">
+        <div class="search-bar-container">
+          <input class="search-bar std-font lg-font-size" [(ngModel)]="searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
+        </div>
+        <img class="magnifying-glass std-transition" (click)="search()" src="./assets/img/search.png" alt="search"/>
+        <img class="menu std-transition" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/menu.png" alt="menu"/>
+      </div>
+      <!-- Search Settings Container -->
+      <div class="search-settings-container std-transition" [ngStyle]="{'height': isSearchExpanded ? '350px' : '0' }">
+        <div class="read-view-settings">
+          <!-- Dark Mode Toggle -->
           <div class="switch-name-container">
             <label class="toggle-switch">
               <input [(ngModel)]="isDarkMode" type="checkbox">
               <span class="slider round"></span>
             </label>
-            <span class="name std-font md-font-size">Dark Mode</span>
+            <span class="std-font md-font-size">Dark Mode</span>
           </div>
-          <!-- Toggle For Using Cookies -->
+          <!-- Cookies Toggle -->
           <div class="switch-name-container">
             <label class="toggle-switch">
               <input [(ngModel)]="useCookies" type="checkbox">
               <span class="slider round"></span>
             </label>
-            <span class="name std-font md-font-size">Use Cookies</span>
+            <span class="std-font md-font-size">Use Cookies</span>
           </div>
-        </td>
-        <!-- Read View Mode Button -->
-        <ng-container *ngFor="let mode of modeSettings.modes">
-          <td class="read-view-container std-transition" [ngClass]="{'read-view-selected': modeSettings.current === mode.id}" (click)="setMode(mode.id)" >
-            <img class="icon" [src]="mode.icon" [alt]="mode"/>
-            <span class="name std-font md-font-size">{{mode.display}}</span>
-          </td>
-        </ng-container>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Search Bar Container -->
-  <div class="search-container">
-    <!-- Search Field -->
-    <input class="search shadow std-font lg-font-size" [(ngModel)]="searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
-    <!-- Container For Dropdown -->
-    <div class="icon-container">
-      <!-- Execute Search Icon -->
-      <img class="magnifying-glass std-transition" (click)="search()" src="./assets/img/search.png" alt="magnifying-glass"/>
-      <!-- Divider -->
-      <div class="divider"></div>
-      <!-- View Search Settings Icon -->
-      <img class="gear std-transition" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/gear.png" alt="gear"/>
-    </div>
-    <!-- Search Settings Container -->
-    <div class="search-settings-container shadow std-transition" [ngClass]="{'search-settings-container-open': isSearchExpanded}">
-      <!-- Version Search Input -->
-      <div class="version-search-container">
-        <input class="version-search std-font md-font-size" type="text" [(ngModel)]="versionSearchTerm" (ngModelChange)="filterVersions()" placeholder="Search Versions"/>
-      </div>
-      <!-- Version List -->
-      <div class="versions-container">
-        <!-- Selected Versions Row -->
-        <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.size > 0">
-          <div class="mini-selected sm-font-size" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
-            <span *ngIf="selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
-          </div>
+          <!-- Read View Buttons -->
+          <ng-container *ngFor="let mode of modeSettings.modes.reverse()">
+            <div class="read-view-container std-transition" [ngClass]="{'read-view-selected': modeSettings.current === mode.id}" (click)="setMode(mode.id)" >
+              <img [src]="mode.icon" [alt]="mode"/>
+              <span class="std-font md-font-size">{{mode.display}}</span>
+            </div>
+          </ng-container>
         </div>
-        <!-- Available Version Row -->
-        <table class="versions std-font">
-          <tr class="std-transition sm-font-size" *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
-            <td><span>{{version.name}}</span></td>
-            <td><span>{{version.description || 'Not Provided'}}</span></td>
-            <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>
-          </tr>
-        </table>
+        <!-- Version Search Input -->
+        <div class="version-search-container">
+          <input class="version-search std-font md-font-size" type="text" [(ngModel)]="versionSearchTerm" (ngModelChange)="filterVersions()" placeholder="Search Versions"/>
+        </div>
+        <!-- Version List -->
+        <div class="versions-container">
+          <!-- Selected Versions Row -->
+          <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.size > 0">
+            <div class="mini-selected sm-font-size" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
+              <span *ngIf="selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
+            </div>
+          </div>
+          <!-- Available Version Row -->
+          <table class="versions std-font">
+            <tr class="std-transition sm-font-size" *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
+              <td><span>{{version.name}}</span></td>
+              <td><span>{{version.description || 'Not Provided'}}</span></td>
+              <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
