@@ -82,8 +82,8 @@
               </p>
             </li>
             <li class="view-grid">
-              <div *ngFor="let mode of modeSettings.modes">
-                <img [src]="mode.icon" [alt]="mode"/>
+              <div *ngFor="let mode of modes">
+                <img [src]="mode.icon"/>
                 <p class="title md-font-size" (click)="openContent(mode.id, mode.query, mode.versions)"><i>{{mode.display}}</i></p>
                 <p class="explanation md-font-size">{{mode.description}}</p>
               </div>

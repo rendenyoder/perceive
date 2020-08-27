@@ -88,5 +88,10 @@ class InterlinearMode implements Mode {
  */
 export const settings = {
   current: 'standard',
-  modes: [new StandardMode(), new ColumnMode(), new RotateMode(), new InterlinearMode()]
+  modes: {
+    standard: new StandardMode(),
+    column: new ColumnMode(),
+    rotate: new RotateMode(),
+    interlinear: new InterlinearMode()
+  }
 };

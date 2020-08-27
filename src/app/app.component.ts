@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   hasSearchResults = false;
   versionNames = [];
   modeSettings = settings;
+  modes = Object.values(settings.modes);
   content = {};
   zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
