@@ -53,26 +53,57 @@ section {
             padding-left: 10px;
           }
         }
-        .read-view-container {
+        .read-view-selection-container {
           float: right;
-          margin: 0 15px;
-          padding: 5px 10px;
-          display: flex;
-          line-height: 30px;
-          cursor: pointer;
-          border-bottom: 1px solid transparent;
-          img {
-            height: 30px;
+          position: relative;
+          .read-view-selection {
+            width: 145px;
+            display: flex;
+            cursor: pointer;
+            line-height: 30px;
+            padding: 5px 0 5px 10px;
+            justify-content: center;
+            border-bottom: 1px solid #bebebe;
+            img {
+              height: 30px;
+            }
+            span {
+              padding-left: 10px;
+            }
+            .down-arrow {
+              height: 8px;
+              margin: 8px 3px 8px 5px;
+              opacity: 0.0;
+            }
           }
-          span {
-            padding-left: 10px;
+          .read-view-selection-list {
+            z-index: 1;
+            max-height: 0;
+            overflow: hidden;
+            position: absolute;
+            border-radius: 2px;
+            background-color: white;
+            .read-view-selection {
+              border-radius: 2px;
+              border-bottom: 1px solid transparent;
+              justify-content: unset;
+            }
+            .read-view-selection:hover {
+              background-color: #ff8534;
+            }
           }
         }
-        .read-view-container:hover {
-          border-bottom: 1px solid #bebebe;
-        }
-        .read-view-selected {
-          border-bottom: 1px solid #ff8534 !important;
+        .read-view-selection-container:hover {
+          .read-view-selection {
+            border-bottom: 1px solid #ff8534;
+            .down-arrow {
+              margin-top: 12px;
+              opacity: 1.0;
+            }
+          }
+          .read-view-selection-list {
+            max-height: 200px;
+          }
         }
       }
       .version-search-container {

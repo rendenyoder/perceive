@@ -170,4 +170,9 @@ export class HeaderComponent implements OnInit {
     this.isGlobalExpanded = state;
     this.updateGlobalExpanded.emit(this.isGlobalExpanded);
   }
+
+  /**
+   * Comparator to use for sorting json keys in declared order.
+   */
+  originalOrder = (a, b) => 0;
 }
