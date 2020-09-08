@@ -5,11 +5,9 @@
       [searchTerm]="searchTerm"
       [modeSettings]="modeSettings"
       [isSearchExpanded]="isSearchExpanded"
-      [isGlobalExpanded]="isGlobalExpanded"
       (execSearch)="setSearchResults($event)"
       (updateSearchTerm)="updateSearchTerm($event)"
-      (updateSearchExpanded)="updateSearch($event)"
-      (updateGlobalExpanded)="updateGlobal($event)">
+      (updateSearchExpanded)="updateSearch($event)">
     </app-header>
   </div>
 
@@ -68,7 +66,7 @@
             </li>
             <li class="help-info">
               <p class="md-font-size">
-                Select a version by clicking the <i (click)="scrollSearchExpand(header, !isSearchExpanded)">gear icon</i>
+                Select a version by clicking the <i (click)="scrollSearchExpand(header, !isSearchExpanded)">menu icon</i>
                 and choosing the version or versions you would like to use when searching
               </p>
             </li>
@@ -78,7 +76,8 @@
             </li>
             <li class="help-info">
               <p class="md-font-size">
-                Select which read view you would like to use by clicking the <i (click)="scrollGlobalExpand(header, !isGlobalExpanded)">menu icon</i>
+                Select which read view you would like to use by clicking the <i (click)="scrollSearchExpand(header, !isSearchExpanded)">menu icon</i>
+                and hovering over the read view dropdown
               </p>
             </li>
             <li class="view-grid">

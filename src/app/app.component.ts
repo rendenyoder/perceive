@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
 
   searchTerm = '';
   isSearchExpanded = false;
-  isGlobalExpanded = false;
   hasSearched = false;
   isReadView = false;
   isHeaderHidden = false;
@@ -131,14 +130,6 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Updates the state of the global settings expanded flag.
-   * @param $event the new state.
-   */
-  updateGlobal($event) {
-    this.isGlobalExpanded = $event;
-  }
-
-  /**
    * Closes the current content view.
    */
   close() {
@@ -153,18 +144,7 @@ export class AppComponent implements OnInit {
    */
   scrollSearchTerm($element, term) {
     this.isSearchExpanded = false;
-    this.isGlobalExpanded = false;
     this.scrollToElement($element, () => this.searchTerm = term);
-  }
-
-  /**
-   * Scrolls view to the updated element and updates global expanded state.
-   * @param $element the updated element.
-   * @param state the new global expanded state.
-   */
-  scrollGlobalExpand($element, state) {
-    this.isSearchExpanded = false;
-    this.scrollToElement($element, () => this.isGlobalExpanded = state);
   }
 
   /**
@@ -173,7 +153,6 @@ export class AppComponent implements OnInit {
    * @param state the new search expanded state.
    */
   scrollSearchExpand($element, state) {
-    this.isGlobalExpanded = false;
     this.scrollToElement($element, () => this.isSearchExpanded = state);
   }
 

@@ -19,9 +19,6 @@ export class HeaderComponent implements OnInit {
   @Input()
   isSearchExpanded = false;
 
-  @Input()
-  isGlobalExpanded = false;
-
   @Output()
   execSearch: EventEmitter<any> = new EventEmitter();
 
@@ -30,9 +27,6 @@ export class HeaderComponent implements OnInit {
 
   @Output()
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  updateGlobalExpanded: EventEmitter<any> = new EventEmitter();
 
   isDarkMode = false;
   useCookies = true;
@@ -119,7 +113,6 @@ export class HeaderComponent implements OnInit {
    */
   search() {
     if (this.searchTerm) {
-      this.isGlobalExpanded = false;
       this.isSearchExpanded = false;
       if (this.selectedVersions.size === 0) {
         this.selectVersions(this.defaultVersion);
@@ -160,15 +153,6 @@ export class HeaderComponent implements OnInit {
   updateSearch(state) {
     this.isSearchExpanded = state;
     this.updateSearchExpanded.emit(this.isSearchExpanded);
-  }
-
-  /**
-   * Toggles the state of the global settings expanded flag.
-   * @param state the new global expanded state
-   */
-  updateGlobal(state) {
-    this.isGlobalExpanded = state;
-    this.updateGlobalExpanded.emit(this.isGlobalExpanded);
   }
 
   /**
