@@ -5,8 +5,29 @@
   display: table;
 }
 
+.pre-search {
+  padding: 100px 20px 0 20px !important;
+  .title {
+    font-family: "Alegreya Sans Thin";
+    font-size: 3.5rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    padding-bottom: 10px;
+  }
+  .sub-title {
+    font-size: 1.5rem;
+    letter-spacing: 0.15rem;
+  }
+  .help {
+    color: #777777;
+    padding: 10px;
+    text-align: right;
+    cursor: pointer;
+  }
+}
+
 .header {
-  display: table-row;
+  padding: 0;
 }
 
 .hidden {
@@ -125,6 +146,7 @@
   padding: 5px;
   background-color: #ffffff;
   border-radius: 2px;
+  box-sizing: border-box;
   .settings-container {
     display: inline-block;
     padding: 5px 0 0 5px;

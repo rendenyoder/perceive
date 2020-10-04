@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
 
 @Component({
@@ -6,7 +6,7 @@ import { settings } from './shared/model/mode';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('appHeader', {static: false}) appHeader;
 
@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   searchTerm = '';
   isSearchExpanded = false;
   hasSearched = false;
+  showHelpInfo = false;
   isReadView = false;
   isHeaderHidden = false;
   searchResults = {};
@@ -25,22 +26,50 @@ export class AppComponent implements OnInit {
   content = {};
   zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
+  effect;
+  effectDelay = 50;
+  effectInterval = 10;
+
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() { }
+
+  ngAfterViewInit() {
+    this.effect = window['VANTA'].DOTS({
+      el: '#perceive',
+      color: 0xff8534,
+      color2: 0xff5d34,
+      backgroundColor: 0xeaebeb,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+    });
+  }
 
   /**
    * Sets the current search results from a search event.
    */
   setSearchResults($event) {
-    this.hasSearched = true;
-    this.isReadView = false;
-    this.searchResults = {results: Array.from($event)};
-    if (this.searchResults['results'] && this.searchResults['results'].length > 0) {
-      this.hasSearchResults = this.searchResults['results'].some(item => {
-        return item.results && (item.results.total || item.results.passages);
-      });
-      this.versionNames = this.searchResults['results'].map(res => res.name);
+    const search = () => {
+      this.hasSearched = true;
+      this.isReadView = false;
+      this.searchResults = {results: Array.from($event)};
+      if (this.searchResults['results'] && this.searchResults['results'].length > 0) {
+        this.hasSearchResults = this.searchResults['results'].some(item => {
+          return item.results && (item.results.total || item.results.passages);
+        });
+        this.versionNames = this.searchResults['results'].map(res => res.name);
+      }
+    };
+    // if effect still active, destroy then search
+    if (this.effect) {
+      this.destroyEffect(search);
+    } else {
+      search();
     }
   }
 
@@ -138,6 +167,23 @@ export class AppComponent implements OnInit {
   }
 
   /**
+   * Show help info.
+   */
+  showHelp() {
+    const help = () => {
+      this.showHelpInfo = true;
+      this.hasSearched = true;
+      this.isSearchExpanded = false;
+    };
+    // if effect still active, destroy then show help
+    if (this.effect) {
+      this.destroyEffect(help);
+    } else {
+      help();
+    }
+  }
+
+  /**
    * Scrolls view to the updated element and updates search term.
    * @param $element the updated element.
    * @param term the new search term.
@@ -163,5 +209,29 @@ export class AppComponent implements OnInit {
   private scrollToElement($element, lambda): void {
     $element.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
     setTimeout(() => lambda(), 150);
+  }
+
+  /**
+   * Fades and destroys background effect.
+   * Note: using for loop and setTimeout as apposed to setInterval as mobile safari
+   * exhibits irregular behavior.
+   */
+  private destroyEffect(postAction) {
+    const subtractionFactor = 1.0 / this.effectInterval;
+    for (let i = 1; i <= this.effectInterval; i++) {
+      setTimeout(() => {
+        if (this.effect.renderer.domElement.style.opacity === '') {
+          this.effect.renderer.domElement.style.opacity = 1.0 - subtractionFactor;
+        } else {
+          this.effect.renderer.domElement.style.opacity = this.effect.renderer.domElement.style.opacity - subtractionFactor;
+        }
+      }, this.effectDelay * i);
+    }
+    // guarantee effect destruction
+    setTimeout(() => {
+      this.effect.destroy();
+      delete this.effect;
+      postAction();
+    }, this.effectDelay * this.effectInterval);
   }
 }

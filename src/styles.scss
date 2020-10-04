@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Alegreya Sans Thin';
+  src: url('./assets/fonts/alegreyasans-thin-webfont.woff2') format('woff2'),
+  url('./assets/fonts/alegreyasans-thin-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body {
   background-color: #eaebeb;
   height: 100%;
