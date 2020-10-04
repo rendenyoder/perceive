@@ -89,13 +89,13 @@ section {
               justify-content: unset;
             }
             .read-view-selection:hover {
-              background-color: #ff8534;
+              background-color: #ff5d34;
             }
           }
         }
         .read-view-selection-container:hover {
           .read-view-selection {
-            border-bottom: 1px solid #ff8534;
+            border-bottom: 1px solid #ff5d34;
             .down-arrow {
               margin-top: 12px;
               opacity: 1.0;
@@ -124,7 +124,7 @@ section {
           padding: 3px;
           .mini-selected {
             display: inline-block;
-            background-color: #ff8534;
+            background-color: #ff5d34;
             border-radius: 2px;
             cursor: pointer;
             padding: 5px;
@@ -159,7 +159,7 @@ section {
             width: 33%;
           }
           .selected {
-            background-color: #ff8534 !important;
+            background-color: #ff5d34 !important;
           }
         }
       }

@@ -37,8 +37,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.effect = window['VANTA'].DOTS({
       el: '#perceive',
-      color: 0xff8534,
-      color2: 0xff5d34,
+      color: 0xff5d34,
+      color2: 0xff3434,
       backgroundColor: 0xeaebeb,
       mouseControls: true,
       touchControls: true,

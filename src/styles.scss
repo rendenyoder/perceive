@@ -67,8 +67,8 @@ html, body {
 }
 
 .checkbox-checked {
-  border: 1px solid #ff8534;
-  background-color: #ff8534;
+  border: 1px solid #ff5d34;
+  background-color: #ff5d34;
 }
 
 .toggle-switch {
@@ -97,10 +97,10 @@ html, body {
     background-color: #ffffff;
   }
   input:checked + .slider {
-    background-color: #ff8534;
+    background-color: #ff5d34;
   }
   input:focus + .slider {
-    box-shadow: 0 0 1px #ff8534;
+    box-shadow: 0 0 1px #ff5d34;
   }
   input:checked + .slider:before {
     -webkit-transform: translateX(28px);
