@@ -35,13 +35,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.effect = window['VANTA'].DOTS({
+    this.effect = window['VANTA'].WAVES({
       el: '#perceive',
-      color: 0xff5d34,
-      color2: 0xff3434,
-      backgroundColor: 0xeaebeb,
-      mouseControls: true,
-      touchControls: true,
+      color: 0x9b9b9b,
+      shininess: 25,
+      waveHeight: 10,
+      waveSpeed: 0.5,
+      mouseControls: false,
+      touchControls: false,
       gyroControls: false,
       minHeight: 200.00,
       minWidth: 200.00,

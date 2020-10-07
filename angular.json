@@ -32,7 +32,7 @@
             ],
             "scripts": [
               "node_modules/vanta/vendor/three.r119.min.js",
-              "node_modules/vanta/dist/vanta.dots.min.js"
+              "node_modules/vanta/dist/vanta.waves.min.js"
             ]
           },
           "configurations": {
