@@ -15,7 +15,7 @@
           <!-- Dark Mode Toggle -->
           <div class="switch-name-container">
             <label class="toggle-switch">
-              <input [(ngModel)]="isDarkMode" type="checkbox">
+              <input [(ngModel)]="isDarkMode" type="checkbox" (change)="updateDarkMode()">
               <span class="slider round"></span>
             </label>
             <span class="std-font md-font-size">Dark Mode</span>

@@ -7,7 +7,7 @@
 }
 
 html, body {
-  background-color: #eaebeb;
+  background-color: var(--base-color);
   height: 100%;
   width: 100%;
   margin: 0;
@@ -19,7 +19,7 @@ html, body {
 
 .std-font {
   @extend .std-font-size;
-  color: #292929;
+  color: var(--font-color);
   font-weight: 200;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -62,13 +62,13 @@ html, body {
   width: 15px;
   height: 15px;
   border-radius: 2px;
-  border: 1px solid #626262;
+  border: 1px solid var(--font-color);
   background-color: transparent;
 }
 
 .checkbox-checked {
-  border: 1px solid #ff5d34;
-  background-color: #ff5d34;
+  border: 1px solid var(--theme-accent);
+  background-color: var(--theme-accent);
 }
 
 .toggle-switch {
@@ -84,7 +84,7 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #626262;
+    background-color: var(--dark-accent);
   }
   .slider:before {
     @extend .std-transition;
@@ -94,13 +94,13 @@ html, body {
     width: 18px;
     left: 4px;
     bottom: 4px;
-    background-color: #ffffff;
+    background-color: var(--bright-accent);
   }
   input:checked + .slider {
-    background-color: #ff5d34;
+    background-color: var(--theme-accent);
   }
   input:focus + .slider {
-    box-shadow: 0 0 1px #ff5d34;
+    box-shadow: 0 0 1px var(--theme-accent);
   }
   input:checked + .slider:before {
     -webkit-transform: translateX(28px);
@@ -121,6 +121,19 @@ html, body {
   height: 0;
 }
 
+::placeholder {
+  color: var(--font-color);
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: var(--font-color);
+}
+
+::-ms-input-placeholder {
+  color: var(--font-color);
+}
+
 /**
   Referenced from https://assets.api.bible/css/scripture-styles.css.
   Slightly modified version of https://github.com/americanbible/scripture-styles.
@@ -130,7 +143,7 @@ html, body {
   font-size: 18px;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   line-height: 25px;
-  color: #111;
+  color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   span {
     font-size: 18px;
@@ -271,7 +284,7 @@ html, body {
 .scripture-styles .ca {
   font-style: italic;
   font-weight: normal;
-  color: #777
+  color: var(--dark-accent)
 }
 
 .scripture-styles .ca:before {
@@ -296,7 +309,7 @@ html, body {
 .scripture-styles .v,
 .scripture-styles .vp,
 .scripture-styles sup[class^="v"] {
-  color: #000;
+  color: var(--font-color);
   font-size: 0.7em;
   letter-spacing: -0.03em;
   vertical-align: 0.25em;
@@ -338,7 +351,7 @@ html, body {
   text-indent: 0;
   text-align: left;
   border-radius: 4px;
-  border: 1px solid #dcdcdc
+  border: 1px solid var(--mid-accent)
 }
 
 .scripture-styles .xo {
@@ -362,7 +375,7 @@ html, body {
 .scripture-styles .notelink:hover,
 .scripture-styles .notelink:active,
 .scripture-styles .notelink:visited {
-  color: #6a6a6a
+  color: var(--dark-accent)
 }
 
 .scripture-styles .notelink sup {
@@ -387,7 +400,7 @@ html, body {
   text-indent: 0;
   text-align: left;
   border-radius: 4px;
-  border: 1px solid #dcdcdc
+  border: 1px solid var(--mid-accent)
 }
 
 .scripture-styles .fr {
@@ -409,7 +422,7 @@ html, body {
 }
 
 .scripture-styles .fv {
-  color: #515151;
+  color: var(--font-color);
   font-size: 0.75em;
   letter-spacing: -0.03em;
   vertical-align: 0.25em;
@@ -736,7 +749,7 @@ html, body {
 }
 
 .scripture-styles .wj {
-  color: #cc0000
+  color: var(--theme-accent)
 }
 
 .scripture-styles .em {

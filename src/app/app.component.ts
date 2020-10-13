@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
+import { DarkTheme, LightTheme } from './shared/model/theme';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('appHeader', {static: false}) appHeader;
 
   @ViewChild('appSearch', {static: false}) appSearch;
+
+  private lightTheme = new LightTheme();
+  private darkTheme = new DarkTheme();
+  theme = this.lightTheme;
 
   searchTerm = '';
   isSearchExpanded = false;
@@ -29,26 +34,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   effect;
   effectDelay = 50;
   effectInterval = 10;
+  effectConfig = {
+    el: '#perceive',
+    shininess: 25,
+    waveHeight: 10,
+    waveSpeed: 0.5,
+    mouseControls: false,
+    touchControls: false,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+  };
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.setTheme();
+  }
 
   ngAfterViewInit() {
-    this.effect = window['VANTA'].WAVES({
-      el: '#perceive',
-      color: 0x9b9b9b,
-      shininess: 25,
-      waveHeight: 10,
-      waveSpeed: 0.5,
-      mouseControls: false,
-      touchControls: false,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-    });
+    this.setEffect();
   }
 
   /**
@@ -160,6 +167,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Updates and sets UI theme.
+   * @param $event whether to use dark mode or not.
+   */
+  updateIsDarkMode($event) {
+    this.theme = $event ? this.darkTheme : this.lightTheme;
+    this.setTheme();
+  }
+
+  /**
    * Closes the current content view.
    */
   close() {
@@ -201,6 +217,26 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   scrollSearchExpand($element, state) {
     this.scrollToElement($element, () => this.isSearchExpanded = state);
+  }
+
+  /**
+   * Sets background effect with proper theme color.
+   */
+  private setEffect() {
+    this.effectConfig['color'] = this.theme.backgroundEffectColor;
+    this.effect = window['VANTA'].WAVES(this.effectConfig);
+  }
+
+  /**
+   * Sets theme and checks if effect color needs to be updated.
+   */
+  private setTheme() {
+    this.theme.setStyleProperties();
+    if (this.effect) {
+      this.effect.destroy();
+      delete this.effect;
+      this.setEffect();
+    }
   }
 
   /**

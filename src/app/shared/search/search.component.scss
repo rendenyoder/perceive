@@ -14,7 +14,7 @@ section {
   width: 100%;
   padding: 18px;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: var(--bright-accent);
   .passage-expand {
     cursor: pointer;
     height: 18px;
@@ -43,7 +43,7 @@ section {
   margin-top: 10px;
 }
 .result-content:nth-child(even) {
-  background-color: #f5f5f5;
+  background-color: var(--mid-accent);
 }
 .result-content:last-child {
   margin-bottom: 0 !important;
@@ -55,7 +55,7 @@ section {
   padding: 8px;
   margin-top: 10px;
   text-align: center;
-  background-color: #f5f5f5;
+  background-color: var(--mid-accent);
   .plus-icon {
     position: relative;
     height: 15px;
@@ -65,7 +65,7 @@ section {
 
 .result-container {
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--bright-accent);
   border-radius: 2px;
   margin-bottom: 10px;
 }
@@ -78,7 +78,7 @@ section {
   top: 0;
   padding: 10px;
   position: sticky;
-  background-color: #ff5d34;
+  background-color: var(--theme-accent);
   border-radius: 2px;
   margin: 10px 10px -13px 10px;
   text-align: center;

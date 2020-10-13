@@ -28,6 +28,9 @@ export class HeaderComponent implements OnInit {
   @Output()
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  updateIsDarkMode: EventEmitter<any> = new EventEmitter();
+
   isDarkMode = false;
   useCookies = true;
 
@@ -153,6 +156,13 @@ export class HeaderComponent implements OnInit {
   updateSearch(state) {
     this.isSearchExpanded = state;
     this.updateSearchExpanded.emit(this.isSearchExpanded);
+  }
+
+  /**
+   * Updates dark mode state.
+   */
+  updateDarkMode() {
+    this.updateIsDarkMode.emit(this.isDarkMode);
   }
 
   /**

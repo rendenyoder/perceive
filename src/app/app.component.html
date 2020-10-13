@@ -11,10 +11,11 @@
       [isSearchExpanded]="isSearchExpanded"
       (execSearch)="setSearchResults($event)"
       (updateSearchTerm)="updateSearchTerm($event)"
-      (updateSearchExpanded)="updateSearch($event)">
+      (updateSearchExpanded)="updateSearch($event)"
+      (updateIsDarkMode)="updateIsDarkMode($event)">
     </app-header>
-    <div *ngIf="!hasSearched" class="help std-font" (click)="showHelp()">
-      need help?
+    <div *ngIf="!hasSearched" class="help std-font">
+      <span (click)="showHelp()">need help?</span>
     </div>
   </div>
 

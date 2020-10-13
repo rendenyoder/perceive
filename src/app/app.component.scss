@@ -13,16 +13,19 @@
     text-align: center;
     letter-spacing: 0.5rem;
     padding-bottom: 10px;
+    color: var(--font-color)
   }
   .sub-title {
     font-size: 1.5rem;
     letter-spacing: 0.15rem;
   }
   .help {
-    color: #777777;
+    color: var(--font-color);
     padding: 10px;
     text-align: right;
-    cursor: pointer;
+    span {
+      cursor: pointer;
+    }
   }
 }
 
@@ -51,7 +54,7 @@
     .not-found {
       height: 100%;
       border-radius: 2px;
-      background-color: white;
+      background-color: var(--bright-accent);
       .message {
         display: flex;
         text-align: left;
@@ -61,7 +64,7 @@
           line-height: 30px;
         }
         i {
-          color: #ff5d34;
+          color: var(--theme-accent);
           padding: 0 2px;
         }
       }
@@ -94,7 +97,7 @@
       width: 100%;
       height: 100%;
       border-radius: 2px;
-      background-color: white;
+      background-color: var(--bright-accent);
     }
     ul {
       list-style: none;
@@ -107,7 +110,7 @@
       .help-info {
         padding: 0 40px 0 40px;
         i {
-          color: #ff5d34;
+          color: var(--theme-accent);
           cursor: pointer;
         }
       }
@@ -126,7 +129,7 @@
           text-align: center;
         }
         .title {
-          color: #ff5d34;
+          color: var(--theme-accent);
           font-style: italic;
           i {
             cursor: pointer;
@@ -144,7 +147,7 @@
   min-height: calc(100% - 20px);
   margin: 10px;
   padding: 5px;
-  background-color: #ffffff;
+  background-color: var(--bright-accent);
   border-radius: 2px;
   box-sizing: border-box;
   .settings-container {
