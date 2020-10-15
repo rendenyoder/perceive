@@ -17,6 +17,7 @@ class StyleProperty {
 abstract class Theme {
   name: string;
   backgroundEffectColor: number;
+  iconFilter: StyleProperty;
   themeAccent: StyleProperty;
   fontColor: StyleProperty;
   baseColor: StyleProperty;
@@ -28,6 +29,7 @@ abstract class Theme {
    * Sets theme properties.
    */
   setStyleProperties() {
+    this.setProp(this.iconFilter);
     this.setProp(this.themeAccent);
     this.setProp(this.fontColor);
     this.setProp(this.baseColor);
@@ -47,6 +49,7 @@ abstract class Theme {
 export class LightTheme extends Theme {
   name = 'light';
   backgroundEffectColor = 0x9b9b9b;
+  iconFilter = new StyleProperty('--icon-filter', 'brightness(100%)');
   themeAccent = new StyleProperty('--theme-accent', '#fc4040');
   fontColor = new StyleProperty('--font-color', '#292929');
   baseColor = new StyleProperty('--base-color', '#f5f5f5');
@@ -61,6 +64,7 @@ export class LightTheme extends Theme {
 export class DarkTheme extends Theme {
   name = 'dark';
   backgroundEffectColor = 0x202020;
+  iconFilter = new StyleProperty('--icon-filter', 'brightness(250%)');
   themeAccent = new StyleProperty('--theme-accent', '#fc4040');
   fontColor = new StyleProperty('--font-color', '#eaeaea');
   baseColor = new StyleProperty('--base-color', '#454545');

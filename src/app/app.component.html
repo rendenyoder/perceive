@@ -108,8 +108,6 @@
       <!-- Default Settings Shared By All Views -->
       <div class="settings-container">
         <img class="icon std-transition" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>
-        <img *ngIf="isHeaderHidden" class="icon up std-transition" (click)="isHeaderHidden = false" src="./assets/img/arrow.png" alt="Show Menu"/>
-        <img *ngIf="!isHeaderHidden" class="icon down std-transition" (click)="isHeaderHidden = true" src="./assets/img/arrow.png" alt="Hide Menu"/>
         <img class="icon std-transition" (click)="zoomIn()" src="./assets/img/plus.png" alt="Zoom In"/>
         <img class="icon std-transition" (click)="zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
       </div>

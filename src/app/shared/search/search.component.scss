@@ -20,6 +20,7 @@ section {
     height: 18px;
     float: right;
     margin-right: 10px;
+    filter: var(--icon-filter);
   }
   .reference {
     padding-bottom: 5px;
@@ -59,7 +60,8 @@ section {
   .plus-icon {
     position: relative;
     height: 15px;
-    margin: 0 0 -2px 5px
+    margin: 0 0 -2px 5px;
+    filter: var(--icon-filter);
   }
 }
 
