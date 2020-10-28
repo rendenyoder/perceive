@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AppTheme } from '../model/theme';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,9 @@ export class HeaderComponent implements OnInit {
   @Input()
   isSearchExpanded = false;
 
+  @Input()
+  appTheme: AppTheme;
+
   @Output()
   execSearch: EventEmitter<any> = new EventEmitter();
 
@@ -28,10 +32,7 @@ export class HeaderComponent implements OnInit {
   @Output()
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
 
-  @Output()
-  updateIsDarkMode: EventEmitter<any> = new EventEmitter();
-
-  isDarkMode = false;
+  isDarkMode;
   useCookies = true;
 
   defaultVersion = 'de4e12af7f28f599-02';
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
   constructor(private bible: BibleService) { }
 
   ngOnInit() {
+    this.isDarkMode = this.appTheme ? this.appTheme.theme.themeName === 'dark' : false;
     this.bible.fetchBibles().subscribe(result => {
       this.versions = result.data;
       // sort versions
@@ -162,7 +164,8 @@ export class HeaderComponent implements OnInit {
    * Updates dark mode state.
    */
   updateDarkMode() {
-    this.updateIsDarkMode.emit(this.isDarkMode);
+    const mode = this.isDarkMode ? 'dark' : 'light';
+    this.appTheme.setTheme(mode);
   }
 
   /**

@@ -9,10 +9,10 @@
       [searchTerm]="searchTerm"
       [modeSettings]="modeSettings"
       [isSearchExpanded]="isSearchExpanded"
+      [appTheme]="appTheme"
       (execSearch)="setSearchResults($event)"
       (updateSearchTerm)="updateSearchTerm($event)"
-      (updateSearchExpanded)="updateSearch($event)"
-      (updateIsDarkMode)="updateIsDarkMode($event)">
+      (updateSearchExpanded)="updateSearch($event)">
     </app-header>
     <div *ngIf="!hasSearched" class="help std-font">
       <span (click)="showHelp()">need help?</span>

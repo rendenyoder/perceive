@@ -1,22 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
-import { DarkTheme, LightTheme } from './shared/model/theme';
+import { AppTheme } from './shared/model/theme';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
 
   @ViewChild('appHeader', {static: false}) appHeader;
 
   @ViewChild('appSearch', {static: false}) appSearch;
 
-  private lightTheme = new LightTheme();
-  private darkTheme = new DarkTheme();
-  theme = this.lightTheme;
-
+  appTheme: AppTheme;
   searchTerm = '';
   isSearchExpanded = false;
   hasSearched = false;
@@ -31,31 +28,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   content = {};
   zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
-  effect;
-  effectDelay = 50;
-  effectInterval = 10;
-  effectConfig = {
-    el: '#perceive',
-    shininess: 25,
-    waveHeight: 10,
-    waveSpeed: 0.5,
-    mouseControls: false,
-    touchControls: false,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-  };
-
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.setTheme();
-  }
-
-  ngAfterViewInit() {
-    this.setEffect();
+    this.appTheme = new AppTheme();
   }
 
   /**
@@ -74,8 +50,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     };
     // if effect still active, destroy then search
-    if (this.effect) {
-      this.destroyEffect(search);
+    if (this.appTheme.isEffectActive()) {
+      this.appTheme.destroyEffect(search);
     } else {
       search();
     }
@@ -167,15 +143,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Updates and sets UI theme.
-   * @param $event whether to use dark mode or not.
-   */
-  updateIsDarkMode($event) {
-    this.theme = $event ? this.darkTheme : this.lightTheme;
-    this.setTheme();
-  }
-
-  /**
    * Closes the current content view.
    */
   close() {
@@ -193,8 +160,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.isSearchExpanded = false;
     };
     // if effect still active, destroy then show help
-    if (this.effect) {
-      this.destroyEffect(help);
+    if (this.appTheme.isEffectActive()) {
+      this.appTheme.destroyEffect(help);
     } else {
       help();
     }
@@ -220,55 +187,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets background effect with proper theme color.
-   */
-  private setEffect() {
-    this.effectConfig['color'] = this.theme.backgroundEffectColor;
-    this.effect = window['VANTA'].WAVES(this.effectConfig);
-  }
-
-  /**
-   * Sets theme and checks if effect color needs to be updated.
-   */
-  private setTheme() {
-    this.theme.setStyleProperties();
-    if (this.effect) {
-      this.effect.destroy();
-      delete this.effect;
-      this.setEffect();
-    }
-  }
-
-  /**
    * Scrolls to given element.
    * @param $element the element to scroll to.
    */
   private scrollToElement($element, lambda): void {
     $element.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
     setTimeout(() => lambda(), 150);
-  }
-
-  /**
-   * Fades and destroys background effect.
-   * Note: using for loop and setTimeout as apposed to setInterval as mobile safari
-   * exhibits irregular behavior.
-   */
-  private destroyEffect(postAction) {
-    const subtractionFactor = 1.0 / this.effectInterval;
-    for (let i = 1; i <= this.effectInterval; i++) {
-      setTimeout(() => {
-        if (this.effect.renderer.domElement.style.opacity === '') {
-          this.effect.renderer.domElement.style.opacity = 1.0 - subtractionFactor;
-        } else {
-          this.effect.renderer.domElement.style.opacity = this.effect.renderer.domElement.style.opacity - subtractionFactor;
-        }
-      }, this.effectDelay * i);
-    }
-    // guarantee effect destruction
-    setTimeout(() => {
-      this.effect.destroy();
-      delete this.effect;
-      postAction();
-    }, this.effectDelay * this.effectInterval);
   }
 }
