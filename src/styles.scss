@@ -134,6 +134,35 @@ html, body {
   color: var(--font-color);
 }
 
+.range-slider {
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--dark-accent);
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--dark-accent);
+    cursor: pointer;
+  }
+  .slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--dark-accent);
+    cursor: pointer;
+  }
+}
+
 /**
   Referenced from https://assets.api.bible/css/scripture-styles.css.
   Slightly modified version of https://github.com/americanbible/scripture-styles.

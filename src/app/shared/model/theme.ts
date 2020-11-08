@@ -85,18 +85,59 @@ class StyleProperty {
 }
 
 /**
+ * Represents the theme accent property.
+ */
+class ThemeAccentProperty extends StyleProperty {
+  hue: number;
+  private readonly saturation;
+  private readonly lightness;
+
+  constructor(property: string, hue: number) {
+    const saturation = 100;
+    const lightness = 60;
+    super(property, `hsl(${hue}, ${saturation}%, ${lightness}%)`);
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+  }
+
+  update(hue: number = this.hue) {
+    this.value = `hsl(${hue}, ${this.saturation}%, ${this.lightness}%)`;
+    this.hue = hue;
+  }
+}
+
+/**
  * Abstract class representing a UI theme.
  */
 abstract class Theme {
-  abstract themeName: string;
+  abstract hueKey: string;
   abstract backgroundEffectColor: number;
   abstract iconFilter: StyleProperty;
-  abstract themeAccent: StyleProperty;
+  abstract themeAccent: ThemeAccentProperty;
   abstract fontColor: StyleProperty;
   abstract baseColor: StyleProperty;
   abstract darkAccent: StyleProperty;
   abstract midAccent: StyleProperty;
   abstract brightAccent: StyleProperty;
+
+  /**
+   * Gets stored hue value using hueKey.
+   */
+  getAccentHue() {
+    const stored = localStorage.getItem(this.hueKey);
+    return stored ? parseInt(stored, 10) : 0;
+  }
+
+  /**
+   * Sets the accent hue.
+   * @param hue The new accent hue.
+   */
+  setAccentHue(hue: number) {
+    this.themeAccent.update(hue);
+    this.setProp(this.themeAccent);
+    localStorage.setItem(this.hueKey, hue.toString());
+  }
 
   /**
    * Sets theme properties.
@@ -111,7 +152,7 @@ abstract class Theme {
     this.setProp(this.brightAccent);
   }
 
-  private setProp(styleProp: StyleProperty) {
+  setProp(styleProp: StyleProperty) {
     document.documentElement.style.setProperty(styleProp.property, styleProp.value);
   }
 }
@@ -120,10 +161,10 @@ abstract class Theme {
  * Light UI theme.
  */
 class LightTheme extends Theme {
-  themeName = 'light';
+  hueKey = 'light-accent-hue';
   backgroundEffectColor = 0x9b9b9b;
   iconFilter = new StyleProperty('--icon-filter', 'brightness(100%)');
-  themeAccent = new StyleProperty('--theme-accent', '#fc4040');
+  themeAccent = new ThemeAccentProperty('--theme-accent', this.getAccentHue());
   fontColor = new StyleProperty('--font-color', '#292929');
   baseColor = new StyleProperty('--base-color', '#f5f5f5');
   darkAccent = new StyleProperty('--dark-accent', '#9b9b9b');
@@ -135,10 +176,10 @@ class LightTheme extends Theme {
  * Dark UI theme.
  */
 class DarkTheme extends Theme {
-  themeName = 'dark';
+  hueKey = 'dark-accent-hue';
   backgroundEffectColor = 0x202020;
   iconFilter = new StyleProperty('--icon-filter', 'brightness(250%)');
-  themeAccent = new StyleProperty('--theme-accent', '#fc4040');
+  themeAccent = new ThemeAccentProperty('--theme-accent', this.getAccentHue());
   fontColor = new StyleProperty('--font-color', '#eaeaea');
   baseColor = new StyleProperty('--base-color', '#454545');
   darkAccent = new StyleProperty('--dark-accent', '#3c3c3c');
@@ -153,11 +194,12 @@ export class AppTheme {
   private themes = { light: new LightTheme(), dark: new DarkTheme() };
   private modeKey = 'mode';
   private effect = new WavesEffect('#perceive');
-  theme: Theme;
+  private theme: Theme;
+  mode: string = Object.keys(this.themes)[0];
 
   constructor() {
-    const key = localStorage.getItem(this.modeKey);
-    this.theme = this.themes[key] || this.themes['light'];
+    this.mode = localStorage.getItem(this.modeKey) || this.mode;
+    this.theme = this.themes[this.mode];
     this.theme.setStyleProperties();
     this.effect.createEffect({color: this.theme.backgroundEffectColor});
   }
@@ -174,6 +216,7 @@ export class AppTheme {
   setTheme(mode: string) {
     const newTheme = this.themes[mode];
     if (newTheme) {
+      this.mode = mode;
       this.theme = newTheme;
       this.theme.setStyleProperties();
 
@@ -183,7 +226,15 @@ export class AppTheme {
         this.effect.createEffect({color: this.theme.backgroundEffectColor});
       }
 
-      localStorage.setItem(this.modeKey, mode);
+      localStorage.setItem(this.modeKey, this.mode);
     }
+  }
+
+  setThemeAccentHue(hue: number) {
+    this.theme.setAccentHue(hue);
+  }
+
+  getThemeAccentHue() {
+    return this.theme.getAccentHue();
   }
 }

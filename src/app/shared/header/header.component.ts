@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
 
   isDarkMode;
-  useCookies = true;
+  colorRange;
 
   defaultVersion = 'de4e12af7f28f599-02';
   selectedVersions = new Set<any>();
@@ -44,7 +44,8 @@ export class HeaderComponent implements OnInit {
   constructor(private bible: BibleService) { }
 
   ngOnInit() {
-    this.isDarkMode = this.appTheme ? this.appTheme.theme.themeName === 'dark' : false;
+    this.isDarkMode = this.appTheme ? this.appTheme.mode === 'dark' : false;
+    this.colorRange = this.appTheme.getThemeAccentHue();
     this.bible.fetchBibles().subscribe(result => {
       this.versions = result.data;
       // sort versions
@@ -132,6 +133,13 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
+   * Updates theme accent based on color slider.
+   */
+  updateAccent() {
+    this.appTheme.setThemeAccentHue(this.colorRange);
+  }
+
+  /**
    * Returns subscribable for executing a search with a given term.
    * @param term The search term.
    * @param limit The number of results to fetch.
@@ -166,6 +174,7 @@ export class HeaderComponent implements OnInit {
   updateDarkMode() {
     const mode = this.isDarkMode ? 'dark' : 'light';
     this.appTheme.setTheme(mode);
+    this.colorRange = this.appTheme.getThemeAccentHue();
   }
 
   /**

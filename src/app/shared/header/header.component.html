@@ -13,7 +13,7 @@
       <div class="search-settings-container std-transition" [ngStyle]="{'height': isSearchExpanded ? '350px' : '0' }">
         <div class="read-view-settings">
           <!-- Dark Mode Toggle -->
-          <div class="switch-name-container">
+          <div class="setting-container">
             <label class="toggle-switch">
               <input [(ngModel)]="isDarkMode" type="checkbox" (change)="updateDarkMode()">
               <span class="slider round"></span>
@@ -21,12 +21,11 @@
             <span class="std-font md-font-size">Dark Mode</span>
           </div>
           <!-- Cookies Toggle -->
-          <div class="switch-name-container">
-            <label class="toggle-switch">
-              <input [(ngModel)]="useCookies" type="checkbox">
-              <span class="slider round"></span>
-            </label>
-            <span class="std-font md-font-size">Use Cookies</span>
+          <div class="setting-container">
+            <div class="range-slider">
+              <input [(ngModel)]="colorRange" (input)="updateAccent()" type="range" min="0" max="359" value="0" class="slider">
+            </div>
+            <span class="std-font md-font-size">Accent</span>
           </div>
           <!-- Read View Selection -->
           <div class="read-view-selection-container">
@@ -53,7 +52,7 @@
         <div class="versions-container">
           <!-- Selected Versions Row -->
           <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.size > 0">
-            <div class="mini-selected sm-font-size" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
+            <div class="mini-selected sm-font-size std-transition" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
               <span *ngIf="selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
             </div>
           </div>
