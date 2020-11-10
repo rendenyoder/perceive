@@ -108,13 +108,13 @@
       <!-- Default Settings Shared By All Views -->
       <div class="settings-container">
         <img class="icon std-transition" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>
-        <img class="icon std-transition" (click)="zoomIn()" src="./assets/img/plus.png" alt="Zoom In"/>
-        <img class="icon std-transition" (click)="zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
+        <img class="icon std-transition" (click)="appTheme.zoomIn()" src="./assets/img/plus.png" alt="Zoom In"/>
+        <img class="icon std-transition" (click)="appTheme.zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
       </div>
       <!-- Standard View -->
-      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content" [zoom]="zoom.factor"></app-standard-view>
+      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content" [zoom]="appTheme.getZoomFactor()"></app-standard-view>
       <!-- Column View -->
-      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content" [zoom]="zoom.factor"></app-column-view>
+      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content" [zoom]="appTheme.getZoomFactor()"></app-column-view>
     </div>
   </div>
 </div>

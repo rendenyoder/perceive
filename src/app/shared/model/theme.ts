@@ -191,50 +191,88 @@ class DarkTheme extends Theme {
  * Contains app theme, including background effect and color theme.
  */
 export class AppTheme {
-  private themes = { light: new LightTheme(), dark: new DarkTheme() };
-  private modeKey = 'mode';
-  private effect = new WavesEffect('#perceive');
-  private theme: Theme;
-  mode: string = Object.keys(this.themes)[0];
+  private theme = {
+    themes: {
+      light: new LightTheme(),
+      dark: new DarkTheme()
+    },
+    selected: undefined
+  };
+  private effect = {
+    key: 'mode',
+    mode: Object.keys(this.theme.themes)[0],
+    selected: new WavesEffect('#perceive')
+  };
+  private zoom = {
+    key: 'zoom',
+    factor: 1,
+    step: 0.1,
+    min: 1,
+    max: 2
+  };
 
   constructor() {
-    this.mode = localStorage.getItem(this.modeKey) || this.mode;
-    this.theme = this.themes[this.mode];
-    this.theme.setStyleProperties();
-    this.effect.createEffect({color: this.theme.backgroundEffectColor});
+    this.effect.mode = localStorage.getItem(this.effect.key) || this.effect.mode;
+    this.theme.selected = this.theme.themes[this.effect.mode];
+    this.theme.selected.setStyleProperties();
+    this.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
+    const zoomFactor = localStorage.getItem(this.zoom.key);
+    this.zoom.factor = zoomFactor ? parseFloat(zoomFactor) : this.zoom.factor;
   }
 
   isEffectActive() {
-    return Boolean(this.effect);
+    return Boolean(this.effect.selected);
   }
 
   destroyEffect(postAction: () => void) {
-    this.effect.destroyEffect(postAction);
-    delete this.effect;
+    this.effect.selected.destroyEffect(postAction);
+    delete this.effect.selected;
+  }
+
+  getMode() {
+    return this.effect.mode;
   }
 
   setTheme(mode: string) {
-    const newTheme = this.themes[mode];
+    const newTheme = this.theme.themes[mode];
     if (newTheme) {
-      this.mode = mode;
-      this.theme = newTheme;
-      this.theme.setStyleProperties();
+      this.effect.mode = mode;
+      this.theme.selected = newTheme;
+      this.theme.selected.setStyleProperties();
 
       if (this.isEffectActive()) {
-        this.effect.effect.destroy();
-        delete this.effect.effect;
-        this.effect.createEffect({color: this.theme.backgroundEffectColor});
+        this.effect.selected.effect.destroy();
+        delete this.effect.selected.effect;
+        this.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
       }
 
-      localStorage.setItem(this.modeKey, this.mode);
+      localStorage.setItem(this.effect.key, this.effect.mode);
     }
   }
 
   setThemeAccentHue(hue: number) {
-    this.theme.setAccentHue(hue);
+    this.theme.selected.setAccentHue(hue);
   }
 
   getThemeAccentHue() {
-    return this.theme.getAccentHue();
+    return this.theme.selected.getAccentHue();
+  }
+
+  getZoomFactor() {
+    return this.zoom.factor;
+  }
+
+  zoomIn() {
+    if (this.zoom.factor < this.zoom.max) {
+      this.zoom.factor += this.zoom.step;
+      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
+    }
+  }
+
+  zoomOut() {
+    if (this.zoom.factor > this.zoom.min) {
+      this.zoom.factor -= this.zoom.step;
+      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
+    }
   }
 }

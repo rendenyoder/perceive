@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
   constructor(private bible: BibleService) { }
 
   ngOnInit() {
-    this.isDarkMode = this.appTheme ? this.appTheme.mode === 'dark' : false;
+    this.isDarkMode = this.appTheme ? this.appTheme.getMode() === 'dark' : false;
     this.colorRange = this.appTheme.getThemeAccentHue();
     this.bible.fetchBibles().subscribe(result => {
       this.versions = result.data;

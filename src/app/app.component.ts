@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   modeSettings = settings;
   modes = Object.values(settings.modes);
   content = {};
-  zoom = { factor: 1, step: 0.1, min: 1, max: 2 };
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
@@ -106,24 +105,6 @@ export class AppComponent implements OnInit {
         this.appSearch.displayResults();
       }
     });
-  }
-
-  /**
-   * Increases the current zoom factor.
-   */
-  zoomIn() {
-    if (this.zoom.factor < this.zoom.max) {
-      this.zoom.factor += this.zoom.step;
-    }
-  }
-
-  /**
-   * Decreases the current zoom factor.
-   */
-  zoomOut() {
-    if (this.zoom.factor > this.zoom.min) {
-      this.zoom.factor -= this.zoom.step;
-    }
   }
 
   /**
