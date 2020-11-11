@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
-import { AppTheme } from './shared/model/theme';
+import { AppSettings } from './shared/model/theme';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('appSearch', {static: false}) appSearch;
 
-  appTheme: AppTheme;
+  appSettings: AppSettings;
   searchTerm = '';
   isSearchExpanded = false;
   hasSearched = false;
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.appTheme = new AppTheme();
+    this.appSettings = new AppSettings();
   }
 
   /**
@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
       }
     };
     // if effect still active, destroy then search
-    if (this.appTheme.isEffectActive()) {
-      this.appTheme.destroyEffect(search);
+    if (this.appSettings.isEffectActive()) {
+      this.appSettings.destroyEffect(search);
     } else {
       search();
     }
@@ -141,8 +141,8 @@ export class AppComponent implements OnInit {
       this.isSearchExpanded = false;
     };
     // if effect still active, destroy then show help
-    if (this.appTheme.isEffectActive()) {
-      this.appTheme.destroyEffect(help);
+    if (this.appSettings.isEffectActive()) {
+      this.appSettings.destroyEffect(help);
     } else {
       help();
     }

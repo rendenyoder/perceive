@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppTheme } from '../model/theme';
+import { AppSettings } from '../model/theme';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   isSearchExpanded = false;
 
   @Input()
-  appTheme: AppTheme;
+  appSettings: AppSettings;
 
   @Output()
   execSearch: EventEmitter<any> = new EventEmitter();
@@ -44,8 +44,8 @@ export class HeaderComponent implements OnInit {
   constructor(private bible: BibleService) { }
 
   ngOnInit() {
-    this.isDarkMode = this.appTheme ? this.appTheme.getMode() === 'dark' : false;
-    this.colorRange = this.appTheme.getThemeAccentHue();
+    this.isDarkMode = this.appSettings ? this.appSettings.getMode() === 'dark' : false;
+    this.colorRange = this.appSettings.getThemeAccentHue();
     this.bible.fetchBibles().subscribe(result => {
       this.versions = result.data;
       // sort versions
@@ -136,7 +136,7 @@ export class HeaderComponent implements OnInit {
    * Updates theme accent based on color slider.
    */
   updateAccent() {
-    this.appTheme.setThemeAccentHue(this.colorRange);
+    this.appSettings.setThemeAccentHue(this.colorRange);
   }
 
   /**
@@ -173,8 +173,8 @@ export class HeaderComponent implements OnInit {
    */
   updateDarkMode() {
     const mode = this.isDarkMode ? 'dark' : 'light';
-    this.appTheme.setTheme(mode);
-    this.colorRange = this.appTheme.getThemeAccentHue();
+    this.appSettings.setTheme(mode);
+    this.colorRange = this.appSettings.getThemeAccentHue();
   }
 
   /**

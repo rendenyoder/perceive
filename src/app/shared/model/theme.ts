@@ -188,9 +188,9 @@ class DarkTheme extends Theme {
 }
 
 /**
- * Contains app theme, including background effect and color theme.
+ * Contains app settings, including background effect and color theme.
  */
-export class AppTheme {
+export class AppSettings {
   private theme = {
     themes: {
       light: new LightTheme(),
