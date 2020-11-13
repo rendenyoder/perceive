@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppSettings } from '../model/theme';
+import { AppSettings } from '../model/settings';
 
 @Component({
   selector: 'app-header',

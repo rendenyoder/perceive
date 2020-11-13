@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
-import { AppSettings } from './shared/model/theme';
+import { AppSettings } from './shared/model/settings';
 
 @Component({
   selector: 'app-root',

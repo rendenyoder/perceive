@@ -28,7 +28,7 @@ abstract class VantaEffect {
 /**
  * Vanta.js wave effect configuration.
  */
-class WavesEffect extends VantaEffect {
+export class WavesEffect extends VantaEffect {
   config = {
     el: this.element,
     shininess: 25,
@@ -101,6 +101,10 @@ class ThemeAccentProperty extends StyleProperty {
     this.lightness = lightness;
   }
 
+  /**
+   * Updates hue and sets the property value using new hue.
+   * @param hue New accent hue.
+   */
   update(hue: number = this.hue) {
     this.value = `hsl(${hue}, ${this.saturation}%, ${this.lightness}%)`;
     this.hue = hue;
@@ -152,6 +156,10 @@ abstract class Theme {
     this.setProp(this.brightAccent);
   }
 
+  /**
+   * Sets property/value to be used by document.
+   * @param styleProp The style property.
+   */
   setProp(styleProp: StyleProperty) {
     document.documentElement.style.setProperty(styleProp.property, styleProp.value);
   }
@@ -160,7 +168,7 @@ abstract class Theme {
 /**
  * Light UI theme.
  */
-class LightTheme extends Theme {
+export class LightTheme extends Theme {
   hueKey = 'light-accent-hue';
   backgroundEffectColor = 0x9b9b9b;
   iconFilter = new StyleProperty('--icon-filter', 'brightness(100%)');
@@ -175,7 +183,7 @@ class LightTheme extends Theme {
 /**
  * Dark UI theme.
  */
-class DarkTheme extends Theme {
+export class DarkTheme extends Theme {
   hueKey = 'dark-accent-hue';
   backgroundEffectColor = 0x202020;
   iconFilter = new StyleProperty('--icon-filter', 'brightness(250%)');
@@ -185,94 +193,4 @@ class DarkTheme extends Theme {
   darkAccent = new StyleProperty('--dark-accent', '#3c3c3c');
   midAccent = new StyleProperty('--mid-accent', '#484848');
   brightAccent = new StyleProperty('--bright-accent', '#515151');
-}
-
-/**
- * Contains app settings, including background effect and color theme.
- */
-export class AppSettings {
-  private theme = {
-    themes: {
-      light: new LightTheme(),
-      dark: new DarkTheme()
-    },
-    selected: undefined
-  };
-  private effect = {
-    key: 'mode',
-    mode: Object.keys(this.theme.themes)[0],
-    selected: new WavesEffect('#perceive')
-  };
-  private zoom = {
-    key: 'zoom',
-    factor: 1,
-    step: 0.1,
-    min: 1,
-    max: 2
-  };
-
-  constructor() {
-    this.effect.mode = localStorage.getItem(this.effect.key) || this.effect.mode;
-    this.theme.selected = this.theme.themes[this.effect.mode];
-    this.theme.selected.setStyleProperties();
-    this.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
-    const zoomFactor = localStorage.getItem(this.zoom.key);
-    this.zoom.factor = zoomFactor ? parseFloat(zoomFactor) : this.zoom.factor;
-  }
-
-  isEffectActive() {
-    return Boolean(this.effect.selected);
-  }
-
-  destroyEffect(postAction: () => void) {
-    this.effect.selected.destroyEffect(postAction);
-    delete this.effect.selected;
-  }
-
-  getMode() {
-    return this.effect.mode;
-  }
-
-  setTheme(mode: string) {
-    const newTheme = this.theme.themes[mode];
-    if (newTheme) {
-      this.effect.mode = mode;
-      this.theme.selected = newTheme;
-      this.theme.selected.setStyleProperties();
-
-      if (this.isEffectActive()) {
-        this.effect.selected.effect.destroy();
-        delete this.effect.selected.effect;
-        this.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
-      }
-
-      localStorage.setItem(this.effect.key, this.effect.mode);
-    }
-  }
-
-  setThemeAccentHue(hue: number) {
-    this.theme.selected.setAccentHue(hue);
-  }
-
-  getThemeAccentHue() {
-    return this.theme.selected.getAccentHue();
-  }
-
-  getZoomFactor() {
-    return this.zoom.factor;
-  }
-
-  zoomIn() {
-    if (this.zoom.factor < this.zoom.max) {
-      this.zoom.factor += this.zoom.step;
-      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
-    }
-  }
-
-  zoomOut() {
-    if (this.zoom.factor > this.zoom.min) {
-      this.zoom.factor -= this.zoom.step;
-      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
-    }
-  }
 }
