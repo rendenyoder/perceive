@@ -4,7 +4,7 @@
     <span class="title std-transition">Alphabetize</span>
     <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
   </div>
-  <div class="toggle" (click)="toggleSmartScroll()">
+  <div *ngIf="isSmartScrollShown" class="toggle" (click)="toggleSmartScroll()">
     <span class="title std-transition">Smart Scroll</span>
     <div class="checkbox" [ngClass]="{'checkbox-checked': isSmartScrollEnabled}"></div>
   </div>

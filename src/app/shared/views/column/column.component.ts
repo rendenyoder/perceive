@@ -12,11 +12,13 @@ export class ColumnComponent extends ViewComponent implements OnInit {
 
   @ViewChild('passageGroup', {static: false}) passageGroup;
 
+  isSmartScrollShown = false;
   isSmartScrollEnabled = true;
 
   ngOnInit() {
     this.sortContent();
     this.isAlphabetizable = this.isMultipleSelected();
+    this.isSmartScrollShown = this.showSmartScroll();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -73,5 +75,18 @@ export class ColumnComponent extends ViewComponent implements OnInit {
   private calculateOffset(diff, child) {
     const percent = (window.scrollY - child.topDist) / Math.abs(child.offsetHeight - window.innerHeight);
     return Math.round(diff * Math.max(0, Math.min(percent, 1)));
+  }
+
+  /**
+   * Whether or not the smart scroll feature should be shown.
+   */
+  private showSmartScroll() {
+    return Object.keys(this.content).some(typeKey => {
+      const type = this.content[typeKey];
+      return Object.keys(type).some(contentKey => {
+        const content = type[contentKey];
+        return content && content.length > 1;
+      });
+    });
   }
 }
