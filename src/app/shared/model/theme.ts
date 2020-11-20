@@ -76,7 +76,7 @@ export class WavesEffect extends VantaEffect {
  */
 class StyleProperty {
   property: string;
-  value: string;
+  value: any;
 
   constructor(property: string, value: any) {
     this.property = property;
@@ -112,18 +112,53 @@ class ThemeAccentProperty extends StyleProperty {
 }
 
 /**
+ * Represents the font "zoom" level.
+ */
+class ZoomProperty extends StyleProperty {
+  step = 0.1;
+  min = 1.0;
+  max = 1.5;
+
+  constructor(property: string, factor: number) {
+    super(property, factor);
+  }
+
+  /**
+   * Increases zoom factor by one step.
+   */
+  zoomIn() {
+    if (this.value < this.max) {
+      this.value += this.step;
+    }
+  }
+
+  /**
+   * Decreases zoom factor by one step.
+   */
+  zoomOut() {
+    if (this.value > this.min) {
+      this.value -= this.step;
+    }
+  }
+}
+
+/**
  * Abstract class representing a UI theme.
  */
 abstract class Theme {
-  abstract hueKey: string;
   abstract backgroundEffectColor: number;
   abstract iconFilter: StyleProperty;
-  abstract themeAccent: ThemeAccentProperty;
   abstract fontColor: StyleProperty;
   abstract baseColor: StyleProperty;
   abstract darkAccent: StyleProperty;
   abstract midAccent: StyleProperty;
   abstract brightAccent: StyleProperty;
+
+  abstract hueKey: string;
+  abstract themeAccent: ThemeAccentProperty;
+
+  private zoomKey = 'zoom';
+  private zoom: ZoomProperty = new ZoomProperty('--zoom-factor', this.getZoomFactor());
 
   /**
    * Gets stored hue value using hueKey.
@@ -144,6 +179,32 @@ abstract class Theme {
   }
 
   /**
+   * Gets stored zoom factor.
+   */
+  getZoomFactor() {
+    const stored = localStorage.getItem(this.zoomKey);
+    return stored ? parseFloat(stored) : 1.0;
+  }
+
+  /**
+   * Increases zoom factor and updates stored value.
+   */
+  zoomIn() {
+    this.zoom.zoomIn();
+    this.setProp(this.zoom);
+    localStorage.setItem(this.zoomKey, this.zoom.value.toString());
+  }
+
+  /**
+   * Decreases zoom factor and updates stored value.
+   */
+  zoomOut() {
+    this.zoom.zoomOut();
+    this.setProp(this.zoom);
+    localStorage.setItem(this.zoomKey, this.zoom.value.toString());
+  }
+
+  /**
    * Sets theme properties.
    */
   setStyleProperties() {
@@ -154,6 +215,7 @@ abstract class Theme {
     this.setProp(this.darkAccent);
     this.setProp(this.midAccent);
     this.setProp(this.brightAccent);
+    this.setProp(this.zoom);
   }
 
   /**

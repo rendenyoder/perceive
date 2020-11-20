@@ -48,6 +48,10 @@ html, body {
   font-size: 1.6rem;
 }
 
+.zoomable {
+  font-size: calc(100% * var(--zoom-factor)) !important;
+}
+
 .std-transition {
   -webkit-transition: 300ms;
   -moz-transition: 300ms;
@@ -169,13 +173,13 @@ html, body {
   Credit to authors https://github.com/bryceallison, https://github.com/dallasbpeters, https://github.com/sloansparger.
  */
 .scripture-styles {
-  font-size: 18px;
+  font-size: calc(var(--zoom-factor) * 18px);
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  line-height: 25px;
+  line-height: calc(var(--zoom-factor) * 25px);
   color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   span {
-    font-size: 18px;
+    font-size: calc(var(--zoom-factor) * 18px);
   }
 }
 
@@ -307,7 +311,7 @@ html, body {
 .scripture-styles .c {
   text-align: center;
   font-weight: bold;
-  font-size: 1.3em
+  font-size: calc(var(--zoom-factor) * 1.3em);
 }
 
 .scripture-styles .ca {
@@ -339,7 +343,7 @@ html, body {
 .scripture-styles .vp,
 .scripture-styles sup[class^="v"] {
   color: var(--font-color);
-  font-size: 0.7em;
+  font-size: calc(var(--zoom-factor) * 0.7em);
   letter-spacing: -0.03em;
   vertical-align: 0.25em;
   line-height: 0;
@@ -371,7 +375,7 @@ html, body {
 }
 
 .scripture-styles .x {
-  font-size: 16px;
+  font-size: calc(var(--zoom-factor) * 16px);
   box-sizing: border-box;
   display: inline-block;
   position: relative;
@@ -408,7 +412,7 @@ html, body {
 }
 
 .scripture-styles .notelink sup {
-  font-size: 0.7em;
+  font-size: calc(var(--zoom-factor) * 0.7em);
   letter-spacing: -0.03em;
   vertical-align: 0.25em;
   line-height: 0;
@@ -421,7 +425,7 @@ html, body {
 }
 
 .scripture-styles .f {
-  font-size: 16px;
+  font-size: calc(var(--zoom-factor) * 16px);
   display: inline-block;
   box-sizing: border-box;
   padding: 0 0.4em;
@@ -452,7 +456,7 @@ html, body {
 
 .scripture-styles .fv {
   color: var(--font-color);
-  font-size: 0.75em;
+  font-size: calc(var(--zoom-factor) * 0.75em);
   letter-spacing: -0.03em;
   vertical-align: 0.25em;
   line-height: 0;
@@ -473,8 +477,8 @@ html, body {
 .scripture-styles [class^="is"] {
   text-align: center;
   font-weight: bold;
-  font-size: 27px;
-  line-height: 50px;
+  font-size: calc(var(--zoom-factor) * 27px);
+  line-height: calc(var(--zoom-factor) * 50px);
   margin-top: 25px;
   margin-bottom: 25px
 }
@@ -540,8 +544,8 @@ html, body {
 
 .scripture-styles .iot {
   font-weight: bold;
-  font-size: 18px;
-  line-height: 25px;
+  font-size: calc(var(--zoom-factor) * 18px);
+  line-height: calc(var(--zoom-factor) * 25px);
   margin-top: 25px;
   margin-bottom: 0px
 }
@@ -708,7 +712,7 @@ html, body {
 .scripture-styles .qa {
   text-align: center;
   font-style: italic;
-  font-size: 1.1em;
+  font-size: calc(var(--zoom-factor) * 1.1em);
   margin-left: 0em;
   margin-right: 0em
 }
@@ -853,14 +857,14 @@ html, body {
 .scripture-styles .mt,
 .scripture-styles .mt1,
 .scripture-styles .mt2 {
-  font-size: 40px;
-  line-height: 50px;
+  font-size: calc(var(--zoom-factor) * 40px);
+  line-height: calc(var(--zoom-factor) * 50px);
   margin-top: 25px;
   margin-bottom: 25px
 }
 
 .scripture-styles .mt2 {
-  font-size: 34px;
+  font-size: calc(var(--zoom-factor) * 34px);
   margin-top: -25px;
   font-style: italic;
   font-weight: normal
@@ -873,14 +877,14 @@ html, body {
 .scripture-styles .ms3 {
   text-align: center;
   font-weight: bold;
-  font-size: 27px;
-  line-height: 50px;
+  font-size: calc(var(--zoom-factor) * 27px);
+  line-height: calc(var(--zoom-factor) * 50px);
   margin-top: 25px;
   margin-bottom: 0px
 }
 
 .scripture-styles .mr {
-  font-size: 0.9em;
+  font-size: calc(var(--zoom-factor) * 0.9em);
   margin-bottom: 25px;
   text-align: center;
   font-weight: normal;
@@ -894,8 +898,8 @@ html, body {
 .scripture-styles .s4 {
   text-align: center;
   font-weight: bold;
-  font-size: 27px;
-  line-height: 50px;
+  font-size: calc(var(--zoom-factor) * 27px);
+  line-height: calc(var(--zoom-factor) * 50px);
   margin-bottom: 25px;
   margin-top: 0px
 }
@@ -909,7 +913,7 @@ html, body {
 }
 
 .scripture-styles .r {
-  font-size: 18px;
+  font-size: calc(var(--zoom-factor) * 18px);
   font-weight: normal;
   font-style: italic;
   text-align: center;
@@ -918,7 +922,7 @@ html, body {
 
 .scripture-styles .rq {
   font-size: inherit;
-  line-height: 25px;
+  line-height: calc(var(--zoom-factor) * 25px);
   font-style: italic;
   text-align: right;
   letter-spacing: normal

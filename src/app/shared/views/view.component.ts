@@ -6,9 +6,6 @@ export class ViewComponent {
   @Input()
   content = {verses: {}, passages: {}};
 
-  @Input()
-  zoom = 1;
-
   isAlphabetized = false;
   isAlphabetizable = false;
   sortedContent = {verses: [], passages: []};

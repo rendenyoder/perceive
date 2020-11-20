@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<section [style.zoom]="zoom">
+<section>
   <!-- View For Verses -->
   <ng-container *ngIf="hasContent(content.verses)">
     <div class="content-container">
@@ -19,10 +19,12 @@
             <tr>
               <td class="std-font">
                 <div class="content-version">
-                  <span>{{verse.versionInfo.name}}</span>&nbsp;
-                  <span *ngIf="verse.versionInfo.description">[{{verse.versionInfo.description}}]</span>
+                  <span class="zoomable">{{verse.versionInfo.name}}</span>&nbsp;
+                  <span *ngIf="verse.versionInfo.description" class="zoomable">[{{verse.versionInfo.description}}]</span>
                 </div>
-                <span class="md-font-size">{{verse.content.reference}}</span>
+                <span class="md-font-size">
+                  <span class="zoomable">{{verse.content.reference}}</span>
+                </span>
               </td>
             </tr>
             <!-- Verse Content -->
@@ -49,10 +51,12 @@
             <tr>
               <td class="std-font">
                 <div class="content-version">
-                  <span>{{passage.versionInfo.name}}</span>&nbsp;
-                  <span *ngIf="passage.versionInfo.description">[{{passage.versionInfo.description}}]</span>
+                  <span class="zoomable">{{passage.versionInfo.name}}</span>&nbsp;
+                  <span *ngIf="passage.versionInfo.description" class="zoomable">[{{passage.versionInfo.description}}]</span>
                 </div>
-                <span class="md-font-size">{{passage.content.reference}}</span>
+                <span class="md-font-size">
+                  <span class="zoomable">{{passage.content.reference}}</span>
+                </span>
               </td>
             </tr>
             <!-- Passage Content -->

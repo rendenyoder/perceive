@@ -112,9 +112,9 @@
         <img class="icon std-transition" (click)="appSettings.zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
       </div>
       <!-- Standard View -->
-      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content" [zoom]="appSettings.getZoomFactor()"></app-standard-view>
+      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content"></app-standard-view>
       <!-- Column View -->
-      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content" [zoom]="appSettings.getZoomFactor()"></app-column-view>
+      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content"></app-column-view>
     </div>
   </div>
 </div>

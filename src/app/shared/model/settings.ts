@@ -20,20 +20,8 @@ export class AppSettings {
     }
   };
 
-  /**
-   * Settings pertaining to read zoom level.
-   */
-  private zoom = {
-    key: 'zoom',
-    factor: 1,
-    step: 0.1,
-    min: 1,
-    max: 2
-  };
-
   constructor() {
     this.initTheme();
-    this.initZoom();
   }
 
   /**
@@ -44,14 +32,6 @@ export class AppSettings {
     this.theme.selected = this.theme.themes[this.theme.effect.mode];
     this.theme.selected.setStyleProperties();
     this.theme.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
-  }
-
-  /**
-   * Initializes zoom settings.
-   */
-  private initZoom() {
-    const zoomFactor = localStorage.getItem(this.zoom.key);
-    this.zoom.factor = zoomFactor ? parseFloat(zoomFactor) : this.zoom.factor;
   }
 
   /**
@@ -114,29 +94,16 @@ export class AppSettings {
   }
 
   /**
-   * Gets the current zoom factor.
-   */
-  getZoomFactor() {
-    return this.zoom.factor;
-  }
-
-  /**
    * Increments zoom factor.
    */
   zoomIn() {
-    if (this.zoom.factor < this.zoom.max) {
-      this.zoom.factor += this.zoom.step;
-      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
-    }
+    this.theme.selected.zoomIn();
   }
 
   /**
    * Decrements zoom factor.
    */
   zoomOut() {
-    if (this.zoom.factor > this.zoom.min) {
-      this.zoom.factor -= this.zoom.step;
-      localStorage.setItem(this.zoom.key, this.zoom.factor.toString());
-    }
+    this.theme.selected.zoomOut();
   }
 }
