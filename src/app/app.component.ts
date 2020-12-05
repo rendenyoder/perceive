@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
 import { AppSettings } from './shared/model/settings';
+import { SearchResults } from './shared/model/search';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +15,14 @@ export class AppComponent implements OnInit {
   @ViewChild('appSearch', {static: false}) appSearch;
 
   appSettings: AppSettings;
+  searchResults: SearchResults;
+
   searchTerm = '';
   isSearchExpanded = false;
   hasSearched = false;
   showHelpInfo = false;
   isReadView = false;
   isHeaderHidden = false;
-  searchResults = {};
   hasSearchResults = false;
   versionNames = [];
   modeSettings = settings;
@@ -40,12 +42,13 @@ export class AppComponent implements OnInit {
     const search = () => {
       this.hasSearched = true;
       this.isReadView = false;
-      this.searchResults = {results: Array.from($event)};
-      if (this.searchResults['results'] && this.searchResults['results'].length > 0) {
-        this.hasSearchResults = this.searchResults['results'].some(item => {
+      this.searchResults = new SearchResults();
+      this.searchResults.results = Array.from($event);
+      if (this.searchResults.results && this.searchResults.results.length > 0) {
+        this.hasSearchResults = this.searchResults.results.some(item => {
           return item.results && (item.results.total || item.results.passages);
         });
-        this.versionNames = this.searchResults['results'].map(res => res.name);
+        this.versionNames = this.searchResults.results.map(res => res.name);
       }
     };
     // if effect still active, destroy then search

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
+import { ContentInfo, SearchResults } from '../model/search';
 
 @Component({
   selector: 'app-search',
@@ -9,7 +10,7 @@ import { BibleService } from '../services/bible.service';
 export class SearchComponent implements OnInit {
 
   @Input()
-  searchResults = {results: []};
+  searchResults: SearchResults;
 
   @Output()
   display: EventEmitter<any> = new EventEmitter();
@@ -88,7 +89,7 @@ export class SearchComponent implements OnInit {
    * Checks whether the user has selected any content to view.
    */
   hasSelected() {
-    const selected = this.searchResults['selected'];
+    const selected = this.searchResults.selected;
     return selected && (Object.keys(selected.passages).length > 0 || Object.keys(selected.verses).length > 0);
   }
 
@@ -99,16 +100,11 @@ export class SearchComponent implements OnInit {
    * @param isPassage Whether or not the content is a passage or verse.
    */
   select(content, version, isPassage) {
-    if (!this.searchResults['selected']) {
-      this.searchResults['selected'] = {verses: {}, passages: {}};
-    }
-    const bibleContent = isPassage ? this.searchResults['selected'].passages : this.searchResults['selected'].verses;
+    const bibleContent = isPassage ? this.searchResults.selected.passages : this.searchResults.selected.verses;
     if (!content.selected) {
       // create object to contain content and version info without results
-      const selectedContent = {content, versionInfo: undefined};
-      const versionInfo = Object.assign({}, version);
-      versionInfo.results = undefined;
-      selectedContent.versionInfo = versionInfo;
+      const selectedContent = new ContentInfo(content, Object.assign({}, version));
+      selectedContent.versionInfo.results = undefined;
       // put content at id of passage or verse
       const contentList = bibleContent[selectedContent.content.id];
       if (contentList) {
@@ -133,9 +129,9 @@ export class SearchComponent implements OnInit {
    * Emit selected search results.
    */
   displayResults() {
-    if (this.searchResults['selected']) {
+    if (this.searchResults.selected) {
       window.scroll(0, 0);
-      this.display.emit(this.searchResults['selected']);
+      this.display.emit(this.searchResults.selected);
     }
   }
 }
