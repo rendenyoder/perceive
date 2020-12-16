@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { settings } from './shared/model/mode';
 import { AppSettings } from './shared/model/settings';
-import { SearchResults } from './shared/model/search';
+import { SearchState } from './shared/model/search';
+import { BibleService } from './shared/services/bible.service';
 
 @Component({
   selector: 'app-root',
@@ -9,53 +10,36 @@ import { SearchResults } from './shared/model/search';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
-  @ViewChild('appHeader', {static: false}) appHeader;
-
-  @ViewChild('appSearch', {static: false}) appSearch;
-
   appSettings: AppSettings;
-  searchResults: SearchResults;
-
-  searchTerm = '';
+  searchState: SearchState;
   isSearchExpanded = false;
-  hasSearched = false;
   showHelpInfo = false;
   isReadView = false;
   isHeaderHidden = false;
-  hasSearchResults = false;
-  versionNames = [];
   modeSettings = settings;
   modes = Object.values(settings.modes);
-  content = {};
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, private bible: BibleService) { }
 
   ngOnInit() {
     this.appSettings = new AppSettings();
+    this.searchState = new SearchState(this.bible);
   }
 
   /**
-   * Sets the current search results from a search event.
+   * After search, destroy effect and show results or show error.
    */
-  setSearchResults($event) {
-    const search = () => {
-      this.hasSearched = true;
-      this.isReadView = false;
-      this.searchResults = new SearchResults();
-      this.searchResults.results = Array.from($event);
-      if (this.searchResults.results && this.searchResults.results.length > 0) {
-        this.hasSearchResults = this.searchResults.results.some(item => {
-          return item.results && (item.results.total || item.results.passages);
-        });
-        this.versionNames = this.searchResults.results.map(res => res.name);
+  search($event) {
+    if ($event) {
+      const view = () => this.isReadView = false;
+      // if effect still active, destroy then run post action
+      if (this.appSettings.isEffectActive()) {
+        this.appSettings.destroyEffect(view);
+      } else {
+        view();
       }
-    };
-    // if effect still active, destroy then search
-    if (this.appSettings.isEffectActive()) {
-      this.appSettings.destroyEffect(search);
     } else {
-      search();
+      // TODO: Case where search fails.
     }
   }
 
@@ -63,10 +47,9 @@ export class AppComponent implements OnInit {
    * Displays the selected content.
    * @param $event The content to be displayed.
    */
-  display($event) {
+  display() {
     this.isHeaderHidden = true;
     this.isReadView = true;
-    this.content = $event;
   }
 
   /**
@@ -79,43 +62,13 @@ export class AppComponent implements OnInit {
    * @param offset The offset of results.
    */
   openContent(modeId, query, versions, selected?, limit?, offset?) {
-    this.modeSettings.current = modeId;
-    this.searchTerm = query;
-    if (versions) {
-      this.appHeader.selectVersions(...versions);
-    }
-    this.appHeader.doSearch(this.searchTerm, limit, offset).subscribe(res => {
-      this.setSearchResults(res);
-      // TODO: Really should not be calling detectChanges()...
-      this.changeDetector.detectChanges();
-      if (this.appSearch) {
-        res.forEach(version => {
-          if (version.results && version.results.verses) {
-            version.results.verses.forEach(v => {
-              if (!selected || selected.includes(v.id)) {
-                this.appSearch.select(v, version, false);
-              }
-            });
-          }
-          if (version.results && version.results.passages) {
-            version.results.passages.forEach(p => {
-              if (!selected || selected.includes(p.id)) {
-                this.appSearch.select(p, version, true);
-              }
-            });
-          }
-        });
-        this.appSearch.displayResults();
-      }
+    this.searchState.searchAndSelect(query, versions, selected, limit, offset).subscribe(results => {
+      this.modeSettings.current = modeId;
+      window.scroll(0, 0);
+      this.display();
+    }, error => {
+      // TODO: Case where search fails.
     });
-  }
-
-  /**
-   * Updates the search term.
-   * @param $event the new search term.
-   */
-  updateSearchTerm($event) {
-    this.searchTerm = $event;
   }
 
   /**
@@ -140,7 +93,7 @@ export class AppComponent implements OnInit {
   showHelp() {
     const help = () => {
       this.showHelpInfo = true;
-      this.hasSearched = true;
+      this.searchState.hasSearched = true;
       this.isSearchExpanded = false;
     };
     // if effect still active, destroy then show help
@@ -158,7 +111,7 @@ export class AppComponent implements OnInit {
    */
   scrollSearchTerm($element, term) {
     this.isSearchExpanded = false;
-    this.scrollToElement($element, () => this.searchTerm = term);
+    this.scrollToElement($element, () => this.searchState.searchTerm = term);
   }
 
   /**

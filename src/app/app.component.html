@@ -1,35 +1,34 @@
 <div #perceive id="perceive" class="perceive">
-  <div class="header std-transition" [ngClass]="{'hidden': isHeaderHidden, 'pre-search': !hasSearched}">
-    <div *ngIf="!hasSearched" class="title">
+  <div class="header std-transition" [ngClass]="{'hidden': isHeaderHidden, 'pre-search': !searchState.hasSearched}">
+    <div *ngIf="!searchState.hasSearched" class="title">
       PERCEIVE
       <div class="sub-title">a simple, clean, and powerful web Bible</div>
     </div>
     <!-- Header Containing Settings Menu And Search Bar -->
-    <app-header #appHeader
-      [searchTerm]="searchTerm"
+    <app-header
+      [searchState]="searchState"
+      [appSettings]="appSettings"
       [modeSettings]="modeSettings"
       [isSearchExpanded]="isSearchExpanded"
-      [appSettings]="appSettings"
-      (execSearch)="setSearchResults($event)"
-      (updateSearchTerm)="updateSearchTerm($event)"
+      (execSearch)="search($event)"
       (updateSearchExpanded)="updateSearch($event)">
     </app-header>
-    <div *ngIf="!hasSearched" class="help std-font">
+    <div *ngIf="!searchState.hasSearched" class="help std-font">
       <span (click)="showHelp()">need help?</span>
     </div>
   </div>
 
-  <div *ngIf="hasSearched" class="content">
+  <div *ngIf="searchState.hasSearched" class="content">
     <!-- Info Container -->
-    <div *ngIf="!isReadView && !hasSearchResults" class="info-container">
+    <div *ngIf="!isReadView && !searchState.hasSearchResults" class="info-container">
       <!-- Info When No Results Are Found -->
-      <div *ngIf="hasSearched && !showHelpInfo" class="not-found-container">
+      <div *ngIf="searchState.hasSearched && !showHelpInfo" class="not-found-container">
         <div class="not-found std-font md-font-size">
           <div class="message">
             <span>
-              No results found for "{{searchTerm}}" when searching from:
-              <i *ngFor="let version of versionNames; let i = index">
-                {{version}}<span *ngIf="(i + 1) != versionNames.length">,</span>
+              No results found for "{{searchState.searchTerm}}" when searching from:
+              <i *ngFor="let version of searchState.versionNames; let i = index">
+                {{version}}<span *ngIf="(i + 1) != searchState.versionNames.length">,</span>
               </i>
             </span>
           </div>
@@ -101,7 +100,7 @@
     </div>
 
     <!-- Display Search Results -->
-    <app-search #appSearch *ngIf="!isReadView && hasSearchResults" [searchResults]="searchResults" (display)="display($event)"></app-search>
+    <app-search *ngIf="!isReadView && searchState.hasSearchResults" [searchState]="searchState" (display)="display()"></app-search>
 
     <!-- Display On Of The Read Views -->
     <div *ngIf="isReadView" class="read-view-container shadow">
@@ -112,9 +111,9 @@
         <img class="icon std-transition" (click)="appSettings.zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
       </div>
       <!-- Standard View -->
-      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="content"></app-standard-view>
+      <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="searchState.searchResults.selected"></app-standard-view>
       <!-- Column View -->
-      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="content"></app-column-view>
+      <app-column-view *ngIf="modeSettings.current === 'column'" [content]="searchState.searchResults.selected"></app-column-view>
     </div>
   </div>
 </div>

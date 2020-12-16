@@ -1,11 +1,11 @@
 <!-- Button To Display Off To the Right To Enter Read Mode -->
-<div class="prompt std-font" (click)="displayResults()" [ngClass]="{'prompt-show': hasSelected()}">
+<div class="prompt std-font" (click)="displayResults()" [ngClass]="{'prompt-show': searchState.hasSelected()}">
   <span class="md-font-size">Open Read View</span>
 </div>
 
 <section>
-  <ng-container *ngFor="let version of searchResults.results">
-    <ng-container *ngIf="version.results && hasContent(version)">
+  <ng-container *ngFor="let version of searchState.searchResults.results">
+    <ng-container *ngIf="version.results && searchState.hasContent(version)">
       <div class="result-container shadow">
         <!-- Version Name -->
         <div class="version-name std-font">
@@ -18,7 +18,7 @@
         <ng-container *ngIf="version.results.verses && version.results.verses.length > 0">
           <ng-container *ngFor="let verse of version.results.verses">
             <!-- Container For Each Verse Result -->
-            <div class="result-content" (click)="select(verse, version, false)">
+            <div class="result-content" (click)="searchState.select(verse, version, false)">
               <!-- Checkbox For Selecting Verse -->
               <div class="checkbox" [ngClass]="{'checkbox-checked': verse.selected}"></div>
               <!-- Name Of The Verse -->
@@ -32,7 +32,7 @@
             </div>
           </ng-container>
           <!-- Button To Add More Search Results To Queue -->
-          <div class="plus-results-container std-font" *ngIf="hasMoreResults(version)" (click)="addResults(version)">
+          <div class="plus-results-container std-font" *ngIf="searchState.hasMoreResults(version)" (click)="addResults(version)">
             <span>Add More Results</span>
             <img class="plus-icon" src="./assets/img/plus.png" alt="Add Results"/>
           </div>
@@ -42,7 +42,7 @@
         <ng-container *ngIf="version.results.passages && version.results.passages.length > 0">
           <ng-container *ngFor="let passage of version.results.passages">
             <!-- Container For Each Passage Result -->
-            <div class="result-content" (click)="select(passage, version, true)">
+            <div class="result-content" (click)="searchState.select(passage, version, true)">
               <!-- Checkbox For Selecting Verse -->
               <div class="checkbox" [ngClass]="{'checkbox-checked': passage.selected}"></div>
               <!-- Icon To Expand Passage Container -->

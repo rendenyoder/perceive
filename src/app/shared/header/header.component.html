@@ -4,7 +4,7 @@
     <div class="navigation-container shadow">
       <div class="navigation-bar">
         <div class="search-bar-container">
-          <input class="search-bar std-font lg-font-size" [(ngModel)]="searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
+          <input class="search-bar std-font lg-font-size" [(ngModel)]="searchState.searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
         </div>
         <img class="magnifying-glass std-transition" (click)="search()" src="./assets/img/search.png" alt="search"/>
         <img class="menu std-transition" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/menu.png" alt="menu"/>
@@ -46,19 +46,19 @@
         </div>
         <!-- Version Search Input -->
         <div class="version-search-container">
-          <input class="version-search std-font md-font-size" type="text" [(ngModel)]="versionSearchTerm" (ngModelChange)="filterVersions()" placeholder="Search Versions"/>
+          <input class="version-search std-font md-font-size" type="text" [(ngModel)]="searchState.versionSearchTerm" (ngModelChange)="searchState.filterVersions()" placeholder="Search Versions"/>
         </div>
         <!-- Version List -->
         <div class="versions-container">
           <!-- Selected Versions Row -->
-          <div class="miniview std-font" *ngIf="selectedVersions && selectedVersions.size > 0">
-            <div class="mini-selected sm-font-size std-transition" *ngFor="let version of selectedVersions" (click)="toggleVersion(version)">
-              <span *ngIf="selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
+          <div class="miniview std-font" *ngIf="searchState.selectedVersions && searchState.selectedVersions.size > 0">
+            <div class="mini-selected sm-font-size std-transition" *ngFor="let version of searchState.selectedVersions" (click)="searchState.toggleVersion(version)">
+              <span *ngIf="searchState.selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
             </div>
           </div>
           <!-- Available Version Row -->
           <table class="versions std-font">
-            <tr class="std-transition sm-font-size" *ngFor="let version of filteredVersions" (click)="toggleVersion(version)" [ngClass]="{'selected': version.selected}">
+            <tr class="std-transition sm-font-size" *ngFor="let version of searchState.filteredVersions" (click)="searchState.toggleVersion(version)" [ngClass]="{'selected': version.selected}">
               <td><span>{{version.name}}</span></td>
               <td><span>{{version.description || 'Not Provided'}}</span></td>
               <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>

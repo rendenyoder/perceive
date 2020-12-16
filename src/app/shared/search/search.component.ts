@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { BibleService } from '../services/bible.service';
-import { ContentInfo, SearchResults } from '../model/search';
+import { SearchState } from '../model/search';
 
 @Component({
   selector: 'app-search',
@@ -10,12 +10,10 @@ import { ContentInfo, SearchResults } from '../model/search';
 export class SearchComponent implements OnInit {
 
   @Input()
-  searchResults: SearchResults;
+  searchState: SearchState;
 
   @Output()
   display: EventEmitter<any> = new EventEmitter();
-
-  selected = {verses: {}, passages: {}};
 
   private isFetching = false;
 
@@ -31,46 +29,29 @@ export class SearchComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll($event) {
     if ((document.body.clientHeight + window.scrollY) + 500 >= document.body.scrollHeight) {
-      const results = this.searchResults.results;
+      const results = this.searchState.searchResults.results;
       if (results.length === 1) {
         const version = results[0];
-        if (version.results && this.hasContent(version) && version.results.verses && this.hasMoreResults(version) && !this.isFetching) {
-          this.addResults(version);
+        if (version.results && this.searchState.hasContent(version) && version.results.verses && this.searchState.hasMoreResults(version)) {
+          if (!this.isFetching) {
+            this.addResults(version);
+          }
         }
       }
     }
   }
 
   /**
-   * Whether or not a version has results.
-   * @param version Version object possibly containing search results.
-   */
-  hasContent(version) {
-    const hasVerses = version.results.verses && version.results.verses.length > 0;
-    const hasPassages = version.results.passages && version.results.passages.length > 0;
-    return hasVerses || hasPassages;
-  }
-
-  /**
-   * Whether or not a version has mroe search results.
-   * @param version Version object containing search results.
-   */
-  hasMoreResults = (version) => version.results.total > version.results.verses.length && version.results.total > version.results.limit;
-
-  /**
    * Adds more search results to a given version.
    * @param version Version object containing search results.
    */
   addResults(version) {
-    if (this.hasMoreResults(version)) {
+    if (this.searchState.hasMoreResults(version)) {
       this.isFetching = true;
-      const id = version.id;
-      const limit = version.results.limit;
-      const query = version.results.query;
-      version.results.offset += limit;
-      this.bible.search(id, query, limit, version.results.offset).subscribe(results => {
+      this.searchState.addResults(version).subscribe(_ => {
         this.isFetching = false;
-        results.data.verses.forEach(res => version.results.verses.push(res));
+      }, error => {
+        // TODO: Case where search fails.
       });
     }
   }
@@ -86,52 +67,12 @@ export class SearchComponent implements OnInit {
   }
 
   /**
-   * Checks whether the user has selected any content to view.
-   */
-  hasSelected() {
-    const selected = this.searchResults.selected;
-    return selected && (Object.keys(selected.passages).length > 0 || Object.keys(selected.verses).length > 0);
-  }
-
-  /**
-   * Adds content to the appropriate selected object.
-   * @param content The selected content.
-   * @param version The selected contents version.
-   * @param isPassage Whether or not the content is a passage or verse.
-   */
-  select(content, version, isPassage) {
-    const bibleContent = isPassage ? this.searchResults.selected.passages : this.searchResults.selected.verses;
-    if (!content.selected) {
-      // create object to contain content and version info without results
-      const selectedContent = new ContentInfo(content, Object.assign({}, version));
-      selectedContent.versionInfo.results = undefined;
-      // put content at id of passage or verse
-      const contentList = bibleContent[selectedContent.content.id];
-      if (contentList) {
-        contentList.push(selectedContent);
-      } else {
-        bibleContent[selectedContent.content.id] = [selectedContent];
-      }
-      content.selected = true;
-    } else {
-      if (bibleContent[content.id]) {
-        bibleContent[content.id] = bibleContent[content.id].filter(item => item.versionInfo.id !== version.id);
-        // remove list if empty
-        if (bibleContent[content.id].length <= 0) {
-          delete bibleContent[content.id];
-        }
-      }
-      content.selected = false;
-    }
-  }
-
-  /**
    * Emit selected search results.
    */
   displayResults() {
-    if (this.searchResults.selected) {
+    if (this.searchState.searchResults.selected) {
       window.scroll(0, 0);
-      this.display.emit(this.searchResults.selected);
+      this.display.emit();
     }
   }
 }
