@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { settings } from './shared/model/mode';
-import { AppSettings } from './shared/model/settings';
-import { SearchState } from './shared/model/search';
+import { settings } from './shared/utility/mode';
+import { AppSettings } from './shared/utility/settings';
+import { SearchState } from './shared/utility/search';
 import { BibleService } from './shared/services/bible.service';
 
 @Component({
