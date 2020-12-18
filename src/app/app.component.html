@@ -26,7 +26,7 @@
         <div class="not-found std-font md-font-size">
           <div class="message">
             <span>
-              No results found for "{{searchState.searchTerm}}" when searching from:
+              No results found for "{{searchState.failedTerm}}" when searching from:
               <i *ngFor="let version of searchState.versionNames; let i = index">
                 {{version}}<span *ngIf="(i + 1) != searchState.versionNames.length">,</span>
               </i>

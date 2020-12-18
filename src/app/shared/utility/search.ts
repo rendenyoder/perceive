@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
  */
 export class SearchState {
   searchTerm = '';
+  failedTerm = '';
   hasSearched = false;
   hasSearchResults = false;
   searchResults: SearchResults;
@@ -151,6 +152,9 @@ export class SearchState {
         return item.results && (item.results.total || item.results.passages);
       });
       this.versionNames = this.searchResults.results.map(res => res.name);
+      if (!this.hasSearchResults) {
+        this.failedTerm = this.searchTerm;
+      }
     }
   }
 
