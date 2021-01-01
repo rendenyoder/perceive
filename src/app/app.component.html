@@ -1,3 +1,9 @@
+<!-- Loading icon -->
+<div class="loading" *ngIf="!loaded">
+  <div class="loader"></div>
+</div>
+
+<!-- Main app -->
 <div #perceive id="perceive" class="perceive">
   <div class="header std-transition" [ngClass]="{'hidden': isHeaderHidden, 'pre-search': !searchState.hasSearched}">
     <div *ngIf="!searchState.hasSearched" class="title">

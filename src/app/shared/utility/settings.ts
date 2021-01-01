@@ -16,22 +16,25 @@ export class AppSettings {
     effect: {
       key: 'mode',
       mode: undefined,
-      selected: new WavesEffect('#perceive')
+      selected: undefined
     }
   };
 
-  constructor() {
-    this.initTheme();
+  constructor(withEffect: boolean = true) {
+    this.initTheme(withEffect);
   }
 
   /**
    * Initializes theme settings.
    */
-  private initTheme() {
+  private initTheme(withEffect: boolean) {
     this.theme.effect.mode = localStorage.getItem(this.theme.effect.key) || Object.keys(this.theme.themes)[0];
     this.theme.selected = this.theme.themes[this.theme.effect.mode];
     this.theme.selected.setStyleProperties();
-    this.theme.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
+    if (withEffect) {
+      this.theme.effect.selected = new WavesEffect('#perceive');
+      this.theme.effect.selected.createEffect({color: this.theme.selected.backgroundEffectColor});
+    }
   }
 
   /**

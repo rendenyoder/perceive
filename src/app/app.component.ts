@@ -12,6 +12,7 @@ import { BibleService } from './shared/services/bible.service';
 export class AppComponent implements OnInit {
   appSettings: AppSettings;
   searchState: SearchState;
+  loaded = false;
   isSearchExpanded = false;
   showHelpInfo = false;
   isReadView = false;
@@ -22,8 +23,7 @@ export class AppComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef, private bible: BibleService) { }
 
   ngOnInit() {
-    this.appSettings = new AppSettings();
-    this.searchState = new SearchState(this.bible);
+    this.load();
   }
 
   /**
@@ -130,5 +130,75 @@ export class AppComponent implements OnInit {
   private scrollToElement($element, lambda): void {
     $element.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
     setTimeout(() => lambda(), 150);
+  }
+
+  /**
+   * Sets up the application and initializes search state if applicable.
+   */
+  private load() {
+    this.searchState = new SearchState(this.bible);
+    // try and parse params if present
+    let params = {};
+    if (location.search) {
+      params = this.parseQueryParams(location.search);
+    }
+    // set search term and read mode from params if present
+    const query = params['query'];
+    const mode = params['mode'];
+    if (query) {
+      this.searchState.searchTerm = query;
+    }
+    if (mode && this.modeSettings.modes[mode]) {
+      this.modeSettings.current = mode;
+    }
+    // create effect if query and version params are not present
+    const versions = params['version'];
+    if (query && versions) {
+      this.appSettings = new AppSettings(false);
+    } else {
+      this.appSettings = new AppSettings();
+      this.loaded = true;
+    }
+    // fetch versions and setup search state from params if present
+    this.searchState.fetchVersions().subscribe(() => {
+      if (query && versions) {
+        const selected = params['selected'];
+        const limit = params['limit'];
+        const offset = params['offset'];
+        // load search state from params
+        this.searchState.searchAndSelect(query, versions, selected, limit, offset).subscribe(_ => {
+          this.display();
+          this.loaded = true;
+        }, error => {
+          // TODO: Case where search fails.
+        });
+      }
+    }, error => {
+      // TODO: Case where search fails.
+    });
+  }
+
+  /**
+   * Parses query params from location search string.
+   * @param location Location search string.
+   */
+  private parseQueryParams(location) {
+    const params: {[key: string]: any} = {};
+    const decoded = decodeURIComponent(location);
+    decoded.substr(1).split('&').forEach(it => {
+      if (it.includes('=')) {
+        const key = it.split('=')[0];
+        const value = it.split('=')[1];
+        if (Array.isArray(params[key])) {
+          params[key].push(value);
+        } else if (!params[key]) {
+          params[key] = value;
+        } else {
+          params[key] = [params[key]];
+          params[key].push(value);
+        }
+      }
+    });
+    return params;
   }
 }

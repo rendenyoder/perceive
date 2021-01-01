@@ -18,15 +18,13 @@ export class SearchState {
   selectedVersions = new Set<any>();
   defaultVersion = 'de4e12af7f28f599-02';
 
-  constructor(private bible: BibleService) {
-    this.fetchVersions();
-  }
+  constructor(private bible: BibleService) { }
 
   /**
    * Fetches all available bible versions.
    */
   fetchVersions() {
-    this.bible.fetchBibles().subscribe(result => {
+    return this.bible.fetchBibles().pipe(map(result => {
       this.versions = result.data;
       // sort versions
       this.versions = this.versions.sort((a, b) => {
@@ -42,7 +40,7 @@ export class SearchState {
       this.filteredVersions = this.versions;
       // set selected version as default
       this.selectVersions(this.defaultVersion);
-    });
+    }));
   }
 
   /**
@@ -166,7 +164,7 @@ export class SearchState {
    * @param limit The number of results to fetch.
    * @param offset The offset of results.
    */
-  searchAndSelect(query, versions, selected, limit?, offset?) {
+  searchAndSelect(query, versions, selected?, limit?, offset?) {
     this.searchTerm = query;
     if (versions) {
       this.selectVersions(...versions);
