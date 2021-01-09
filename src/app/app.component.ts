@@ -160,7 +160,7 @@ export class AppComponent implements OnInit {
       this.loaded = true;
     }
     // fetch versions and setup search state from params if present
-    this.searchState.fetchVersions().subscribe(() => {
+    this.searchState.initVersions().subscribe(() => {
       if (query && versions) {
         const selected = params['selected'];
         const limit = params['limit'];

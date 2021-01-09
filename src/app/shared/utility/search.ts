@@ -23,7 +23,7 @@ export class SearchState {
   /**
    * Fetches all available bible versions.
    */
-  fetchVersions() {
+  initVersions() {
     return this.bible.fetchBibles().pipe(map(result => {
       this.versions = result.data;
       // sort versions
