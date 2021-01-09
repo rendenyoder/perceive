@@ -166,7 +166,8 @@ export class AppComponent implements OnInit {
         const limit = params['limit'];
         const offset = params['offset'];
         // load search state from params
-        this.searchState.searchAndSelect(query, versions, selected, limit, offset).subscribe(_ => {
+        const list = Array.isArray(versions) ? versions : [versions];
+        this.searchState.searchAndSelect(query, list, selected, limit, offset).subscribe(_ => {
           this.display();
           this.loaded = true;
         }, error => {
