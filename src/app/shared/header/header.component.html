@@ -53,12 +53,14 @@
           <!-- Selected Versions Row -->
           <div class="miniview std-font" *ngIf="searchState.selectedVersions && searchState.selectedVersions.size > 0">
             <div class="mini-selected sm-font-size std-transition" *ngFor="let version of searchState.selectedVersions" (click)="searchState.toggleVersion(version)">
-              <span *ngIf="searchState.selectedVersions.size > 1" class="close">×</span><span>{{version.name}}</span>&nbsp;<span *ngIf="version.description">[{{version.description}}]</span>
+              <span *ngIf="searchState.selectedVersions.size > 1" class="close">×</span>
+              <span>{{searchState.versionFromId(version).name}}</span>&nbsp;
+              <span>[{{searchState.versionFromId(version).description}}]</span>
             </div>
           </div>
           <!-- Available Version Row -->
           <table class="versions std-font">
-            <tr class="std-transition sm-font-size" *ngFor="let version of searchState.filteredVersions" (click)="searchState.toggleVersion(version)" [ngClass]="{'selected': version.selected}">
+            <tr class="std-transition sm-font-size" *ngFor="let version of searchState.filteredVersions" (click)="searchState.toggleVersion(version.id)" [ngClass]="{'selected': searchState.selectedVersions.has(version.id)}">
               <td><span>{{version.name}}</span></td>
               <td><span>{{version.description || 'Not Provided'}}</span></td>
               <td><span>{{version.language.name}} <sup>[{{version.language.script}}]</sup></span></td>

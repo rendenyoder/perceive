@@ -13,6 +13,7 @@ export class SearchState {
   searchResults: SearchResults;
   versionSearchTerm = '';
   versions = [];
+  versionMap = {};
   versionNames = [];
   filteredVersions = [];
   selectedVersions = new Set<any>();
@@ -25,9 +26,8 @@ export class SearchState {
    */
   initVersions() {
     return this.bible.fetchBibles().pipe(map(result => {
-      this.versions = result.data;
       // sort versions
-      this.versions = this.versions.sort((a, b) => {
+      this.versions = result.data.sort((a, b) => {
         if (a.language.id === 'eng') {
           return -1;
         } else if (b.language.id === 'eng') {
@@ -36,6 +36,8 @@ export class SearchState {
           return a.name.localeCompare(b.name);
         }
       });
+      // create map of id to version
+      this.versions.forEach((it, index) => this.versionMap[it.id] = index);
       // set filtered version list to full list
       this.filteredVersions = this.versions;
       // set selected version as default
@@ -48,10 +50,10 @@ export class SearchState {
    * @param versions The version(s) being selected.
    */
   selectVersions(...versions) {
-    const selected = this.versions.filter(v => versions.includes(v.id) && !v.selected);
-    for (const version of selected) {
-      version.selected = true;
-      this.selectedVersions.add(version);
+    const selected = versions.filter(it => this.versionMap[it] !== undefined);
+    if (selected.length > 0) {
+      this.selectedVersions.clear();
+      selected.forEach(it => this.selectedVersions.add(it));
     }
   }
 
@@ -74,14 +76,23 @@ export class SearchState {
    * @param version The version object that has been selected.
    */
   toggleVersion(version) {
-    if (version.selected && this.selectedVersions.size > 1) {
-      this.selectedVersions.delete(version);
-      version.selected = false;
-      version.results = undefined;
+    if (this.selectedVersions.has(version) && this.selectedVersions.size > 1) {
+      const index = this.versionMap[version];
+      if (index >= 0) {
+        this.selectedVersions.delete(version);
+        this.versions[index].results = undefined;
+      }
     } else {
       this.selectedVersions.add(version);
-      version.selected = true;
     }
+  }
+
+  /**
+   * Fetches the version object from a version id.
+   * @param id The version id.
+   */
+  versionFromId(id: string) {
+    return this.versions[this.versionMap[id]];
   }
 
   /**
@@ -127,24 +138,28 @@ export class SearchState {
     }
     const calls = [];
     this.selectedVersions.forEach(version => {
-      const id = version.id;
-      const call = this.bible.search(id, term, limit, offset).pipe(
+      const call = this.bible.search(version, term, limit, offset).pipe(
         map((results) => {
-          version.results = results.data;
+          const index = this.versionMap[version];
+          if (index >= 0) {
+            this.versions[index].results = results.data;
+          }
         })
       );
       calls.push(call);
     });
-    return forkJoin(calls).pipe(map(_ => this.selectedVersions));
+    return forkJoin(calls).pipe(map(_ => {
+      return this.versions.filter(it => this.selectedVersions.has(it.id));
+    }));
   }
 
   /**
    * Sets the current search results from a search event.
    */
-  setSearchResults(results: Iterable<Version>) {
+  setSearchResults(results: Version[]) {
     this.hasSearched = true;
     this.searchResults = new SearchResults();
-    this.searchResults.results = Array.from(results);
+    this.searchResults.results = results;
     if (this.searchResults.results && this.searchResults.results.length > 0) {
       this.hasSearchResults = this.searchResults.results.some(item => {
         return item.results && (item.results.total || item.results.passages);
@@ -278,7 +293,6 @@ interface Version {
   type: string;
   updatedAt: string;
   audioBibles: any[];
-  selected: boolean;
   results: Results;
 }
 
