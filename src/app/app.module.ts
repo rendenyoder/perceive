@@ -9,6 +9,7 @@ import { BibleService } from './shared/services/bible.service';
 import { SearchComponent } from './shared/search/search.component';
 import { StandardComponent } from './shared/views/standard/standard.component';
 import { ColumnComponent } from './shared/views/column/column.component';
+import { RotateComponent } from './shared/views/rotate/rotate.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ColumnComponent } from './shared/views/column/column.component';
     HeaderComponent,
     SearchComponent,
     StandardComponent,
-    ColumnComponent
+    ColumnComponent,
+    RotateComponent
   ],
   imports: [
     BrowserModule,

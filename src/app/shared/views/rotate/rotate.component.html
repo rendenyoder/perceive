@@ -1,0 +1,79 @@
+<!-- Container For Settings Pertaining To Viewer -->
+<div class="toggle-container std-transition std-font md-font-size">
+  <div *ngIf="isAlphabetizable" class="toggle" (click)="toggleAlphabetical()">
+    <span class="title std-transition">Alphabetize</span>
+    <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
+  </div>
+</div>
+
+<section>
+  <!-- View For Verses -->
+  <ng-container *ngIf="hasContent(content.verses)">
+    <div class="content-container">
+      <ng-container *ngFor="let group of sortedContent.verses">
+        <!-- Table For Each Passage Group -->
+        <table class="content-table">
+          <!-- Verse Title -->
+          <tr>
+            <td class="std-font">
+              <div class="content-version">
+                <span class="zoomable">{{group[0].versionInfo.name}}</span>&nbsp;
+                <span *ngIf="group[0].versionInfo.description" class="zoomable">[{{group[0].versionInfo.description}}]</span>
+              </div>
+              <span class="md-font-size verse-reference">
+                <img *ngIf="group.length > 1" class="std-transition back-icon" src="./assets/img/caret.png" alt="Back" (click)="back(group)"/>
+                <span class="zoomable">{{group[0].content.reference}}</span>
+                <img *ngIf="group.length > 1" class="std-transition next-icon" src="./assets/img/caret.png" alt="Next" (click)="next(group)"/>
+              </span>
+            </td>
+          </tr>
+          <!-- Verse Content -->
+          <tr>
+            <td class="verse-content">
+              <div class="scripture-styles content">
+                <p class="p">{{group[0].content.text}}</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- View For Passages -->
+  <ng-container *ngIf="hasContent(content.passages)">
+    <div class="content-container">
+      <ng-container *ngFor="let group of sortedContent.passages">
+        <!-- Table For Each Passage Group -->
+        <table class="content-table">
+          <!-- Passage Title -->
+          <tr>
+            <td class="std-font">
+              <div class="content-version">
+                <span class="zoomable">{{group[0].versionInfo.name}}</span>&nbsp;
+                <span *ngIf="group[0].versionInfo.description" class="zoomable">[{{group[0].versionInfo.description}}]</span>
+              </div>
+              <span class="md-font-size">
+                <span class="zoomable">{{group[0].content.reference}}</span>
+              </span>
+            </td>
+          </tr>
+          <!-- Passage Content -->
+          <tr>
+            <td class="passage-content">
+              <div *ngIf="group.length > 1" class="back-btn-container std-transition" (click)="back(group)">
+                <div class="background std-transition"></div>
+                <img class="std-transition" src="./assets/img/caret.png" alt="Back"/>
+              </div>
+              <div *ngIf="group.length > 1" class="next-btn-container std-transition" (click)="next(group)">
+                <div class="background std-transition"></div>
+                <img class="std-transition" src="./assets/img/caret.png" alt="Next"/>
+              </div>
+              <div class="scripture-styles content" [innerHTML]="group[0].content.content"></div>
+            </td>
+          </tr>
+        </table>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>

@@ -120,6 +120,8 @@
       <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="searchState.searchResults.selected"></app-standard-view>
       <!-- Column View -->
       <app-column-view *ngIf="modeSettings.current === 'column'" [content]="searchState.searchResults.selected"></app-column-view>
+      <!-- Rotate View -->
+      <app-rotate-view *ngIf="modeSettings.current === 'rotate'" [content]="searchState.searchResults.selected"></app-rotate-view>
     </div>
   </div>
 </div>
