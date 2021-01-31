@@ -88,6 +88,12 @@ section {
   span {
     color: #f9f9f9;
   }
+  .open-arrow {
+    width: 18px;
+    height: auto;
+    transform: rotate(-90deg);
+    filter: brightness(250%);
+  }
 }
 .prompt-show {
   display: block;

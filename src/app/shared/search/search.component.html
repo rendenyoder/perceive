@@ -1,6 +1,9 @@
 <!-- Button To Display Off To the Right To Enter Read Mode -->
 <div class="prompt std-font" (click)="displayResults()" [ngClass]="{'prompt-show': searchState.hasSelected()}">
-  <span class="md-font-size">Open Read View</span>
+  <span class="md-font-size">
+    <span>Open</span>
+    <img class="std-transition open-arrow" src="./assets/img/caret.png" alt="Next"/>
+  </span>
 </div>
 
 <section>
@@ -33,7 +36,7 @@
           </ng-container>
           <!-- Button To Add More Search Results To Queue -->
           <div class="plus-results-container std-font" *ngIf="searchState.hasMoreResults(version)" (click)="addResults(version)">
-            <span>Add More Results</span>
+            <span>More</span>
             <img class="plus-icon" src="./assets/img/plus.png" alt="Add Results"/>
           </div>
         </ng-container>
