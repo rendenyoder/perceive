@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AppSettings } from '../utility/settings';
-import { SearchState } from '../utility/search';
+import { AppSettings } from '../shared/utility/settings';
+import { SearchState } from '../shared/utility/search';
 
 @Component({
   selector: 'app-header',
