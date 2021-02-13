@@ -6,43 +6,18 @@
         <div class="search-bar-container">
           <input class="search-bar std-font lg-font-size" [(ngModel)]="searchState.searchTerm" (keyup.enter)="search()" type="text" placeholder="Search"/>
         </div>
-        <img class="magnifying-glass std-transition" (click)="search()" src="./assets/img/search.png" alt="search"/>
-        <img class="menu std-transition" (click)="updateSearch(!isSearchExpanded)" src="./assets/img/menu.png" alt="menu"/>
+        <img class="magnifying-glass std-transition" (click)="search()" src="../../assets/img/search.png" alt="search"/>
+        <img class="menu std-transition" (click)="updateSearch(!isSearchExpanded)" src="../../assets/img/menu.png" alt="menu"/>
       </div>
       <!-- Search Settings Container -->
       <div class="search-settings-container std-transition" [ngStyle]="{'height': isSearchExpanded ? '350px' : '0' }">
         <div class="read-view-settings">
           <!-- Dark Mode Toggle -->
-          <div class="setting-container">
-            <label class="toggle-switch">
-              <input [(ngModel)]="isDarkMode" type="checkbox" (change)="updateDarkMode()">
-              <span class="slider round"></span>
-            </label>
-            <span class="std-font md-font-size">Dark Mode</span>
-          </div>
-          <!-- Cookies Toggle -->
-          <div class="setting-container">
-            <div class="range-slider">
-              <input [(ngModel)]="colorRange" (input)="updateAccent()" type="range" min="0" max="359" value="0" class="slider">
-            </div>
-            <span class="std-font md-font-size">Accent</span>
-          </div>
+          <app-dark-mode [appSettings]="appSettings" [colorRange]="colorRange"></app-dark-mode>
+          <!-- Color Slider -->
+          <app-accent-slider [appSettings]="appSettings" [colorRange]="colorRange"></app-accent-slider>
           <!-- Read View Selection -->
-          <div class="read-view-selection-container">
-            <div class="read-view-selection std-font std-transition">
-              <img [src]="modeSettings.modes[modeSettings.current].icon"/>
-              <span class="md-font-size">{{modeSettings.modes[modeSettings.current].display}}</span>
-              <img class="down-arrow std-transition" src="./assets/img/caret.png"/>
-            </div>
-            <div class="read-view-selection-list md-font-size shadow std-transition">
-              <ng-container *ngFor="let mode of this.modeSettings.modes | keyvalue : originalOrder">
-                <div class="read-view-selection std-font" (click)="setMode(mode.value.id)">
-                  <img [src]="mode.value.icon"/>
-                  <span class="md-font-size">{{mode.value.display}}</span>
-                </div>
-              </ng-container>
-            </div>
-          </div>
+          <app-view-selection [modeSettings]="modeSettings"></app-view-selection>
         </div>
         <!-- Version Search Input -->
         <div class="version-search-container">

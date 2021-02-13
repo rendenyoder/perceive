@@ -21,9 +21,9 @@
                 <span *ngIf="group[0].versionInfo.description" class="zoomable">[{{group[0].versionInfo.description}}]</span>
               </div>
               <span class="md-font-size verse-reference">
-                <img *ngIf="group.length > 1" class="std-transition back-icon" src="./assets/img/caret.png" alt="Back" (click)="back(group)"/>
+                <img *ngIf="group.length > 1" class="std-transition back-icon" src="../../../assets/img/caret.png" alt="Back" (click)="back(group)"/>
                 <span class="zoomable">{{group[0].content.reference}}</span>
-                <img *ngIf="group.length > 1" class="std-transition next-icon" src="./assets/img/caret.png" alt="Next" (click)="next(group)"/>
+                <img *ngIf="group.length > 1" class="std-transition next-icon" src="../../../assets/img/caret.png" alt="Next" (click)="next(group)"/>
               </span>
             </td>
           </tr>
@@ -63,11 +63,11 @@
             <td class="passage-content">
               <div *ngIf="group.length > 1" class="back-btn-container std-transition" (click)="back(group)">
                 <div class="background std-transition"></div>
-                <img class="std-transition" src="./assets/img/caret.png" alt="Back"/>
+                <img class="std-transition" src="../../../assets/img/caret.png" alt="Back"/>
               </div>
               <div *ngIf="group.length > 1" class="next-btn-container std-transition" (click)="next(group)">
                 <div class="background std-transition"></div>
-                <img class="std-transition" src="./assets/img/caret.png" alt="Next"/>
+                <img class="std-transition" src="../../../assets/img/caret.png" alt="Next"/>
               </div>
               <div class="scripture-styles content" [innerHTML]="group[0].content.content"></div>
             </td>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { BibleService } from '../services/bible.service';
-import { SearchState } from '../utility/search';
+import { BibleService } from '../shared/services/bible.service';
+import { SearchState } from '../shared/utility/search';
 
 @Component({
   selector: 'app-search',
