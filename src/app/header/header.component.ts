@@ -27,23 +27,11 @@ export class HeaderComponent implements OnInit {
   @Output()
   updateSearchExpanded: EventEmitter<any> = new EventEmitter();
 
-  isDarkMode;
   colorRange;
 
   constructor() { }
 
-  ngOnInit() {
-    this.isDarkMode = this.appSettings ? this.appSettings.getMode() === 'dark' : false;
-    this.colorRange = this.appSettings.getThemeAccentHue();
-  }
-
-  /**
-   * Sets the appropriate view mode.
-   * @param selected The selected mode.
-   */
-  setMode(selected: string) {
-    this.modeSettings.current = selected;
-  }
+  ngOnInit() { }
 
   /**
    * Executes search and emits success or failure.
@@ -61,13 +49,6 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * Updates theme accent based on color slider.
-   */
-  updateAccent() {
-    this.appSettings.setThemeAccentHue(this.colorRange);
-  }
-
-  /**
    * Toggles the state of the search settings expanded flag.
    * @param state the new search expanded state
    */
@@ -75,18 +56,4 @@ export class HeaderComponent implements OnInit {
     this.isSearchExpanded = state;
     this.updateSearchExpanded.emit(this.isSearchExpanded);
   }
-
-  /**
-   * Updates dark mode state.
-   */
-  updateDarkMode() {
-    const mode = this.isDarkMode ? 'dark' : 'light';
-    this.appSettings.setTheme(mode);
-    this.colorRange = this.appSettings.getThemeAccentHue();
-  }
-
-  /**
-   * Comparator to use for sorting json keys in declared order.
-   */
-  originalOrder = (a, b) => 0;
 }

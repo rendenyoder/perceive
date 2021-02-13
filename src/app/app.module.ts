@@ -10,6 +10,9 @@ import { SearchComponent } from './search/search.component';
 import { StandardComponent } from './views/standard/standard.component';
 import { ColumnComponent } from './views/column/column.component';
 import { RotateComponent } from './views/rotate/rotate.component';
+import { ViewSelectionComponent } from './shared/components/view-selection/view-selection.component';
+import { AccentComponent } from './shared/components/accent/accent.component';
+import { DarkModeComponent } from './shared/components/dark-mode/dark-mode.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { RotateComponent } from './views/rotate/rotate.component';
     SearchComponent,
     StandardComponent,
     ColumnComponent,
-    RotateComponent
+    RotateComponent,
+    ViewSelectionComponent,
+    AccentComponent,
+    DarkModeComponent
   ],
   imports: [
     BrowserModule,
