@@ -115,6 +115,7 @@
         <img class="icon std-transition" (click)="close()" src="./assets/img/exit.png" alt="Exit"/>
         <img class="icon std-transition" (click)="appSettings.zoomIn()" src="./assets/img/plus.png" alt="Zoom In"/>
         <img class="icon std-transition" (click)="appSettings.zoomOut()" src="./assets/img/minus.png" alt="Zoom Out"/>
+        <app-view-selection [modeSettings]="modeSettings"></app-view-selection>
       </div>
       <!-- Standard View -->
       <app-standard-view *ngIf="modeSettings.current === 'standard'" [content]="searchState.searchResults.selected"></app-standard-view>

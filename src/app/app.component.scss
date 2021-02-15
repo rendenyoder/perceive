@@ -186,5 +186,9 @@
     .icon:hover {
       opacity: 0.7;
     }
+    app-view-selection {
+      float: right;
+      padding-left: 10px;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ViewComponent} from '../view.component';
+import { ViewComponent } from '../view.component';
 
 @Component({
   selector: 'app-rotate-view',
@@ -10,7 +10,6 @@ export class RotateComponent extends ViewComponent implements OnInit {
 
   ngOnInit() {
     this.sortContent();
-    this.isAlphabetizable = this.isMultipleSelected();
   }
 
   next(list) {

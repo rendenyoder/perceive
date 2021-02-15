@@ -10,6 +10,5 @@ export class StandardComponent extends ViewComponent implements OnInit {
 
   ngOnInit() {
     this.sortContent();
-    this.isAlphabetizable = this.isMultipleSelected();
   }
 }

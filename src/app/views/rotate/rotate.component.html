@@ -1,11 +1,3 @@
-<!-- Container For Settings Pertaining To Viewer -->
-<div class="toggle-container std-transition std-font md-font-size">
-  <div *ngIf="isAlphabetizable" class="toggle" (click)="toggleAlphabetical()">
-    <span class="title std-transition">Alphabetize</span>
-    <div class="checkbox" [ngClass]="{'checkbox-checked': isAlphabetized}"></div>
-  </div>
-</div>
-
 <section>
   <!-- View For Verses -->
   <ng-container *ngIf="hasContent(content.verses)">

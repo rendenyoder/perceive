@@ -12,13 +12,8 @@ export class ColumnComponent extends ViewComponent implements OnInit {
 
   @ViewChild('passageGroup', {static: false}) passageGroup;
 
-  isSmartScrollShown = false;
-  isSmartScrollEnabled = true;
-
   ngOnInit() {
     this.sortContent();
-    this.isAlphabetizable = this.isMultipleSelected();
-    this.isSmartScrollShown = this.showSmartScroll();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -29,14 +24,6 @@ export class ColumnComponent extends ViewComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize($event) {
     this.setTop(true);
-  }
-
-  /**
-   * Toggle smart scroll.
-   */
-  toggleSmartScroll() {
-    this.isSmartScrollEnabled = !this.isSmartScrollEnabled;
-    this.setTop(false);
   }
 
   /**
@@ -52,15 +39,11 @@ export class ColumnComponent extends ViewComponent implements OnInit {
       }
       // calculate offset for top if applicable
       for (const content of child.children) {
-        if (this.isSmartScrollEnabled) {
-          const diff = child.offsetHeight - content.offsetHeight;
-          if (diff > 200) {
-            child.isTopSet = true;
-            content.style.top = this.calculateOffset(diff, child) + 'px';
-          } else if (child.isTopSet) {
-            content.style.top = '0px';
-          }
-        } else {
+        const diff = child.offsetHeight - content.offsetHeight;
+        if (diff > 200) {
+          child.isTopSet = true;
+          content.style.top = this.calculateOffset(diff, child) + 'px';
+        } else if (child.isTopSet) {
           content.style.top = '0px';
         }
       }
@@ -75,18 +58,5 @@ export class ColumnComponent extends ViewComponent implements OnInit {
   private calculateOffset(diff, child) {
     const percent = (window.scrollY - child.topDist) / Math.abs(child.offsetHeight - window.innerHeight);
     return Math.round(diff * Math.max(0, Math.min(percent, 1)));
-  }
-
-  /**
-   * Whether or not the smart scroll feature should be shown.
-   */
-  private showSmartScroll() {
-    return Object.keys(this.content).some(typeKey => {
-      const type = this.content[typeKey];
-      return Object.keys(type).some(contentKey => {
-        const content = type[contentKey];
-        return content && content.length > 1;
-      });
-    });
   }
 }
