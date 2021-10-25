@@ -71,19 +71,6 @@ class RotateMode implements Mode {
 }
 
 /**
- * Interlinear view mode.
- */
-class InterlinearMode implements Mode {
-  id = 'interlinear';
-  display = 'Interlinear';
-  icon = './assets/img/interlinear-view.png';
-  description = 'The interlinear view takes verses, passages and chapters grouped by their book name, chapter and verse and interweaves' +
-    ' them line by line';
-  query = 'Psalm 32';
-  versions = ['de4e12af7f28f599-02', '06125adad2d5898a-01'];
-}
-
-/**
  * Mode settings.
  */
 export const settings = {
@@ -92,6 +79,5 @@ export const settings = {
     standard: new StandardMode(),
     column: new ColumnMode(),
     rotate: new RotateMode(),
-    interlinear: new InterlinearMode()
   }
 };
